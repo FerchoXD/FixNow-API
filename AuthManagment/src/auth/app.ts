@@ -1,5 +1,5 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-import express, { Request, Response } from 'express';
+import express from 'express';
 import userRouter from "./infraestructure/routes/UserRoutes"
 
 const app = express();

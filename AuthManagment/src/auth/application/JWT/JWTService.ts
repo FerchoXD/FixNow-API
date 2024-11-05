@@ -8,7 +8,7 @@ export class JWTService {
 
     static verifyToken(token: string): jwt.JwtPayload {
         try {
-            return jwt.verify(token, 'miClaveSecretaSuperSegura123!$'!) as jwt.JwtPayload;
+            return jwt.verify(token, 'clavesegura!$'!) as jwt.JwtPayload;
         } catch (error) {
             throw new Error('Token inválido o expirado');
         }

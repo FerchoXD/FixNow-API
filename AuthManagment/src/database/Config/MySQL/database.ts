@@ -1,11 +1,11 @@
 import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize('ms-auth', 'auth', '0612583492761', {
-  host: '34.28.117.237',
+const sequelize = new Sequelize('db', 'user', 'pass', {
+  host: 'host',
   dialect: 'mysql',
   dialectOptions: {
     ssl: {
-      rejectUnauthorized: false
+      rejectUnauthorized: false //! quitar en producción
     }
   }
 });

@@ -7,7 +7,7 @@ import { transporter } from "./Mailer";
 export class EmailService implements EmailPort {
     async run(user: any): Promise<void> {
         const opcionesCorreo = {
-            from: 'fernandodanielp49@gmail.com', // Debe ser el mismo email usado en la autenticación del transporter
+            from: 'email', // Debe ser el mismo email usado en la autenticación del transporter
             to: user.email,
             subject: 'Activacion de Cuenta', // Asunto del correo
             text: user.activationToken, // Cuerpo del correo en texto plano
