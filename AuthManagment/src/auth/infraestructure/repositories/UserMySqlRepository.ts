@@ -3,8 +3,71 @@ import { UserInterface } from "../../domain/repositories/UserInterface";
 import { UserModel } from "../models/MySQL/User";
 import bcrypt from "bcrypt";
 import { JWTService } from "../../application/JWT/JWTService";
+import UserImageModel from "../models/MySQL/UserImage";
 
 export class UserMySqlRepository implements UserInterface {
+
+    async getServices(uuid: string): Promise<any> {
+        try {
+            const user = await UserModel.findOne({ where: { uuid } });
+            if (!user) {
+                return {
+                    status: 404,
+                    message: 'Usuario no encontrado.'
+                };
+            }
+            return {
+                status: 200,
+                response: user.selectedservices
+            };
+        } catch (error) {
+            console.error('Error al obtener los servicios:', error);
+            return {
+                status: 500,
+                message: 'Error interno del servidor.'
+            };
+        }
+    }
+    
+    async profileData(uuid: string, profileData: any, imageUrls: string[]): Promise<any> {
+        try {
+            console.log('profileData:', uuid, profileData, imageUrls);
+            // Buscar el usuario
+            const user = await UserModel.findOne({ where: { uuid } });
+            if (!user) {
+                throw new Error('Usuario no encontrado.');
+            }
+
+            // Actualizar datos del perfil en el usuario
+            await user.update(profileData);
+
+            // Si hay nuevas URLs de imágenes, actualizar las imágenes en UserImageModel
+            
+            // Eliminar imágenes antiguas
+            await UserImageModel.destroy({ where: { userUuid: uuid } });
+
+
+            console.log('User uuid:', uuid);
+            console.log('Image urls:', imageUrls);
+            // Guardar las nuevas imágenes
+            for (const url of imageUrls) {
+                console.log('URL:', url);
+                console.log('UUID:', uuid);
+                console.log("imageUrls:", imageUrls);
+                await UserImageModel.create({
+                    userUuid: uuid,
+                    images: url,  // Guardar cada URL en una fila separada
+                });
+            }
+            
+
+            return user; 
+        } catch (error) {
+            console.error('Error actualizando el perfil:', error);
+            throw error;
+        }
+    }
+
     async save(user: User): Promise<any> {
         try {
             const userResponse = await UserModel.create({
@@ -97,7 +160,7 @@ export class UserMySqlRepository implements UserInterface {
                 };
             }
     
-            const token = JWTService.generateToken(user.id, user.email);
+            const token = JWTService.generateToken(user.uuid, user.email);
             user.token = token;
             await user.save();
             return {

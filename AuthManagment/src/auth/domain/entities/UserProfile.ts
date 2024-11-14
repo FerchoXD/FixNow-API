@@ -5,7 +5,7 @@ export class UserProfile {
     profileurl?: string;
 
     @IsOptional()
-    profilefilenames?: string[];
+    images?: string[];
 
     @IsOptional()
     address?: string;
@@ -22,21 +22,26 @@ export class UserProfile {
     @IsOptional()
     selectedservices?: string[];
 
+    @IsOptional()
+    ranking?: number;
+
     constructor(
         profileurl?: string,
-        profilefilenames?: string[],
+        images?: string[],
         address?: string,
         workexperience?: string,
         standardprice?: number,
         hourlyrate?: number,
-        selectedservices?: string[]
+        selectedservices?: string[],
+        ranking?: number
     ) {
         this.profileurl = profileurl;
-        this.profilefilenames = profilefilenames;
+        this.images = images;
         this.address = address;
         this.workexperience = workexperience;
         this.standardprice = standardprice;
         this.hourlyrate = hourlyrate;
         this.selectedservices = selectedservices;
+        this.ranking = ranking;
     }
 }

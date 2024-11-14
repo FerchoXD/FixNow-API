@@ -5,4 +5,6 @@ export interface UserInterface {
     update(token:string): Promise<User|any>;
     login(email:string, password:string):Promise<User|any>;
     logout(email:string):Promise<any|void>;
+    profileData(uuid: any, profileData:any,imageUrls: string[]):Promise<User|any>;
+    getServices(uuid:string):Promise<User|any>;
 }

@@ -12,6 +12,7 @@ export class RegisterUserController {
 
     async run(req:Request, res:Response){
 
+        console.log(req.body.firstname);
 
         if(!req.body.firstname || !req.body.lastname || !req.body.phone || !req.body.email || !req.body.password || !req.body.role){
             return res.status(400).json({
