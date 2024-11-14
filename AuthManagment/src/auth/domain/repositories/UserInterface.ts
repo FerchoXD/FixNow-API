@@ -8,4 +8,5 @@ export interface UserInterface {
     profileData(uuid: any, profileData:any,imageUrls: string[]):Promise<User|any>;
     getServices(uuid:string):Promise<User|any>;
     findProfileById(uuid: string):Promise<User|any>;
+    getFilters(data:any):Promise<User|any>;
 }

@@ -19,6 +19,8 @@ import { SearchSupplierController } from "./controllers/SearchSupplierController
 import { SearchSupplierUseCase } from "../application/usecases/SearchSupplierUseCase";
 import { GetProfileUseCase } from "../application/usecases/GetGetProfileUseCase";
 import { GetProfileController } from "./controllers/GetProfileController";
+import { GetFiltersUseCase } from "../application/usecases/GetFiltersUseCase";
+import { GetFiltersController } from "./controllers/GetFiltersController";
 
 const mysqlRepository = new UserMySqlRepository();
 const databaseConfig = new MySQLConfig();
@@ -38,6 +40,7 @@ const saveProfileDataUseCase = new SaveProfileDataUseCase(mysqlRepository, Image
 const getServicesUseCase = new GetServicesUseCase(mysqlRepository);
 const searchSupplierUseCase = new SearchSupplierUseCase();
 const getProfileUseCase = new GetProfileUseCase(mysqlRepository);
+const getFiltersUseCase = new GetFiltersUseCase(mysqlRepository);
 
 const registerUserController = new RegisterUserController(registerUserUseCase, new EmailService());
 const activateUserController = new ActivateUserController(activateUserUseCase);
@@ -47,6 +50,7 @@ const saveProfileDataController = new SaveProfileDataController();
 const getServicesController = new GetServicesController(getServicesUseCase);
 const searchSupplierController = new SearchSupplierController(searchSupplierUseCase);
 const getProfileController = new GetProfileController(getProfileUseCase);
+const getFiltersController = new GetFiltersController(getFiltersUseCase);
 
 const dbConfig = getDatabaseConfig(mysqlRepository);
 dbConfig.initialize().then(() => {
@@ -61,5 +65,6 @@ export {
   saveProfileDataController,
   getServicesController,
   searchSupplierController,
-  getProfileController
+  getProfileController,
+  getFiltersController,
   };

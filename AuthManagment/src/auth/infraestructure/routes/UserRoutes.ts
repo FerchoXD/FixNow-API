@@ -7,7 +7,8 @@ import {
     saveProfileDataController, 
     getServicesController,
     searchSupplierController,
-    getProfileController
+    getProfileController,
+    getFiltersController
 } from '../dependencies';
 
 const router = Router();
@@ -47,9 +48,8 @@ router.post('/profile/', (req: Request, res: Response) => {
 });
 
 
-router.get('/get/filters', (req: Request, res: Response) => {
-    //TODO: Implementar la obtención de los filtros
-    throw new Error('Not implemented');
+router.post('/filters', (req: Request, res: Response) => {
+    getFiltersController.run(req, res);
 });
 
 

@@ -27,6 +27,7 @@ export class UserModel extends Model {
     public activationToken!: string | null;
     public verifiedAt!: Date | null;
     public quotation!: number;
+    public relevance!: number;
 }
 
 UserModel.init({

@@ -6,6 +6,32 @@ import { JWTService } from "../../application/JWT/JWTService";
 import UserImageModel from "../models/MySQL/UserImage";
 
 export class UserMySqlRepository implements UserInterface {
+    
+    getFilters(data: any): Promise<User | any> {
+        const filters: any = {
+            role: 'supplier',
+        };
+    
+        if (data.relevance) {
+            filters.relevance = data.relevance;
+        }
+        
+        if (data.service) {
+            filters.selectedservices = data.service;
+        }
+    
+        if (data.quotation) {
+            filters.quotation = data.quotation;
+        }
+    
+        if (data.hourlyrate) {
+            filters.hourlyrate = data.hourlyrate;
+        }
+    
+        return UserModel.findAll({
+            where: filters,
+        });
+    }
 
     async findProfileById(uuid: string): Promise<User | any> {
         try {
