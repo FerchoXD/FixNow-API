@@ -7,6 +7,56 @@ import UserImageModel from "../models/MySQL/UserImage";
 
 export class UserMySqlRepository implements UserInterface {
 
+    async findProfileById(uuid: string): Promise<User | any> {
+        try {
+            console.log('Buscand:', uuid);
+            const user = await UserModel.findOne({
+                where: { uuid },
+                //include: [{ model: UserImageModel, as: 'images' }]
+            });
+
+            if (!user) {
+                return {
+                    status: 404,
+                    message: 'Usuario no encontrado.'
+                };
+            }
+
+            const data = {
+                uuid: user.uuid,
+                contact: {
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    phone: user.phone,
+                    role: user.role
+                },
+                credential: {
+                    email: user.email
+                },
+                ...(user.role === 'supplier' && {
+                    userProfile: {
+                        address: user.address,
+                        workexperience: user.workexperience,
+                        standardprice: user.standardprice,
+                        hourlyrate: user.hourlyrate,
+                        selectedservices: user.selectedservices
+                    }
+                })
+            };
+
+            return {
+                status: 200,
+                data: data
+            };
+        } catch (error) {
+            console.error('Error al obtener el perfil del cliente:', error);
+            return {
+                status: 500,
+                message: 'Error interno del servidor.'
+            };
+        }
+    }
+
     async getServices(uuid: string): Promise<any> {
         try {
             const user = await UserModel.findOne({ where: { uuid } });

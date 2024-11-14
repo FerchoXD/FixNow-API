@@ -17,6 +17,8 @@ import { EmailService } from "./Services/Email/Email";
 import { ImageStorageService } from "./Services/StorageImages/ImageStorageService";
 import { SearchSupplierController } from "./controllers/SearchSupplierController";
 import { SearchSupplierUseCase } from "../application/usecases/SearchSupplierUseCase";
+import { GetProfileUseCase } from "../application/usecases/GetGetProfileUseCase";
+import { GetProfileController } from "./controllers/GetProfileController";
 
 const mysqlRepository = new UserMySqlRepository();
 const databaseConfig = new MySQLConfig();
@@ -35,6 +37,7 @@ const logoutUserUseCase = new LogoutUserUseCase(mysqlRepository);
 const saveProfileDataUseCase = new SaveProfileDataUseCase(mysqlRepository, ImageStorageService as any);
 const getServicesUseCase = new GetServicesUseCase(mysqlRepository);
 const searchSupplierUseCase = new SearchSupplierUseCase();
+const getProfileUseCase = new GetProfileUseCase(mysqlRepository);
 
 const registerUserController = new RegisterUserController(registerUserUseCase, new EmailService());
 const activateUserController = new ActivateUserController(activateUserUseCase);
@@ -43,6 +46,7 @@ const logoutUserController = new LogoutUserController(logoutUserUseCase);
 const saveProfileDataController = new SaveProfileDataController();
 const getServicesController = new GetServicesController(getServicesUseCase);
 const searchSupplierController = new SearchSupplierController(searchSupplierUseCase);
+const getProfileController = new GetProfileController(getProfileUseCase);
 
 const dbConfig = getDatabaseConfig(mysqlRepository);
 dbConfig.initialize().then(() => {
@@ -56,5 +60,6 @@ export {
   logoutUserController, 
   saveProfileDataController,
   getServicesController,
-  searchSupplierController
+  searchSupplierController,
+  getProfileController
   };

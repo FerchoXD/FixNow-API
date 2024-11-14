@@ -6,7 +6,8 @@ import {
     logoutUserController, 
     saveProfileDataController, 
     getServicesController,
-    searchSupplierController
+    searchSupplierController,
+    getProfileController
 } from '../dependencies';
 
 const router = Router();
@@ -41,14 +42,8 @@ router.post('/services/ai', (req: Request, res: Response) => {
 });
 
 
-router.put('/profile/customer', (req: Request, res: Response) => {
-    //TODO: Implementar el perfil de cliente
-    throw new Error('Not implemented');
-});
-
-router.get('/profile/:uuid', (req: Request, res: Response) => {
-    //TODO: Implementar la obtención de un perfil
-    throw new Error('Not implemented');
+router.post('/profile/', (req: Request, res: Response) => {
+    getProfileController.run(req, res);
 });
 
 

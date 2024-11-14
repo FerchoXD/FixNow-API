@@ -7,4 +7,5 @@ export interface UserInterface {
     logout(email:string):Promise<any|void>;
     profileData(uuid: any, profileData:any,imageUrls: string[]):Promise<User|any>;
     getServices(uuid:string):Promise<User|any>;
+    findProfileById(uuid: string):Promise<User|any>;
 }
