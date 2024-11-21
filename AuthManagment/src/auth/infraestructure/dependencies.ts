@@ -21,8 +21,12 @@ import { GetProfileUseCase } from "../application/usecases/GetGetProfileUseCase"
 import { GetProfileController } from "./controllers/GetProfileController";
 import { GetFiltersUseCase } from "../application/usecases/GetFiltersUseCase";
 import { GetFiltersController } from "./controllers/GetFiltersController";
+import { GoogleAuthController } from "./controllers/GoogleAuthController";
+import { GoogleAuthUseCase } from "../application/usecases/GoogleAuthUseCase";
+import { GoogleAuthService } from "./Services/GoogleAuth/GoogleAuthService";
 
 const mysqlRepository = new UserMySqlRepository();
+const googleAuthService = new GoogleAuthService( new GoogleAuthUseCase(mysqlRepository) );
 const databaseConfig = new MySQLConfig();
 
 function getDatabaseConfig(currentRepository: any): DatabaseConfig {
@@ -51,6 +55,7 @@ const getServicesController = new GetServicesController(getServicesUseCase);
 const searchSupplierController = new SearchSupplierController(searchSupplierUseCase);
 const getProfileController = new GetProfileController(getProfileUseCase);
 const getFiltersController = new GetFiltersController(getFiltersUseCase);
+const googleAuthController = new GoogleAuthController(googleAuthService);
 
 const dbConfig = getDatabaseConfig(mysqlRepository);
 dbConfig.initialize().then(() => {
@@ -67,4 +72,5 @@ export {
   searchSupplierController,
   getProfileController,
   getFiltersController,
+  googleAuthController
   };

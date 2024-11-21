@@ -9,4 +9,7 @@ export interface UserInterface {
     getServices(uuid:string):Promise<User|any>;
     findProfileById(uuid: string):Promise<User|any>;
     getFilters(data:any):Promise<User|any>;
+    authenticateWithGoogle(googleId: string, name: string, email: string, profileUrl: string): Promise<User>;
+    findByGoogleId(googleId: string): Promise<User | null>;
+    createUser(user: User): Promise<User>;
 }

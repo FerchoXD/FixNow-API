@@ -38,4 +38,5 @@ export const associateUserImageModel = () => {
 };
 
 
+
 export default UserImageModel;

@@ -1,5 +1,10 @@
-import UserModel from '../models/MySQL/User';
-import UserImageModel from '../models/MySQL/UserImage';
+import { associateUserCalendarModel } from '../models/MySQL/UserCalendar';
+import { associateUserImageModel } from '../models/MySQL/UserImage';
+import {associateUserModelWithImages, associateUserModelWithCalendars}  from '../models/MySQL/User';
 
-UserModel.hasMany(UserImageModel, { foreignKey: 'userUuid' });
-UserImageModel.belongsTo(UserModel, { foreignKey: 'userUuid' });
+export const associateModels = () => {
+    associateUserCalendarModel();
+    associateUserImageModel();
+    associateUserModelWithImages();
+    associateUserModelWithCalendars();
+};

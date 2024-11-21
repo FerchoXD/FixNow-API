@@ -8,8 +8,10 @@ import {
     getServicesController,
     searchSupplierController,
     getProfileController,
-    getFiltersController
+    getFiltersController,
+    googleAuthController
 } from '../dependencies';
+import passport from 'passport';
 
 const router = Router();
 
@@ -25,6 +27,17 @@ router.put('/:token/activate', (req: Request, res: Response) => {
 router.post('/auth/login', (req: Request, res: Response) => {
     loginUserController.run(req, res);
 });
+
+router.get('/auth/google', (req: Request, res: Response) => {
+    googleAuthController.run(req, res);
+});
+  
+
+router.get('/auth/google/callback', passport.authenticate('google', { 
+    successRedirect: '/home',
+    failureRedirect: '/login' 
+}));
+
 
 router.post('/auth/logout', (req: Request, res: Response) => {
     logoutUserController.run(req, res);

@@ -5,19 +5,22 @@ import { Credential } from '../../../domain/entities/Credential';
 import { Status } from '../../../domain/entities/Status';
 import { UserProfile } from '../../../domain/entities/UserProfile';
 import UserImageModel from './UserImage';
+import UserCalendarModel from './UserCalendar';
 
 export class UserModel extends Model {
     public uuid!: string;  // Agregado
+    public googleId!: string;  // Agregado
     public contact!: Contact;  // Agregado
     public credential!: Credential;  // Agregado
     public status!: Status;  // Agregado
     public userProfile!: UserProfile;  // Agregado
     public firstname!: string;
     public lastname!: string;
+    public fullname!: string;
     public phone!: string;
     public email!: string;
     public password!: string;
-    public role!: string;
+    public role!: "CUSTOMER" | "SUPPLIER";
     public address!: string;
     public workexperience!: string;
     public standardprice!: number;
@@ -36,6 +39,10 @@ UserModel.init({
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
     },
+    googleId: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     firstname: { 
         type: DataTypes.STRING,
         allowNull: false,
@@ -43,6 +50,12 @@ UserModel.init({
     lastname: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    fullname:{
+        type: DataTypes.VIRTUAL,
+        get() {
+            return `${this.firstname} ${this.lastname}`;
+        },
     },
     phone: { 
         type: DataTypes.STRING,
@@ -59,7 +72,7 @@ UserModel.init({
         allowNull: false,
     },
     role: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('CUSTOMER', 'SUPPLIER'),
         allowNull: false,
     },
     address: {
@@ -116,8 +129,13 @@ UserModel.init({
     timestamps: true,
 });
 
-export const associateUserModel = () => {
+export const associateUserModelWithImages = () => {
     UserModel.hasMany(UserImageModel, { foreignKey: 'userUuid' });
 };
+
+export const associateUserModelWithCalendars = () => {
+    UserModel.hasMany(UserCalendarModel, { foreignKey: 'userUuid' });
+};
+
 
 export default UserModel;

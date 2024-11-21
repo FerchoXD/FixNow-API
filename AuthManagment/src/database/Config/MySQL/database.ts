@@ -1,13 +1,25 @@
-import { Sequelize } from 'sequelize';
+import { Dialect, Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize('ms-auth', 'auth', '0612583492761', {
-  host: '34.28.117.237',
-  dialect: 'mysql',
-  dialectOptions: {
-    ssl: {
-      rejectUnauthorized: false
+const dialectOptions = process.env.NODE_ENV === 'development'
+  ? {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
     }
+  : undefined;
+
+const sequelize = new Sequelize(
+  process.env.DB_NAME as string,
+  process.env.DB_USER as string,
+  process.env.DB_PASSWORD as string,
+  {
+    host: process.env.DB_HOST as string,
+    dialect: process.env.DB_DIALECT as Dialect,
+    port: parseInt(process.env.DB_PORT as string),
+    dialectOptions,
+    logging: console.log,
   }
-});
+);
 
 export default sequelize;

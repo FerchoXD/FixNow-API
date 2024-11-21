@@ -3,10 +3,49 @@ import { UserInterface } from "../../domain/repositories/UserInterface";
 import { UserModel } from "../models/MySQL/User";
 import bcrypt from "bcrypt";
 import { JWTService } from "../../application/JWT/JWTService";
-import UserImageModel from "../models/MySQL/UserImage";
+import UserImageModel from '../models/MySQL/UserImage';
+import { v4 as uuidv4 } from 'uuid';
 
 export class UserMySqlRepository implements UserInterface {
+    async authenticateWithGoogle(googleId: string, fullname: string, email: string, profileUrl: string,): Promise<User> {
+        return UserModel.findOrCreate({
+            where: { googleId },
+            defaults: {
+                uuid: uuidv4(),
+                fullname,
+                email,
+                googleId,
+                role: 'SUPPLIER',
+                verifiedAt: new Date()
+            }
+        }).then(([user, created]) => {
+            if (!created) {
+                user.fullname = fullname;
+                user.email = email;
+                user.verifiedAt = new Date();
+                return user.save();
+            }
+
+            UserImageModel.create({
+                userUuid: user.uuid,
+                images: profileUrl
+            });
+
+            return user;
+        }).then(user => user.toJSON());
+    }
     
+    async findByGoogleId(googleId: string): Promise<User | null> {
+        const user = await UserModel.findOne({ where: { googleId } });
+        return user ? user.toJSON() : null;
+      }
+    
+      async createUser(user: User): Promise<User> {
+        const createdUser = await UserModel.create(
+        );
+        return createdUser.toJSON();
+      }
+
     getFilters(data: any): Promise<User | any> {
         const filters: any = {
             role: 'supplier',
@@ -59,7 +98,7 @@ export class UserMySqlRepository implements UserInterface {
                 credential: {
                     email: user.email
                 },
-                ...(user.role === 'supplier' && {
+                ...(user.role === 'SUPPLIER' && {
                     userProfile: {
                         address: user.address,
                         workexperience: user.workexperience,
