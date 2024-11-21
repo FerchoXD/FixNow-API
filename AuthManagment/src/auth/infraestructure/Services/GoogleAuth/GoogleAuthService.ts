@@ -15,13 +15,14 @@ export class GoogleAuthService {
         console.log("googleToken desde service", googleToken);
         console.log("client id desde service", process.env.GOOGLE_CLIENT_ID);
         console.log("oauth2Client desde service", this.oauth2Client);
+        
       // Verificar el token de Google usando la API de Google
       try {
         const ticket = await this.oauth2Client.verifyIdToken({
           idToken: googleToken,
           audience: process.env.GOOGLE_CLIENT_ID,
         });
-        console.log("Ticket verificado:", ticket);
+        console.log("Ticket verificado:", ticket);  
       const payload = ticket.getPayload();
       const userId = payload?.sub;
       const email = payload?.email;
