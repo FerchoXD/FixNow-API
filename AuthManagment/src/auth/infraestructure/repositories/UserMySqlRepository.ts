@@ -8,6 +8,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class UserMySqlRepository implements UserInterface {
     async authenticateWithGoogle(googleId: string, fullname: string, email: string, profileUrl: string,): Promise<User> {
+        console.log('Google ID desde repo:', googleId);
+        console.log('Nombre desde repo:', fullname);
+        console.log('Correo desde repo:', email);
+        console.log('URL de perfil desde repo:', profileUrl);
         return UserModel.findOrCreate({
             where: { googleId },
             defaults: {
@@ -26,10 +30,15 @@ export class UserMySqlRepository implements UserInterface {
                 return user.save();
             }
 
-            UserImageModel.create({
-                userUuid: user.uuid,
-                images: profileUrl
+            UserImageModel.findOrCreate({
+                where: { userUuid: user.uuid },
+                defaults: {
+                    userUuid: user.uuid,
+                    images: profileUrl
+                }
             });
+
+            console.log('Usuario creado repo:', user);
 
             return user;
         }).then(user => user.toJSON());
@@ -124,6 +133,13 @@ export class UserMySqlRepository implements UserInterface {
 
     async getServices(uuid: string): Promise<any> {
         try {
+            if(!uuid || uuid === "undefined"){
+                return {
+                    status: 400,
+                    message: 'UUID no encontrado.'
+                }
+            }
+
             const user = await UserModel.findOne({ where: { uuid } });
             if (!user) {
                 return {
@@ -131,6 +147,14 @@ export class UserMySqlRepository implements UserInterface {
                     message: 'Usuario no encontrado.'
                 };
             }
+
+            if (user.role !== 'SUPPLIER') {
+                return {
+                    status: 403,
+                    message: 'No tienes permisos para acceder a este recurso.'
+                };
+            }
+
             return {
                 status: 200,
                 response: user.selectedservices

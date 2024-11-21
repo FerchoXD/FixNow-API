@@ -8,12 +8,15 @@ export class GoogleAuthController {
     try {
         const googleToken = req.query.token as string;
 
+        console.log("googleToken desde controller", googleToken);
+
         if (!googleToken) {
             return res.status(400).json({ error: 'Token de Google requerido' });
         }
 
         const user = await this.googleAuthService.authenticateWithToken(googleToken);
-      return res.status(200).json({ token: user.token });  // Responder con un nuevo token
+        console.log("user desde controller", user);
+      return res.status(200).json({ user });  // Responder con un nuevo token
     } catch (error) {
       if (error instanceof Error) {
         return res.status(500).json({ error: error.message });

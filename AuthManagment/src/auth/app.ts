@@ -21,7 +21,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/api/v1/users', userRouter);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
   console.log(`---Servidor corriendo en el puerto ${port}---`);
