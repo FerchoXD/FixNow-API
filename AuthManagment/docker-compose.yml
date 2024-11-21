@@ -8,9 +8,9 @@ services:
     volumes:
       - .:/app  # Monta el directorio actual dentro del contenedor
     ports:
-      - "3000:3000"  # Mapea el puerto 3000 del contenedor al puerto 3000 de tu máquina local
+      - "3001:3001"  # Mapea el puerto 3001 del contenedor al puerto 3001 de tu máquina local
     environment:
-      - PORT = 3000
+      - PORT = 3001
       - NODE_ENV=development  
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET} 
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
