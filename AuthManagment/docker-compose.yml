@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    image: node:20 
+    container_name: auth
+    working_dir: /app
+    volumes:
+      - .:/app  # Monta el directorio actual dentro del contenedor
+    ports:
+      - "3000:3000"  # Mapea el puerto 3000 del contenedor al puerto 3000 de tu máquina local
+    environment:
+      - PORT = 3000
+      - NODE_ENV=development  
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET} 
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
+      - GOOGLE_SECRET_SESSION=${GOOGLE_SECRET_SESSION}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION = ${JWT_EXPIRATION}
+      - DB_DIALECT = ${DB_DIALECT}
+      - DB_HOST = ${DB_HOST}
+      - DB_PORT = ${DB_PORT}
+      - DB_USER = ${DB_USER}
+      - DB_PASSWORD = ${DB_PASSWORD}
+      - DB_NAME = ${DB_NAME}
+      - RABBITMQ_URL = ${RABBITMQ_URL}
+      - EMAIL_USER = ${EMAIL_USER}
+      - EMAIL_PASSWORD_APPLICATION = ${EMAIL_PASSWORD_APPLICATION}
+      - EMAIL_SERVICE = ${EMAIL_SERVICE}
+      - EMAIL_PORT = ${EMAIL_PORT}
+      - EMAIL_HOST = ${EMAIL_HOST}
+      - EMAIL_FROM = ${EMAIL_FROM}
+      - BUCKET_NAME = ${BUCKET_NAME}
+      - BUCKET_REGION = ${BUCKET_REGION}
+      - GOOGLE_APPLICATION_CREDENTIALS = ${GOOGLE_APPLICATION_CREDENTIALS}
+    command: npm run dev
+    restart: always
+    networks:
+      - fixnow-network
+
+networks:
+  fixnow-network:
+    driver: bridge
