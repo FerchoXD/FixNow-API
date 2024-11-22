@@ -1,52 +1,51 @@
-import { OAuth2Client } from 'google-auth-library'; // Biblioteca para validar el token de Google
+import { OAuth2Client } from 'google-auth-library';
 import { GoogleAuthUseCase } from '../../../application/usecases/GoogleAuthUseCase';
 import { JWTService } from '../../../application/JWT/JWTService';
 
 export class GoogleAuthService {
-  constructor(private googleAuthUseCase: GoogleAuthUseCase) {}
-
   private oauth2Client = new OAuth2Client(
-      process.env.GOOGLE_CLIENT_ID,
-      process.env.GOOGLE_CLIENT_SECRET,
-    );
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+  );
+
+  constructor(private googleAuthUseCase: GoogleAuthUseCase) {}
 
   public async authenticateWithToken(googleToken: string): Promise<any> {
     try {
-        console.log("googleToken desde service", googleToken);
-        console.log("client id desde service", process.env.GOOGLE_CLIENT_ID);
-        console.log("oauth2Client desde service", this.oauth2Client);
-        
-      // Verificar el token de Google usando la API de Google
-      try {
-        const ticket = await this.oauth2Client.verifyIdToken({
-          idToken: googleToken,
-          audience: process.env.GOOGLE_CLIENT_ID,
-        });
-        console.log("Ticket verificado:", ticket);  
+      console.log('Token recibido en el backend:', googleToken);
+
+      // Verifica el token usando Google Auth
+      const ticket = await this.oauth2Client.verifyIdToken({
+        idToken: googleToken,
+        audience: process.env.GOOGLE_CLIENT_ID, // Coincide con el cliente configurado
+      });
+
       const payload = ticket.getPayload();
-      const userId = payload?.sub;
-      const email = payload?.email;
-      const name = payload?.name;
-      const picture = payload?.picture;
+      if (!payload) {
+        throw new Error('No se pudo obtener información del token');
+      }
 
-      console.log("payload desde service", payload);
+      console.log('Payload de Google:', payload);
 
-      // Buscar al usuario en tu base de datos o crear uno nuevo
-      const user = await this.googleAuthUseCase.authenticateWithGoogle(userId, name, email, picture);
+      const { sub: userId, email, name, picture } = payload;
 
-      console.log("user desde service", user);
-      // Crear un nuevo JWT o cualquier otro tipo de token que tu sistema use
-      const newToken = JWTService.generateToken(user.id,user.email);  // Función que generas para crear un nuevo token
-      console.log("newToken desde service", newToken);
+      // Autentica o registra al usuario en tu base de datos
+      const user = await this.googleAuthUseCase.authenticateWithGoogle(
+        userId,
+        name,
+        email,
+        picture,
+      );
 
-      return { token: newToken }; 
+      // Genera un token JWT propio para el usuario
+      const newToken = JWTService.generateToken(user.id, user.email);
+
+      console.log('Token generado por el sistema:', newToken);
+
+      return { token: newToken };
     } catch (error) {
-      console.error("Error verificando el token:", (error as any).message || error);
-      throw new Error("No se pudo autenticar el token de Google");
-    }
-    } catch (error) {
+      console.error('Error autenticando el token de Google:', (error as any).message || error);
       throw new Error('Token de Google inválido');
     }
   }
 }
-
