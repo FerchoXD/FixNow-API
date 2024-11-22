@@ -6,7 +6,7 @@ export class GoogleAuthController {
 
   public async run(req: Request, res: Response) {
     try {
-        const googleToken = req.body.token as string;
+        const googleToken = req.query.token as string;
 
         console.log("googleToken desde controller", googleToken);
 

@@ -29,7 +29,7 @@ router.post('/auth/login', (req: Request, res: Response) => {
 });
 
 router.get('/auth/google', (req: Request, res: Response) => {
-    console.log("ruta auth/google", req.body.token);
+    console.log("ruta auth/google", req.query.token);
     googleAuthController.run(req, res);
 });
   
