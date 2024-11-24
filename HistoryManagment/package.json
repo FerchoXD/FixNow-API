@@ -1,0 +1,31 @@
+{
+  "name": "historymanagment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/history/app.ts --host=0.0.0.0 --port=3002",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/amqplib": "^0.10.5",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.9.1",
+    "@types/sequelize": "^4.28.20",
+    "@types/uuid": "^10.0.0",
+    "amqplib": "^0.10.4",
+    "class-validator": "^0.14.1",
+    "mysql2": "^3.11.4",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
+    "uuid": "^11.0.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "sequelize": "^6.37.5"
+  }
+}

@@ -5,8 +5,32 @@ import bcrypt from "bcrypt";
 import { JWTService } from "../../application/JWT/JWTService";
 import UserImageModel from '../models/MySQL/UserImage';
 import { v4 as uuidv4 } from 'uuid';
+import CustomError from "../../application/errors/CustomError";
 
 export class UserMySqlRepository implements UserInterface {
+    async rabbitHistory(uuid: string): Promise<any> {
+        console.log('UUID:', uuid);
+    
+        // Buscar historial del usuario en la base de datos
+        const history = await UserModel.findOne({ where: { uuid } });
+    
+        // Si no se encuentra el historial, lanzar un error
+        if (!history) {
+            throw new CustomError('Historial de provedor no encontrado.', 404);  // 404 Not Found
+        }
+    
+        // Si la cuenta no está activada, lanzar un error
+        if (!history.verifiedAt) {
+            throw new CustomError('La cuenta no está activada.', 400);  // 400 Bad Request
+        }
+    
+        console.log('Historial:', typeof(history.fullname));
+        console.log('Historial:', history.fullname);
+
+        return history.fullname;
+    }
+    
+    
     async authenticateWithGoogle(googleId: string, fullname: string, email: string, profileUrl: string,): Promise<User> {
         console.log('Google ID desde repo:', googleId);
         console.log('Nombre desde repo:', fullname);
@@ -213,6 +237,7 @@ export class UserMySqlRepository implements UserInterface {
                 id: user.uuid,
                 firstname: user.contact.firstname,
                 lastname: user.contact.lastname,
+                fullname: user.contact.firstname + ' ' + user.contact.lastname,
                 phone: user.contact.phone,
                 email: user.credential.email,
                 password: user.credential.password,

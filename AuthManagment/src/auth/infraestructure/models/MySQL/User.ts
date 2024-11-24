@@ -52,10 +52,8 @@ UserModel.init({
         allowNull: false,
     },
     fullname:{
-        type: DataTypes.VIRTUAL,
-        get() {
-            return `${this.firstname} ${this.lastname}`;
-        },
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     phone: { 
         type: DataTypes.STRING,

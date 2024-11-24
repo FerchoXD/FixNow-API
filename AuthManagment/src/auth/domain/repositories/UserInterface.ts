@@ -12,4 +12,5 @@ export interface UserInterface {
     authenticateWithGoogle(googleId: string, name: string, email: string, profileUrl: string): Promise<User>;
     findByGoogleId(googleId: string): Promise<User | null>;
     createUser(user: User): Promise<User>;
+    rabbitHistory(uuid: string): Promise<any>;
 }

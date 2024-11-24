@@ -24,10 +24,32 @@ import { GetFiltersController } from "./controllers/GetFiltersController";
 import { GoogleAuthController } from "./controllers/GoogleAuthController";
 import { GoogleAuthUseCase } from "../application/usecases/GoogleAuthUseCase";
 import { GoogleAuthService } from "./Services/GoogleAuth/GoogleAuthService";
+import { ConsumerHistory } from "./Services/rabbitmq/consumer/HistoryConsumer";
+import { RabbitMQHistoryUseCase } from "../application/usecases/RabbitmqHistoryUseCase";
 
 const mysqlRepository = new UserMySqlRepository();
 const googleAuthService = new GoogleAuthService( new GoogleAuthUseCase(mysqlRepository) );
 const databaseConfig = new MySQLConfig();
+const consumerHistory = new ConsumerHistory();
+
+
+export async function init() {
+  try {
+    // Inicializar RabbitMQ Consumer
+    await consumerHistory.setup();
+    await consumerHistory.consume(async (data: any) => {
+      console.log('Datos recibidos:', data);
+    });
+    console.log('RabbitMQ Consumer está listo');
+  } catch (error) {
+    console.error('Error al configurar las dependencias:', error);
+  }
+}
+
+// Si se necesita acceder al consumerHistory desde otra parte del código
+function getConsumerHistory() {
+  return consumerHistory;
+}
 
 function getDatabaseConfig(currentRepository: any): DatabaseConfig {
   if (currentRepository instanceof UserMySqlRepository) {
@@ -45,6 +67,7 @@ const getServicesUseCase = new GetServicesUseCase(mysqlRepository);
 const searchSupplierUseCase = new SearchSupplierUseCase();
 const getProfileUseCase = new GetProfileUseCase(mysqlRepository);
 const getFiltersUseCase = new GetFiltersUseCase(mysqlRepository);
+const rabbitmqHistoryUsecase = new RabbitMQHistoryUseCase(mysqlRepository);
 
 const registerUserController = new RegisterUserController(registerUserUseCase, new EmailService());
 const activateUserController = new ActivateUserController(activateUserUseCase);
@@ -62,6 +85,7 @@ dbConfig.initialize().then(() => {
   console.log('Database initialized.');
 });
 
+
 export { 
   registerUserController, 
   activateUserController, 
@@ -72,5 +96,6 @@ export {
   searchSupplierController,
   getProfileController,
   getFiltersController,
-  googleAuthController
+  googleAuthController,
+  rabbitmqHistoryUsecase
   };
