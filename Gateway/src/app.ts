@@ -15,9 +15,9 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 const SERVICES = {
-    AUTH: process.env.AUTH_URL || 'http://127.0.0.1:3001',
-    HISTORY: process.env.HISTORY_URL || 'http://127.0.0.1:3002',
-    FORUM: process.env.FORUM_URL || 'http://127.0.0.1:3003',
+    AUTH: process.env.AUTH_URL || 'http://auth:3001',
+    HISTORY: process.env.HISTORY_URL || 'http://history:3002',
+    FORUM: process.env.FORUM_URL || 'http://forum:3003',
 };
 
 

@@ -6,6 +6,13 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+
+    environment:
+      - AUTH_URL=http://auth:3001
+      - HISTORY_URL=http://history:3002
+      - FORUM_URL=http://forum:3003
+
+      
     depends_on:
       - auth
       - history
