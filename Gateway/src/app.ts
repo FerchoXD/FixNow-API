@@ -17,6 +17,7 @@ const DNS = process.env.DNS;
 
 app.use('/api/v1/auth', proxy('http://127.0.0.1:3001'));
 app.use('/api/v1/history',proxy('http://127.0.0.1:3002'));
+app.use('/api/v1/forum',proxy('http://127.0.0.1:3003'));
 
 app.listen(PORT,() => {
     signale.success(`SERVER RUNNING IN http://localhost:3000`);
