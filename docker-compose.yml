@@ -2,10 +2,10 @@ version: '3.8'
 services:
   gateway:
     build:
-      context: ./gateway
+      context: ./Gateway
       dockerfile: Dockerfile
     ports:
-      - "3000:3000" # Gateway expuesto en el puerto 3000
+      - "3000:3000"
     depends_on:
       - auth
       - history
@@ -15,21 +15,21 @@ services:
 
   auth:
     build:
-      context: ./auth
+      context: ./AuthManagment
       dockerfile: Dockerfile
     networks:
       - red_fixnow
 
   history:
     build:
-      context: ./history
+      context: ./HistoryManagment
       dockerfile: Dockerfile
     networks:
       - red_fixnow
 
   forum:
     build:
-      context: ./forum
+      context: ./ForumManagment
       dockerfile: Dockerfile
     networks:
       - red_fixnow
