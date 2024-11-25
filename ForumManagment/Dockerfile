@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+RUN npm install -g typescript
+
 RUN npm run build
 
 EXPOSE 3003
