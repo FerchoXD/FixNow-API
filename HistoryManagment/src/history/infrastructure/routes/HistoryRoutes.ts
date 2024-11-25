@@ -9,7 +9,7 @@ router.post('/create/service', (req: Request, res: Response) => {
     createServiceHistoryController.run(res, req);
 });
 
-router.post('/history/supplier', (req: Request, res: Response) => {
+router.post('/get/history', (req: Request, res: Response) => {
     console.log(req.body);
     createSupplierHistoryController.run(req, res);
 });

@@ -7,20 +7,28 @@ export class SaveProfileDataController {
     private saveProfileDataUseCase: SaveProfileDataUseCase;
 
     constructor() {
-        const imageStorageService = new ImageStorageService(); // Corregimos la creación de la instancia de ImageStorageService
+        const imageStorageService = new ImageStorageService();
         const userRepository = new UserMySqlRepository();
         this.saveProfileDataUseCase = new SaveProfileDataUseCase(userRepository, imageStorageService);
     }
 
-    // Controlador para manejar la actualización del perfil
     async saveProfileData(req: Request, res: Response): Promise<void> {
         try {
-            //console.log(req.body);
-            const { uuid, profileData, images } = req.body;  // Asegúrate de que el cuerpo tiene estos datos
-            const user = await this.saveProfileDataUseCase.run(uuid, profileData, images);
-            res.status(200).json(user);  // Retornamos el usuario actualizado
+            const { uuid, profileData, images } = req.body;
+    
+            // Asegúrate de que imagesToUpdate sea un arreglo, incluso si no hay imágenes
+            const imagesToUpdate: string[] = Array.isArray(images) ? images : [];
+    
+            const user = await this.saveProfileDataUseCase.run(uuid, profileData, imagesToUpdate); 
+            res.status(200).json(user); // Retornamos el usuario actualizado
         } catch (error) {
-            res.status(500).json({ error: error });  // Manejamos errores
+            console.error('Error al guardar los datos del perfil:', error);
+            if (error instanceof Error) {
+                res.status(500).json({ error: error.message }); // Manejamos errores
+            } else {
+                res.status(500).json({ error: 'Unknown error' }); // Manejamos errores
+            }
         }
     }
+    
 }

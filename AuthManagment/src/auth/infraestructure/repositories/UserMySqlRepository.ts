@@ -194,42 +194,54 @@ export class UserMySqlRepository implements UserInterface {
     
     async profileData(uuid: string, profileData: any, imageUrls: string[]): Promise<any> {
         try {
-            console.log('profileData:', uuid, profileData, imageUrls);
             // Buscar el usuario
             const user = await UserModel.findOne({ where: { uuid } });
             if (!user) {
                 throw new Error('Usuario no encontrado.');
             }
-
+    
             // Actualizar datos del perfil en el usuario
-            await user.update(profileData);
-
+            await this.updateUserProfile(user, profileData);
+    
             // Si hay nuevas URLs de imágenes, actualizar las imágenes en UserImageModel
-            
-            // Eliminar imágenes antiguas
-            await UserImageModel.destroy({ where: { userUuid: uuid } });
-
-
-            console.log('User uuid:', uuid);
-            console.log('Image urls:', imageUrls);
-            // Guardar las nuevas imágenes
-            for (const url of imageUrls) {
-                console.log('URL:', url);
-                console.log('UUID:', uuid);
-                console.log("imageUrls:", imageUrls);
-                await UserImageModel.create({
-                    userUuid: uuid,
-                    images: url,  // Guardar cada URL en una fila separada
-                });
+            if (imageUrls && imageUrls.length > 0) {
+                await this.updateUserImages(uuid, imageUrls);
             }
-            
-
+    
             return user; 
         } catch (error) {
             console.error('Error actualizando el perfil:', error);
             throw error;
         }
     }
+    
+    private async updateUserProfile(user: any, profileData: any): Promise<void> {
+        try {
+            await user.update(profileData);
+        } catch (error) {
+            console.error('Error actualizando los datos del usuario:', error);
+            throw new Error('No se pudo actualizar el perfil del usuario.');
+        }
+    }
+    
+    async updateUserImages(uuid: string, imageUrls: string[]): Promise<void> {
+        try {
+            // Eliminar imágenes antiguas
+            await UserImageModel.destroy({ where: { userUuid: uuid } });
+    
+            // Guardar las nuevas imágenes
+            for (const url of imageUrls) {
+                await UserImageModel.create({
+                    userUuid: uuid,
+                    images: url, // Guardar cada URL en una fila separada
+                });
+            }
+        } catch (error) {
+            console.error('Error actualizando las imágenes del usuario:', error);
+            throw new Error('No se pudo actualizar las imágenes del usuario.');
+        }
+    }
+    
 
     async save(user: User): Promise<any> {
         try {

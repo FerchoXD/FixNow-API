@@ -5,6 +5,8 @@ export class CreateServiceHistoryController {
     constructor(readonly useCase: CreateServiceHistoryUseCase) { }
 
     async run(res: Response, req: Request): Promise<any> {
+
+        console.log(req.body);
         const {userUuid,title, description, agreedPrice, agreedDate } = req.body;
         if (!title || !description || !agreedPrice || !agreedDate) {
             return res.status(400).send({
