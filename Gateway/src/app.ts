@@ -15,9 +15,9 @@ const PORT = process.env.PORT || 3000;
 const IPA = process.env.IPA || 'localhost';
 const DNS = process.env.DNS;
 
-app.use('/api/v1/auth', proxy('http://127.0.0.1:3001'));
-app.use('/api/v1/history',proxy('http://127.0.0.1:3002'));
-app.use('/api/v1/forum',proxy('http://127.0.0.1:3003'));
+app.use('/api/v1/auth', proxy({ target: 'http://auth:3000', changeOrigin: true }));
+app.use('/api/v1/history', proxy({ target: 'http://history:3000', changeOrigin: true }));
+app.use('/api/v1/forum', proxy({ target: 'http://forum:3000', changeOrigin: true }));
 
 app.listen(PORT,() => {
     signale.success(`SERVER RUNNING IN http://localhost:3000`);
