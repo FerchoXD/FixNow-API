@@ -12,7 +12,6 @@
   }
 
 init();
-
   const app = express();
   app.use(session({
     secret: process.env.GOOGLE_SECRET_SESSION as string,
@@ -20,12 +19,12 @@ init();
     saveUninitialized: false,
   }));
   app.use(express.json());
-  app.use(passport.initialize());
+app.use(passport.initialize());
   app.use(passport.session());
   app.use('/', userRouter);
-
+  
   const port = process.env.PORT || 3001;
-
+  
   app.listen(port, () => {
     console.log(`---Servidor corriendo en el puerto ${port}---`);
   });

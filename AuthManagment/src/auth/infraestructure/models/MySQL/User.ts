@@ -128,11 +128,11 @@ UserModel.init({
 });
 
 export const associateUserModelWithImages = () => {
-    UserModel.hasMany(UserImageModel, { foreignKey: 'userUuid' });
+    UserModel.hasMany(UserImageModel, { foreignKey: 'userUuid', as: 'images' });
 };
 
 export const associateUserModelWithCalendars = () => {
-    UserModel.hasMany(UserCalendarModel, { foreignKey: 'userUuid' });
+    UserModel.hasMany(UserCalendarModel, { foreignKey: 'userUuid', as: 'calendar' });
 };
 
 

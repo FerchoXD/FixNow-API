@@ -14,12 +14,13 @@ export class SaveProfileDataController {
 
     async saveProfileData(req: Request, res: Response): Promise<void> {
         try {
-            const { uuid, profileData, images } = req.body;
-    
-            // Asegúrate de que imagesToUpdate sea un arreglo, incluso si no hay imágenes
+            const { uuid, profileData, images, calendar } = req.body;
+            
+            const calendarToUpdate: string[] = Array.isArray(calendar) ? calendar : [];
+
             const imagesToUpdate: string[] = Array.isArray(images) ? images : [];
     
-            const user = await this.saveProfileDataUseCase.run(uuid, profileData, imagesToUpdate); 
+            const user = await this.saveProfileDataUseCase.run(uuid, profileData, imagesToUpdate, calendarToUpdate); 
             res.status(200).json(user); // Retornamos el usuario actualizado
         } catch (error) {
             console.error('Error al guardar los datos del perfil:', error);

@@ -5,7 +5,7 @@ export interface UserInterface {
     update(token:string): Promise<User|any>;
     login(email:string, password:string):Promise<User|any>;
     logout(email:string):Promise<any|void>;
-    profileData(uuid: any, profileData:any,imageUrls: string[]):Promise<User|any>;
+    profileData(uuid: any, profileData:any,imageUrls: string[], calendar: any[]):Promise<User|any>;
     updateUserImages(uuid: string, images: string[]): Promise<any>;
     getServices(uuid:string):Promise<User|any>;
     findProfileById(uuid: string):Promise<User|any>;
@@ -14,4 +14,6 @@ export interface UserInterface {
     findByGoogleId(googleId: string): Promise<User | null>;
     createUser(user: User): Promise<User>;
     rabbitHistory(uuid: string): Promise<any>;
+    findRelevantSuppliers(keyPhrases:string[]): Promise<User[]>;
+    getData(uuid: string): Promise<User>;
 }

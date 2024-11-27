@@ -8,9 +8,9 @@ export class SaveProfileDataUseCase {
         private readonly imageStorageService: ImageStorageService
     ) {}
 
-    async run(uuid: string, profileData: any, images: string[]): Promise<any> {
+    async run(uuid: string, profileData: any, images: string[], calendar: any[]): Promise<any> {
 
-        const response = await this.repository.profileData(uuid, profileData,images);
+        const response = await this.repository.profileData(uuid, profileData,images, calendar);
 
 
         if (images && images.length > 0) {

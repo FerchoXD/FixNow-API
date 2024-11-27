@@ -6,8 +6,58 @@ import { JWTService } from "../../application/JWT/JWTService";
 import UserImageModel from '../models/MySQL/UserImage';
 import { v4 as uuidv4 } from 'uuid';
 import CustomError from "../../application/errors/CustomError";
+import UserCalendarModel from '../models/MySQL/UserCalendar';
+import { Op, Sequelize } from 'sequelize';
 
 export class UserMySqlRepository implements UserInterface {
+
+    async getData(userUuuid: string): Promise<any> {
+        try {
+
+            console.log('UUID:', userUuuid);
+            const response = await UserModel.findOne({ where: { uuid: userUuuid } });
+
+            console.log('Usuario:', response);
+
+            if (!response) {
+                return {
+                    status: 404,
+                    message: 'Usuario no encontrado.'
+                };
+            }
+
+            return {
+                status: 200,
+                response: response
+            };
+        } catch (error) {
+            console.error('Error al obtener los datos del usuario:', error);
+            throw new Error('No se pudo obtener los datos del usuario.');
+        }
+    }
+    
+    async findRelevantSuppliers(keyPhrases: string[]): Promise<UserModel[]> {
+        try {
+            const suppliers = await UserModel.findAll({
+                where: {
+                    role: 'SUPPLIER', // Filtrar solo usuarios con rol SUPPLIER
+                    [Op.or]: keyPhrases.map((phrase) => {
+                        return Sequelize.where(
+                            Sequelize.fn('JSON_CONTAINS', Sequelize.col('selectedservices'), JSON.stringify(phrase)),
+                            true
+                        );
+                    }),
+                },
+                order: [['relevance', 'DESC']], // Ordenar por relevancia descendente
+            });
+
+            return suppliers;
+        } catch (error) {
+            console.error('Error buscando proveedores relevantes:', error);
+            throw new Error('No se pudo buscar proveedores relevantes.');
+        }
+    }
+
     async rabbitHistory(uuid: string): Promise<any> {
         console.log('UUID:', uuid);
     
@@ -192,7 +242,7 @@ export class UserMySqlRepository implements UserInterface {
         }
     }
     
-    async profileData(uuid: string, profileData: any, imageUrls: string[]): Promise<any> {
+    async profileData(uuid: string, profileData: any, imageUrls: string[], calendar: any[]): Promise<any> {
         try {
             // Buscar el usuario
             const user = await UserModel.findOne({ where: { uuid } });
@@ -203,17 +253,61 @@ export class UserMySqlRepository implements UserInterface {
             // Actualizar datos del perfil en el usuario
             await this.updateUserProfile(user, profileData);
     
+            // Actualizar el calendario si se pasa un nuevo calendario
+            if (calendar && calendar.length > 0) {
+                await this.updateUserCalendar(uuid, calendar);
+            }
+    
             // Si hay nuevas URLs de imágenes, actualizar las imágenes en UserImageModel
             if (imageUrls && imageUrls.length > 0) {
                 await this.updateUserImages(uuid, imageUrls);
             }
     
-            return user; 
+            // Recuperar los datos actualizados del usuario
+            const updatedUser = await UserModel.findOne({
+                where: { uuid },
+                include: [
+                    { model: UserImageModel, as: 'images', required: false }, // Incluye imágenes del usuario
+                    { model: UserCalendarModel, as: 'calendar', required: false } // Incluye calendario del usuario
+                ]
+            });
+    
+            if (!updatedUser) {
+                throw new Error('No se pudo recuperar el usuario actualizado.');
+            }
+    
+            // Devolver los datos actualizados (usuario, calendario, imágenes)
+            return {
+                data: updatedUser,
+            };
         } catch (error) {
             console.error('Error actualizando el perfil:', error);
             throw error;
         }
     }
+    
+
+    async updateUserCalendar(uuid: string, calendar: any[]): Promise<void> {
+        try {
+            // Eliminar el calendario existente para este usuario
+            await UserCalendarModel.destroy({ where: { userUuid : uuid } });
+    
+            const calendarEntries = calendar.map((day) => ({
+                uuid: uuidv4(),
+                userUuid:uuid,
+                day: day.day, 
+                active: day.activo, 
+                start: day.inicio, 
+                end: day.fin, 
+            }));
+    
+            await UserCalendarModel.bulkCreate(calendarEntries);
+        } catch (error) {
+            console.error('Error actualizando el calendario del usuario:', error);
+            throw new Error('No se pudo actualizar el calendario del usuario.');
+        }
+    }
+    
     
     private async updateUserProfile(user: any, profileData: any): Promise<void> {
         try {
@@ -342,7 +436,8 @@ export class UserMySqlRepository implements UserInterface {
             return {
                 status: 200,
                 message: 'Inicio de sesión exitoso.',
-                token: token
+                token: token,
+                uuid: user.uuid
             };
     
         } catch (error) {

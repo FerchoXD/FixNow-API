@@ -27,19 +27,19 @@ UserCalendarModel.init({
         },
     },
     day: {
-        type: DataTypes.STRING,
-        allowNull: true,
+        type: DataTypes.STRING, // Ejemplo: "Lunes"
+        allowNull: false,
     },
-    isWorking: {
+    active: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
+    },
+    start: {
+        type: DataTypes.TIME,
         allowNull: true,
     },
-    start_time: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    end_time: {
-        type: DataTypes.STRING,
+    end: {
+        type: DataTypes.TIME,
         allowNull: true,
     },
 }, {

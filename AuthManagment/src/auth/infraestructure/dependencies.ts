@@ -26,11 +26,19 @@ import { GoogleAuthUseCase } from "../application/usecases/GoogleAuthUseCase";
 import { GoogleAuthService } from "./Services/GoogleAuth/GoogleAuthService";
 import { ConsumerHistory } from "./Services/rabbitmq/consumer/HistoryConsumer";
 import { RabbitMQHistoryUseCase } from "../application/usecases/RabbitmqHistoryUseCase";
+import { SearchSuppliersController } from "./controllers/SearchSuppliersController";
+import { SearchSuppliersUseCase } from "../application/usecases/SearchSuppliersUseCase";
+import { AnalyzePrompt } from './Services/aws/AnalyzePrompt';
+import { ConsumerPayment } from "./Services/rabbitmq/consumer/PaymentConsumer";
+import { GetDataUserController } from "./controllers/GetDataUserController";
+import { GetDataUserUseCase } from "../application/usecases/GetDataUserUseCase";
 
 const mysqlRepository = new UserMySqlRepository();
 const googleAuthService = new GoogleAuthService( new GoogleAuthUseCase(mysqlRepository) );
 const databaseConfig = new MySQLConfig();
 const consumerHistory = new ConsumerHistory();
+const consumerPayment = new ConsumerPayment();
+const analyzePrompt = new AnalyzePrompt();
 
 
 export async function init() {
@@ -38,17 +46,16 @@ export async function init() {
     // Inicializar RabbitMQ Consumer
     await consumerHistory.setup();
     await consumerHistory.consume(async (data: any) => {
-      console.log('Datos recibidos:', data);
+      console.log('Datos recibidos de historial:', data);
+    });
+    await consumerPayment.setup();
+    await consumerPayment.consume(async (data: any) => {
+      console.log('Datos recibidos de pagos:', data);
     });
     console.log('RabbitMQ Consumer está listo');
   } catch (error) {
     console.error('Error al configurar las dependencias:', error);
   }
-}
-
-// Si se necesita acceder al consumerHistory desde otra parte del código
-function getConsumerHistory() {
-  return consumerHistory;
 }
 
 function getDatabaseConfig(currentRepository: any): DatabaseConfig {
@@ -68,6 +75,8 @@ const searchSupplierUseCase = new SearchSupplierUseCase();
 const getProfileUseCase = new GetProfileUseCase(mysqlRepository);
 const getFiltersUseCase = new GetFiltersUseCase(mysqlRepository);
 const rabbitmqHistoryUsecase = new RabbitMQHistoryUseCase(mysqlRepository);
+const searchSuppliersUseCase = new SearchSuppliersUseCase(mysqlRepository, analyzePrompt);
+const getDataUserUseCase = new GetDataUserUseCase(mysqlRepository);
 
 const registerUserController = new RegisterUserController(registerUserUseCase, new EmailService());
 const activateUserController = new ActivateUserController(activateUserUseCase);
@@ -79,6 +88,8 @@ const searchSupplierController = new SearchSupplierController(searchSupplierUseC
 const getProfileController = new GetProfileController(getProfileUseCase);
 const getFiltersController = new GetFiltersController(getFiltersUseCase);
 const googleAuthController = new GoogleAuthController(googleAuthService);
+const searchSuppliersController = new SearchSuppliersController(searchSuppliersUseCase);
+const getDataUserController = new GetDataUserController(getDataUserUseCase);
 
 const dbConfig = getDatabaseConfig(mysqlRepository);
 dbConfig.initialize().then(() => {
@@ -97,5 +108,7 @@ export {
   getProfileController,
   getFiltersController,
   googleAuthController,
-  rabbitmqHistoryUsecase
+  rabbitmqHistoryUsecase,
+  searchSuppliersController,
+  getDataUserController
   };
