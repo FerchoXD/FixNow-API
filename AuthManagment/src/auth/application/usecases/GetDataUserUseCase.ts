@@ -3,8 +3,11 @@ import { UserInterface } from "../../domain/repositories/UserInterface";
 export class GetDataUserUseCase {
     constructor(readonly repository: UserInterface) { }
 
-    async execute(userUuid: string): Promise<any> {
-
-        return await this.repository.getData(userUuid);
+    async execute(userId: string) {
+        const user = await this.repository.findProfileById(userId);
+        if (!user) {
+            throw new Error('Usuario no encontrado');
+        }
+        return user;
     }
 }

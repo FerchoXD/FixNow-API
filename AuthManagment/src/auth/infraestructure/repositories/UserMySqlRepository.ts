@@ -10,32 +10,7 @@ import UserCalendarModel from '../models/MySQL/UserCalendar';
 import { Op, Sequelize } from 'sequelize';
 
 export class UserMySqlRepository implements UserInterface {
-
-    async getData(userUuuid: string): Promise<any> {
-        try {
-
-            console.log('UUID:', userUuuid);
-            const response = await UserModel.findOne({ where: { uuid: userUuuid } });
-
-            console.log('Usuario:', response);
-
-            if (!response) {
-                return {
-                    status: 404,
-                    message: 'Usuario no encontrado.'
-                };
-            }
-
-            return {
-                status: 200,
-                response: response
-            };
-        } catch (error) {
-            console.error('Error al obtener los datos del usuario:', error);
-            throw new Error('No se pudo obtener los datos del usuario.');
-        }
-    }
-    
+   
     async findRelevantSuppliers(keyPhrases: string[]): Promise<UserModel[]> {
         try {
             const suppliers = await UserModel.findAll({
@@ -157,11 +132,8 @@ export class UserMySqlRepository implements UserInterface {
 
     async findProfileById(uuid: string): Promise<User | any> {
         try {
-            console.log('Buscand:', uuid);
-            const user = await UserModel.findOne({
-                where: { uuid },
-                //include: [{ model: UserImageModel, as: 'images' }]
-            });
+            
+            const user = await UserModel.findOne({ where: { uuid: uuid } });
 
             if (!user) {
                 return {
@@ -170,31 +142,31 @@ export class UserMySqlRepository implements UserInterface {
                 };
             }
 
-            const data = {
-                uuid: user.uuid,
-                contact: {
-                    firstname: user.firstname,
-                    lastname: user.lastname,
-                    phone: user.phone,
-                    role: user.role
-                },
-                credential: {
-                    email: user.email
-                },
-                ...(user.role === 'SUPPLIER' && {
-                    userProfile: {
-                        address: user.address,
-                        workexperience: user.workexperience,
-                        standardprice: user.standardprice,
-                        hourlyrate: user.hourlyrate,
-                        selectedservices: user.selectedservices
-                    }
-                })
-            };
+            // const data = {
+            //     uuid: user.uuid,
+            //     contact: {
+            //         firstname: user.firstname,
+            //         lastname: user.lastname,
+            //         phone: user.phone,
+            //         role: user.role
+            //     },
+            //     credential: {
+            //         email: user.email
+            //     },
+            //     ...(user.role === 'SUPPLIER' && {
+            //         userProfile: {
+            //             address: user.address,
+            //             workexperience: user.workexperience,
+            //             standardprice: user.standardprice,
+            //             hourlyrate: user.hourlyrate,
+            //             selectedservices: user.selectedservices
+            //         }
+            //     })
+            // };
 
             return {
                 status: 200,
-                data: data
+                data: user
             };
         } catch (error) {
             console.error('Error al obtener el perfil del cliente:', error);

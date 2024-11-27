@@ -15,5 +15,5 @@ export interface UserInterface {
     createUser(user: User): Promise<User>;
     rabbitHistory(uuid: string): Promise<any>;
     findRelevantSuppliers(keyPhrases:string[]): Promise<User[]>;
-    getData(uuid: string): Promise<User>;
+    // getData(): Promise<User>;
 }
