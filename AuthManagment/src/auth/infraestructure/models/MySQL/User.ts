@@ -104,7 +104,7 @@ UserModel.init({
         defaultValue: 0,
     },
     relevance: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: true,
         defaultValue: 0,
     },

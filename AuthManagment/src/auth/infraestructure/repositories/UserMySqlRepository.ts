@@ -8,8 +8,59 @@ import { v4 as uuidv4 } from 'uuid';
 import CustomError from "../../application/errors/CustomError";
 import UserCalendarModel from '../models/MySQL/UserCalendar';
 import { Op, Sequelize } from 'sequelize';
+import passport from 'passport';
 
 export class UserMySqlRepository implements UserInterface {
+
+    async rabbitRaiting(userUuid: any, polaridad :any): Promise<any> {
+        console.log('Datos recibidos de pagos:', userUuid);
+        console.log('Datos recibidos de pagos:', polaridad );
+        
+        await UserModel.update({ relevance: polaridad }, { where: { uuid: userUuid } });
+
+        const userdata = await UserModel.findOne({ 
+            where: { uuid: userUuid },
+            attributes:['fullname']
+        });
+        console.log('Datos recibidos de pagos:', userdata?.dataValues.fullname);
+
+        return {
+            status: 200,
+            message: 'Usuario actualizado.',
+            data: userdata?.dataValues.fullname
+        };
+    }
+
+
+    async rabbitPayment(data: any): Promise<any> {
+
+        console.log('Datos recibidos de pagos:', data);
+        
+        const payment = await UserModel.findOne({ 
+            where: { uuid: data, role: 'SUPPLIER'},
+            attributes: ['uuid', 'firstname','lastname', 'email', 'phone', 'role', ]
+        });
+
+        if (payment?.verifiedAt === null) {
+            return {
+                status: 403,
+                message: 'Usuario no verificado.'
+            };
+        }
+
+        if (!payment) {
+            return {
+                status: 404,
+                message: 'Usuario no encontrado.'
+            };
+        }
+
+        return {
+            status: 200,
+            data: payment
+        };
+
+    }
 
     async getData(userUuuid: string): Promise<any> {
         try {

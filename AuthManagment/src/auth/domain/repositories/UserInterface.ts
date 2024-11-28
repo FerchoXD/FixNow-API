@@ -16,4 +16,6 @@ export interface UserInterface {
     rabbitHistory(uuid: string): Promise<any>;
     findRelevantSuppliers(keyPhrases:string[]): Promise<User[]>;
     getData(uuid: string): Promise<User>;
+    rabbitPayment(data: any): Promise<void>;
+    rabbitRaiting(data: any, polarity:any): Promise<void>;
 }

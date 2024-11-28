@@ -15,9 +15,12 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 const SERVICES = {
-    AUTH: process.env.AUTH_URL || 'http://auth:3001',
-    HISTORY: process.env.HISTORY_URL || 'http://history:3002',
-    FORUM: process.env.FORUM_URL || 'http://forum:3003',
+    AUTH: process.env.AUTH_URL || 'http://127.0.0.1:3001',
+    HISTORY: process.env.HISTORY_URL || 'http://127.0.0.1:3002',
+    FORUM: process.env.FORUM_URL || 'http://127.0.0.1:3003',
+    //CHAT: process.env.CHAT_URL || 'http://127.0.0.1:3004',
+    PAYMENT: process.env.PAYMENT_URL || 'http://127.0.0.1:3004',
+    RAITING: process.env.RAITING_URL || 'http://127.0.0.1:5000',
 };
 
 
@@ -33,6 +36,9 @@ const createProxy = (target: string) =>
 app.use('/api/v1/auth', createProxy(SERVICES.AUTH));
 app.use('/api/v1/history', createProxy(SERVICES.HISTORY));
 app.use('/api/v1/forum', createProxy(SERVICES.FORUM));
+//app.use('/api/v1/chat', createProxy(SERVICES.CHAT));
+app.use('/api/v1/payment', createProxy(SERVICES.PAYMENT));
+app.use('/api/v1/raiting', createProxy(SERVICES.RAITING));
 
 
 app.listen(PORT,() => {

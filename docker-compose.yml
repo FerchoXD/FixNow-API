@@ -11,8 +11,9 @@ services:
       - AUTH_URL=http://auth:3001
       - HISTORY_URL=http://history:3002
       - FORUM_URL=http://forum:3003
+      - PAYMENT_URL=http://payment:3004
+      - RAITING_URL=http://raiting:5000
 
-      
     depends_on:
       - auth
       - history
@@ -41,6 +42,21 @@ services:
     networks:
       - red_fixnow
 
+  payment:
+    build:
+      context: ./PaymentManagment
+      dockerfile: Dockerfile
+    networks:
+      - red_fixnow
+
+  raiting:
+    build:
+      context: ./RaitingManagment
+      dockerfile: Dockerfile
+    networks:
+      - red_fixnow
+
+      
 networks:
   red_fixnow:
     driver: bridge

@@ -1,5 +1,5 @@
 import RabbitMQConnection from '../rabbitConexion';
-import { rabbitmqHistoryUsecase } from '../../../dependencies';
+import { rabbitmqPaymentUsecase } from '../../../dependencies';
 import CustomError  from '../../../../application/errors/CustomError';
 
 export class ConsumerPayment {
@@ -27,96 +27,121 @@ export class ConsumerPayment {
     }
 
     
-    async consume(onMessage: (data: any) => void): Promise<void> {
+    async consume(onMessage: (data: any) => void): Promise<any> {
         console.log('Iniciando RabbitMQ Consumer...');
+    
         if (!this.channel) {
             throw new Error('RabbitMQ no está configurado. Llama a `setup()` primero.');
         }
-
+    
         try {
             console.log(`Esperando mensajes en la cola: ${this.queue}`);
-
-            // Consumir mensajes de la cola
+    
             this.channel.consume(this.queue, async (msg: any) => {
-                console.log('Mensaje recibido:', msg.content.toString());
-                if (msg !== null) {
+                if (!msg) return;
+    
+                try {
+                    // Parsear el mensaje recibido
+                    const rawMessage = msg.content.toString();
+                    console.log('Contenido bruto del mensaje recibido:', rawMessage);
+    
+                    let message: any;
                     try {
-                        const rawMessage = msg.content.toString();
-                        console.log('Contenido bruto del mensaje recibido:', rawMessage);
-            
-                        let message;
-                        try {
-                            message = JSON.parse(rawMessage);
-                        } catch (error) {
-                            console.error('Error al parsear el mensaje:', rawMessage);
-                            this.channel.nack(msg, false, false);
-                            return;
-                        }
-            
-                        // Validar que el mensaje sea un objeto antes de continuar
-                        if (typeof message !== 'object' || message === null) {
-                            console.error('El mensaje recibido no es un objeto válido:', message);
-                            this.channel.nack(msg, false, false);
-                            return;
-                        }
-            
-                        console.log('Mensaje recibido como objeto:', message);
-            
-                        // Obtener fullname
-                        const fullname = await rabbitmqHistoryUsecase.execute(message.userUuid);
-                        console.log('Obteniendo fullname:', fullname);
-            
-                        // Asignar el fullname al mensaje
-                        message.fullname = fullname;
-            
-                        console.log('Mensaje actualizado:', message);
-            
-                        // Procesar el mensaje
-                        onMessage(message);
-            
-                        // Enviar el mensaje de vuelta a la cola temporal si se requiere
-                        const replyQueue = msg.properties.replyTo;
-                        if (replyQueue) {
-                            this.channel.sendToQueue(replyQueue, Buffer.from(JSON.stringify(message)), {
-                                correlationId: msg.properties.correlationId,
-                            });
-                        }
-            
-                        // Confirmar que el mensaje fue procesado correctamente
-                        this.channel.ack(msg);
+                        message = JSON.parse(rawMessage);
                     } catch (error) {
-                        if (error instanceof CustomError) {
-                            // Manejar errores personalizados de manera estructurada
-                            console.error('Error procesando historial:', error.message);
-                            
-                            // Responder al cliente con el código de estado y el mensaje de error
-                            const errorMessage = {
-                                statusCode: error.statusCode,
-                                message: error.message
-                            };
-
-                            console.log('Enviando mensaje de error:', errorMessage);
-                
-                            // Aquí puedes enviar este error de vuelta al cliente
-                            this.channel.sendToQueue(msg.properties.replyTo, Buffer.from(JSON.stringify(errorMessage)), {
-                                correlationId: msg.properties.correlationId,
-                            });
-
-                            this.channel.nack(msg, false, false); // Rechazar el mensaje
-
-                        } else {
-                            // Manejar errores no previstos
-                            console.error('Error inesperado:', error);
-                            const errorMessage = {
-                                statusCode: 500,
-                                message: 'Error interno del servidor.'
-                            };
-                            
-                            // Responder con un error genérico de servidor
+                        console.error('Error al parsear el mensaje:', rawMessage);
+                        this.channel.nack(msg, false, false); // Rechazar mensaje
+                        return;
+                    }
+    
+                    // Validar que sea un objeto válido
+                    if (typeof message !== 'object' || message === null) {
+                        console.error('El mensaje recibido no es un objeto válido:', message);
+                        this.channel.nack(msg, false, false); // Rechazar mensaje
+                        return;
+                    }
+    
+                    console.log('Mensaje recibido como objeto:', message);
+    
+                    const { userUuid, ...otherProperties } = message;
+    
+                    if (!userUuid) {
+                        console.error('userUuid no está presente en el mensaje.');
+                        this.channel.nack(msg, false, false); // Rechazar mensaje
+                        return;
+                    }
+    
+                    // Obtener datos completos del usuario
+                    const paymentResponse = await rabbitmqPaymentUsecase.execute(userUuid);
+    
+                    if (!paymentResponse || paymentResponse.status !== 200) {
+                        console.error('No se encontraron datos para el usuario con UUID:', userUuid);
+                        this.channel.nack(msg, false, false); // Rechazar mensaje
+                        return;
+                    }
+    
+                    const paymentData = paymentResponse.data;
+    
+                    // Añadir los datos al mensaje
+                    message.userData = {
+                        uuid: paymentData.uuid,
+                        firstname: paymentData.firstname,
+                        lastname: paymentData.lastname,
+                        email: paymentData.email,
+                        phone: paymentData.phone,
+                        role: paymentData.role,
+                    };
+    
+                    console.log('Mensaje actualizado con datos del usuario:', message);
+    
+                    // Procesar el mensaje actualizado
+                    onMessage(message);
+    
+                    // Enviar respuesta si hay una cola de respuesta (replyTo)
+                    const replyQueue = msg.properties.replyTo;
+                    if (replyQueue) {
+                        this.channel.sendToQueue(replyQueue, Buffer.from(JSON.stringify(message)), {
+                            correlationId: msg.properties.correlationId,
+                        });
+                    }
+    
+                    // Confirmar que el mensaje fue procesado
+                    this.channel.ack(msg);
+    
+                } catch (error) {
+                    if (error instanceof CustomError) {
+                        console.error('Error procesando el mensaje:', error.message);
+    
+                        const errorMessage = {
+                            statusCode: error.statusCode,
+                            message: error.message,
+                        };
+    
+                        // Enviar mensaje de error a la cola de respuesta
+                        if (msg.properties.replyTo) {
                             this.channel.sendToQueue(msg.properties.replyTo, Buffer.from(JSON.stringify(errorMessage)), {
                                 correlationId: msg.properties.correlationId,
                             });
                         }
+    
+                        this.channel.nack(msg, false, false); // Rechazar mensaje
+    
+                    } else {
+                        console.error('Error inesperado:', error);
+    
+                        const errorMessage = {
+                            statusCode: 500,
+                            message: 'Error interno del servidor.',
+                        };
+    
+                        // Enviar error genérico a la cola de respuesta
+                        if (msg.properties.replyTo) {
+                            this.channel.sendToQueue(msg.properties.replyTo, Buffer.from(JSON.stringify(errorMessage)), {
+                                correlationId: msg.properties.correlationId,
+                            });
+                        }
+    
+                        this.channel.nack(msg, false, false); // Rechazar mensaje
                     }
                 }
             });
@@ -125,6 +150,7 @@ export class ConsumerPayment {
             throw new Error('No se pudo consumir mensajes de RabbitMQ.');
         }
     }
+    
 
     async close(): Promise<void> {
         try {

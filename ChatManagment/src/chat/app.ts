@@ -1,18 +1,25 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import express from 'express';
-import forumRoutes from './infrastructure/routes/ChatRoutes';
+import express, { Application } from 'express';
+import cors from 'cors';
+import messageRoutes from './infrastructure/routes/ChatRoutes';
+import { createServer } from 'http';
+import { initializeSocketServer } from './infrastructure/services/socketIO/server';
 
-const app = express();
+export const app: Application = express();
 
+app.use(cors());
 app.use(express.json());
 
-app.use('/', forumRoutes);
+app.use('/',messageRoutes)
 
+const httpServer = createServer(app);
+export const io = initializeSocketServer(httpServer);
 
-const port = process.env.PORT || 3004;
+const PORT = process.env.PORT || 3004;
 
-app.listen(port, () => {
-    console.log(`---Servidor corriendo en el puerto ${port}---`);
+httpServer.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+

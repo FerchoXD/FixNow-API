@@ -3,17 +3,23 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node src/forum/app.ts --host=0.0.0.0 --port=3003"
+    "dev": "nodemon --exec ts-node src/chat/app.ts --host=0.0.0.0 --port=3003"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "mongoose": "^8.8.2",
-    "mysql2": "^3.11.4"
+    "moment-timezone": "^0.5.46",
+    "mongoose": "^8.8.3",
+    "mysql2": "^3.11.4",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "twilio": "^5.3.6"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/node": "^22.9.3",
+    "@types/node": "^22.10.0",
+    "@types/socket.io": "^3.0.1",
+    "@types/socket.io-client": "^1.4.36",
     "@types/uuid": "^10.0.0",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",

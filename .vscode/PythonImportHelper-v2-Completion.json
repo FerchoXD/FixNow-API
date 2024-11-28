@@ -1,0 +1,378 @@
+[
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Blueprint",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Comment",
+        "importPath": "src.models.comments",
+        "description": "src.models.comments",
+        "isExtraImport": true,
+        "detail": "src.models.comments",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "importPath": "src.models.comments",
+        "description": "src.models.comments",
+        "isExtraImport": true,
+        "detail": "src.models.comments",
+        "documentation": {}
+    },
+    {
+        "label": "enviar_mensaje",
+        "importPath": "src.services.AI.raiting",
+        "description": "src.services.AI.raiting",
+        "isExtraImport": true,
+        "detail": "src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "Producer",
+        "importPath": "src.services.rabbitmq.Raiting_producer",
+        "description": "src.services.rabbitmq.Raiting_producer",
+        "isExtraImport": true,
+        "detail": "src.services.rabbitmq.Raiting_producer",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "MongoEngine",
+        "importPath": "flask_mongoengine",
+        "description": "flask_mongoengine",
+        "isExtraImport": true,
+        "detail": "flask_mongoengine",
+        "documentation": {}
+    },
+    {
+        "label": "MongoEngine",
+        "importPath": "flask_mongoengine",
+        "description": "flask_mongoengine",
+        "isExtraImport": true,
+        "detail": "flask_mongoengine",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "create_comment",
+        "importPath": "src.controllers.raiting_controller",
+        "description": "src.controllers.raiting_controller",
+        "isExtraImport": true,
+        "detail": "src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "service_account",
+        "importPath": "google.oauth2",
+        "description": "google.oauth2",
+        "isExtraImport": true,
+        "detail": "google.oauth2",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "google.auth.transport.requests",
+        "description": "google.auth.transport.requests",
+        "isExtraImport": true,
+        "detail": "google.auth.transport.requests",
+        "documentation": {}
+    },
+    {
+        "label": "pika",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pika",
+        "description": "pika",
+        "detail": "pika",
+        "documentation": {}
+    },
+    {
+        "label": "RabbitMQConnection",
+        "importPath": "src.services.rabbitmq.rabbit_connection",
+        "description": "src.services.rabbitmq.rabbit_connection",
+        "isExtraImport": true,
+        "detail": "src.services.rabbitmq.rabbit_connection",
+        "documentation": {}
+    },
+    {
+        "label": "raiting_bp",
+        "importPath": "src.routes.raiting_routes",
+        "description": "src.routes.raiting_routes",
+        "isExtraImport": true,
+        "detail": "src.routes.raiting_routes",
+        "documentation": {}
+    },
+    {
+        "label": "Config",
+        "importPath": "src.database.configdb",
+        "description": "src.database.configdb",
+        "isExtraImport": true,
+        "detail": "src.database.configdb",
+        "documentation": {}
+    },
+    {
+        "label": "controllers",
+        "importPath": "app",
+        "description": "app",
+        "isExtraImport": true,
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "calcular_rating",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.controllers.raiting_controller",
+        "description": "RaitingManagment.src.controllers.raiting_controller",
+        "peekOfCode": "def calcular_rating(user_uuid, polaridad_actual=None):\n    try:\n        # Obtener todos los comentarios activos, relevantes y con categoría 'relevante' para el usuario\n        comentarios = Comment.objects(\n            userUuid=user_uuid,\n            status=\"active\",\n            isRelevant=True,\n            category=\"relevante\"\n        )\n        # Verificar si hay comentarios válidos",
+        "detail": "RaitingManagment.src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "crear_comentario",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.controllers.raiting_controller",
+        "description": "RaitingManagment.src.controllers.raiting_controller",
+        "peekOfCode": "def crear_comentario(polaridad, userUuid, contenido,fullname):\n    try:\n        if polaridad == 0:\n            status = 'active'\n            is_relevant = False\n            category = 'irrelevante'\n        elif polaridad == -1:\n            status = 'deleted'\n            is_relevant = False\n            category = 'grosero'",
+        "detail": "RaitingManagment.src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "create_comment",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.controllers.raiting_controller",
+        "description": "RaitingManagment.src.controllers.raiting_controller",
+        "peekOfCode": "def create_comment():\n    try:\n        # Obtener datos del cuerpo de la solicitud\n        data = request.get_json()\n        if not data or 'userUuid' not in data or not data['userUuid']:\n            return jsonify({\"error\": \"El identificador del usuario es requerido\"}), 400\n        # Validar que el contenido exista\n        if not data or 'content' not in data or not data['content']:\n            return jsonify({\"error\": \"El contenido del comentario es requerido\"}), 400\n        print(\"Esto es data:\", json.dumps(data['content'], indent=4))",
+        "detail": "RaitingManagment.src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "Config",
+        "kind": 6,
+        "importPath": "RaitingManagment.src.database.configdb",
+        "description": "RaitingManagment.src.database.configdb",
+        "peekOfCode": "class Config:\n    SECRET_KEY = os.environ.get('SECRET_KEY') or 'clave_secreta'\n    MONGODB_SETTINGS = {\n        'host': f\"mongodb+srv://{os.environ.get('MONGO_USER', 'user')}:{os.environ.get('MONGO_PASSWORD', 'password')}@{os.environ.get('MONGO_CLUSTER', 'cluster0.7zv8v')}.faonfdg.mongodb.net/{os.environ.get('MONGO_DATABASE', 'ratingdb')}?retryWrites=true&w=majority&appName={os.environ.get('MONGO_CLUSTER', 'cluster0.7zv8v')}\"\n    }",
+        "detail": "RaitingManagment.src.database.configdb",
+        "documentation": {}
+    },
+    {
+        "label": "Comment",
+        "kind": 6,
+        "importPath": "RaitingManagment.src.models.comments",
+        "description": "RaitingManagment.src.models.comments",
+        "peekOfCode": "class Comment(db.Document):\n    uuid = db.UUIDField(default=uuid_lib.uuid4, required=True, unique=True)\n    userUuid = db.StringField(required=True)\n    fullname = db.StringField()\n    content = db.StringField(required=True)\n    polarity = db.FloatField()\n    timestamp = db.DateTimeField(default=datetime.utcnow)  # Fecha y hora del comentario\n    status = db.StringField(default=\"active\", choices=[\"active\", \"deleted\"])  # Estado\n    isRelevant = db.BooleanField(default=True)  # Indica relevancia\n    category = db.StringField(choices=[\"relevante\", \"irrelevante\", \"grosero\"])",
+        "detail": "RaitingManagment.src.models.comments",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.models.comments",
+        "description": "RaitingManagment.src.models.comments",
+        "peekOfCode": "db = MongoEngine()\nclass Comment(db.Document):\n    uuid = db.UUIDField(default=uuid_lib.uuid4, required=True, unique=True)\n    userUuid = db.StringField(required=True)\n    fullname = db.StringField()\n    content = db.StringField(required=True)\n    polarity = db.FloatField()\n    timestamp = db.DateTimeField(default=datetime.utcnow)  # Fecha y hora del comentario\n    status = db.StringField(default=\"active\", choices=[\"active\", \"deleted\"])  # Estado\n    isRelevant = db.BooleanField(default=True)  # Indica relevancia",
+        "detail": "RaitingManagment.src.models.comments",
+        "documentation": {}
+    },
+    {
+        "label": "create_comment_route",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.routes.raiting_routes",
+        "description": "RaitingManagment.src.routes.raiting_routes",
+        "peekOfCode": "def create_comment_route():\n    return create_comment()",
+        "detail": "RaitingManagment.src.routes.raiting_routes",
+        "documentation": {}
+    },
+    {
+        "label": "raiting_bp",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.routes.raiting_routes",
+        "description": "RaitingManagment.src.routes.raiting_routes",
+        "peekOfCode": "raiting_bp = Blueprint('raiting', __name__)\n# Ruta POST para crear un comentario\n@raiting_bp.route('/create/commet', methods=['POST'])\ndef create_comment_route():\n    return create_comment()",
+        "detail": "RaitingManagment.src.routes.raiting_routes",
+        "documentation": {}
+    },
+    {
+        "label": "get_access_token",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "def get_access_token():\n    if not os.path.exists(CREDENTIALS_PATH):\n        raise FileNotFoundError(f\"El archivo de credenciales no fue encontrado en la ruta: {CREDENTIALS_PATH}\")\n    credentials = service_account.Credentials.from_service_account_file(\n        CREDENTIALS_PATH, scopes=SCOPES)\n    credentials.refresh(Request())\n    return credentials.token\ndef enviar_mensaje(mensaje_usuario):\n    texto = preparar_texto(mensaje_usuario)\n    token = get_access_token()",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "enviar_mensaje",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "def enviar_mensaje(mensaje_usuario):\n    texto = preparar_texto(mensaje_usuario)\n    token = get_access_token()\n    headers = {\n        'Authorization': f'Bearer {token}',\n        'Content-Type': 'application/json'\n    }\n    payload = {\n        \"contents\": [\n            {\"parts\": [{\"text\": texto}]}",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "preparar_texto",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "def preparar_texto(texto):\n    mensaje_usuario = (\n        f\"{texto} Evalúa este mensaje y clasifícalo en una de las siguientes categorías: \"\n        \"'relevante' (si está relacionado con el servicio del proveedor actual), \"\n        \"'irrelevante' (si no está relacionado con el servicio del proveedor y debe tener una polaridad de 0), \"\n        f\"o 'grosero' (si contiene lenguaje inapropiado como {PALABRAS_PROHIBIDAS} y debe tener una polaridad de -1). \"\n        \"Si el mensaje es relevante, proporciona también la polaridad del sentimiento en una escala del 1 al 5 (1=Muy negativo, 5=Muy positivo). \"\n        \"Ejemplos de texto irrelevante: '¿Cómo estás hoy?', 'Me gusta el clima'. \"\n        \"Responde únicamente en un JSON con las claves 'categoria' y 'polaridad'. \"\n        \"No des explicaciones ni detalles adicionales.\"",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "CREDENTIALS_PATH",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "CREDENTIALS_PATH = \"./src/services/AI/mineria.json\"\nSCOPES = [\"https://www.googleapis.com/auth/generative-language\"]\nAPI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent'\ndef get_access_token():\n    if not os.path.exists(CREDENTIALS_PATH):\n        raise FileNotFoundError(f\"El archivo de credenciales no fue encontrado en la ruta: {CREDENTIALS_PATH}\")\n    credentials = service_account.Credentials.from_service_account_file(\n        CREDENTIALS_PATH, scopes=SCOPES)\n    credentials.refresh(Request())\n    return credentials.token",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "SCOPES",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "SCOPES = [\"https://www.googleapis.com/auth/generative-language\"]\nAPI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent'\ndef get_access_token():\n    if not os.path.exists(CREDENTIALS_PATH):\n        raise FileNotFoundError(f\"El archivo de credenciales no fue encontrado en la ruta: {CREDENTIALS_PATH}\")\n    credentials = service_account.Credentials.from_service_account_file(\n        CREDENTIALS_PATH, scopes=SCOPES)\n    credentials.refresh(Request())\n    return credentials.token\ndef enviar_mensaje(mensaje_usuario):",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "API_ENDPOINT",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent'\ndef get_access_token():\n    if not os.path.exists(CREDENTIALS_PATH):\n        raise FileNotFoundError(f\"El archivo de credenciales no fue encontrado en la ruta: {CREDENTIALS_PATH}\")\n    credentials = service_account.Credentials.from_service_account_file(\n        CREDENTIALS_PATH, scopes=SCOPES)\n    credentials.refresh(Request())\n    return credentials.token\ndef enviar_mensaje(mensaje_usuario):\n    texto = preparar_texto(mensaje_usuario)",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "PALABRAS_PROHIBIDAS",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "PALABRAS_PROHIBIDAS = \"\"\"\nestúpido,imbécil,idiota,mierda,chingadera,chingar,maldito,basura,perro,puto,\nperra,puta,cabrón,tarado,patético, chinga tu madre,chinga tu puta madre,\nasqueroso,grosero,inepto,mediocre,ridículo,despreciable,malparido,ojete,pendejo,\ntonto,cretino,sarnoso,inútil,corrupto,sucio,traidor,huevón,cobarde,infeliz,zángano,\nidiot,dumb,stupid,trash,bastard,scumbag,jerk,loser,moron,idiotic,fool,useless,\nworthless,ignorant,dirty,corrupt,incompetent,lame,stupid-ass,motherf***er,asshole,\ndickhead,f***er,b***h,a**hole,crap,crappy,trashbag,bullshit,damn,hell,numbskull,\ndork,prick,weirdo,jackass,scumbag,P3nd3j0,Kk,Pu+0,M!erda,B@$t@rd0,C@bR0n,M0th3rf***3r,\nF00l,Idi0+,@$$,Sh!t,Bu!!sh!t,Cr@ppy,1d10t,F**k,T@r@d0,B@st@rdo,H3ll,A$$h0l3,P3rr@,",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "RabbitMQConnection",
+        "kind": 6,
+        "importPath": "RaitingManagment.src.services.rabbitmq.rabbit_connection",
+        "description": "RaitingManagment.src.services.rabbitmq.rabbit_connection",
+        "peekOfCode": "class RabbitMQConnection:\n    _instance = None  # Singleton instance\n    def __init__(self):\n        self.connection = None\n        self.channel = None\n        self.rabbitmq_url = os.getenv(\"RABBITMQ_URL\", \"amqp://localhost:5672\")\n        if not (self.rabbitmq_url.startswith(\"amqp://\") or self.rabbitmq_url.startswith(\"amqps://\")):\n            raise ValueError(f\"La URL de RabbitMQ debe comenzar con 'amqp://' o 'amqps://'. URL actual: {self.rabbitmq_url}\")\n    @classmethod\n    def get_instance(cls):",
+        "detail": "RaitingManagment.src.services.rabbitmq.rabbit_connection",
+        "documentation": {}
+    },
+    {
+        "label": "Producer",
+        "kind": 6,
+        "importPath": "RaitingManagment.src.services.rabbitmq.Raiting_producer",
+        "description": "RaitingManagment.src.services.rabbitmq.Raiting_producer",
+        "peekOfCode": "class Producer:\n    def __init__(self, queue_name):\n        self.queue_name = os.environ.get(\"RABBITMQ_QUEUE\", queue_name)\n        self.rabbit = RabbitMQConnection.get_instance()\n        self.correlation_id = None  # ID único para correlación de mensajes\n        self.response = None  # Almacena la respuesta del consumidor\n    def send_message_with_reply(self, user_uuid, polaridad):\n        \"\"\"Enviar un mensaje y esperar una respuesta en una cola temporal.\"\"\"\n        try:\n            channel = self.rabbit.connect()",
+        "detail": "RaitingManagment.src.services.rabbitmq.Raiting_producer",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.main",
+        "description": "RaitingManagment.src.main",
+        "peekOfCode": "db = MongoEngine()\napp = Flask(__name__)\napp.config.from_object(Config)\ndb.init_app(app)\napp.register_blueprint(raiting_bp)\nif __name__ == '__main__':\n    app.run(debug=True)\nfrom app import controllers",
+        "detail": "RaitingManagment.src.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.main",
+        "description": "RaitingManagment.src.main",
+        "peekOfCode": "app = Flask(__name__)\napp.config.from_object(Config)\ndb.init_app(app)\napp.register_blueprint(raiting_bp)\nif __name__ == '__main__':\n    app.run(debug=True)\nfrom app import controllers",
+        "detail": "RaitingManagment.src.main",
+        "documentation": {}
+    }
+]
