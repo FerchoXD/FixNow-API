@@ -44,7 +44,7 @@ services:
 
   payment:
     build:
-      context: ./PaymentManagment
+      context: ./PaymentsManagment
       dockerfile: Dockerfile
     networks:
       - red_fixnow
@@ -56,7 +56,7 @@ services:
     networks:
       - red_fixnow
 
-      
+
 networks:
   red_fixnow:
     driver: bridge

@@ -5,35 +5,18 @@ export class GetDataUserController {
     constructor(readonly usecase: GetDataUserUseCase) { }
 
     async run(req: Request, res: Response): Promise<any> {
-        const {userUuid} = req.body
-
-        if (typeof userUuid !== 'string') {
-            return res.status(400).json({ message: 'El UUID debe ser una cadena de texto válida.' });
-        }
-
-        if (!userUuid) {
-            return res.status(400).json({
-                error: "Bad Request",
-                message: "Falta el uuid del usuario."
-            });
-        }
-
         try {
-            const response = await this.usecase.execute(userUuid);
+            const user = (req as any).user; // Datos decodificados del token
+            if (!user) {
+                res.status(401).json({ message: 'No autorizado' });
+                return;
+            }
 
-        if (response.status === 404) {
-            return res.status(404).json({
-                error: "Not Found",
-                message: "Usuario no encontrado."
-            });
-        }
-
-        return res.status(response.status).json(response);
+            // Opcional: Obtener información adicional del usuario desde el repositorio
+            const userData = await this.usecase.execute(user.userId);
+            res.status(200).json(userData);
         } catch (error) {
-            return res.status(500).json({
-                error: "Internal Server Error",
-                message: (error as Error).message
-            });
+            res.status(500).json({ message: 'Error al obtener los datos del usuario', error });
         }
     }
 }   
