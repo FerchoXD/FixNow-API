@@ -1,21 +1,44 @@
 import { ChatInterface } from "../../domain/repositories/ChatInterface";
-import { MessageModel } from "../models/Mongo/messageSchema";
+import Message  from "../models/Mongo/messageSchema";
+import moment from 'moment-timezone';
+import 'moment/locale/es';
 
+moment.locale('es');
 export class ChatMongoRepository implements ChatInterface {
-    
-    async createMessage(sender: string, receiver: string, message: string): Promise<any> {
+
+    async saveMessage(data: { sender: string; receiver: string; content: string }): Promise<any> {
         try {
-            const newMessage = await MessageModel.create({
-                sender,
-                receiver,
-                message,
-                timestamp: new Date(),
+
+            // Crear una nueva instancia del modelo
+            const newMessage = new Message({
+                senderId: data.sender,
+                recipientId: data.receiver,
+                content: data.content,
             });
 
-            return newMessage;
+            await newMessage.save();
+
+            const response = await Message.find({
+                $or: [
+                    { senderId: data.sender, recipientId
+                        : data.receiver },
+                    { senderId: data.receiver, recipientId
+                        : data.sender },
+                ],
+            }).sort({ timestamp: 1 });
+
+            const formattedResponse = response.map((message) => ({
+                ...message.toObject(),
+                timestamp: moment(message.timestamp).tz('America/Mexico_City').format('HH:mm:ss'),
+            }));
+            // Retornar el mensaje guardado
+            return {
+                status: 200,
+                data: formattedResponse,
+            };
         } catch (error) {
-            console.error('Error al crear el mensaje:', error);
-            throw new Error('Error al guardar el mensaje en la base de datos.');
+            console.error('Error guardando el mensaje:', error);
+            throw new Error('No se pudo guardar el mensaje.');
         }
     }
     

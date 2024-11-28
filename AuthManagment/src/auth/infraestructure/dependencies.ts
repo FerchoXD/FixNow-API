@@ -32,12 +32,16 @@ import { AnalyzePrompt } from './Services/aws/AnalyzePrompt';
 import { ConsumerPayment } from "./Services/rabbitmq/consumer/PaymentConsumer";
 import { GetDataUserController } from "./controllers/GetDataUserController";
 import { GetDataUserUseCase } from "../application/usecases/GetDataUserUseCase";
+import { RabbitmqPaymentUseCase } from '../application/usecases/RabbitmqPaymentUseCase';
+import { ConsumerRaiting } from "./Services/rabbitmq/consumer/RaitingConsumer";
+import { RabbitmqRaitingUseCase } from "../application/usecases/RabbitmqRaitingUseCase";
 
 const mysqlRepository = new UserMySqlRepository();
 const googleAuthService = new GoogleAuthService( new GoogleAuthUseCase(mysqlRepository) );
 const databaseConfig = new MySQLConfig();
 const consumerHistory = new ConsumerHistory();
 const consumerPayment = new ConsumerPayment();
+const consumerRaiting = new ConsumerRaiting();
 const analyzePrompt = new AnalyzePrompt();
 
 
@@ -50,6 +54,10 @@ export async function init() {
     });
     await consumerPayment.setup();
     await consumerPayment.consume(async (data: any) => {
+      console.log('Datos recibidos de pagos:', data);
+    });
+    await consumerRaiting.setup();
+    await consumerRaiting.consume(async (data: any) => {
       console.log('Datos recibidos de pagos:', data);
     });
     console.log('RabbitMQ Consumer está listo');
@@ -75,6 +83,8 @@ const searchSupplierUseCase = new SearchSupplierUseCase();
 const getProfileUseCase = new GetProfileUseCase(mysqlRepository);
 const getFiltersUseCase = new GetFiltersUseCase(mysqlRepository);
 const rabbitmqHistoryUsecase = new RabbitMQHistoryUseCase(mysqlRepository);
+const rabbitmqPaymentUsecase = new RabbitmqPaymentUseCase(mysqlRepository);
+const rabbitmqRaitingUsecase = new RabbitmqRaitingUseCase(mysqlRepository);
 const searchSuppliersUseCase = new SearchSuppliersUseCase(mysqlRepository, analyzePrompt);
 const getDataUserUseCase = new GetDataUserUseCase(mysqlRepository);
 
@@ -109,6 +119,8 @@ export {
   getFiltersController,
   googleAuthController,
   rabbitmqHistoryUsecase,
+  rabbitmqPaymentUsecase,
+  rabbitmqRaitingUsecase,
   searchSuppliersController,
   getDataUserController
   };
