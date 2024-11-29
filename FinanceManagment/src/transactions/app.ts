@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use('/api/v1/finances', transactionRoutes)
+app.use('/', transactionRoutes)
 
 app.listen(PORT, () => {
     console.log("Server is running on port", PORT);
