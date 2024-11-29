@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES6",
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
@@ -11,6 +11,6 @@
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/chat/infrastructure/services/socketIO/server.ts"],
   "exclude": ["node_modules"]
 }

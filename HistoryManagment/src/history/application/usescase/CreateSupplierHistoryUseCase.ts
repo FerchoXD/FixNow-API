@@ -13,9 +13,10 @@ export class CreateSupplierHistoryUseCase {
 
             // Envía datos al proveedor RabbitMQ
             const responseuuid = await producer.send(userUuid);
-
+            console.log(responseuuid);
             console.log('Respuesta del proveedor:', responseuuid.statusCode, responseuuid.message);
-
+            console.log('UUID:', responseuuid.fullname);
+            console.log('UUID:', userUuid);
             if (responseuuid.statusCode === 404) {
                 return {
                     status: 404,
@@ -24,8 +25,15 @@ export class CreateSupplierHistoryUseCase {
             }
 
             // Consultar historial desde el repositorio
-            const response = await this.repository.historySupplier(responseuuid.fullname, userUuid);
+            const response: any = await this.repository.historySupplier(responseuuid.fullname, userUuid);
             console.log('Historial creado y mensaje enviado.', response);
+
+            if (response.status === 404) {
+                return {
+                    status: 404,
+                    message: response.message
+                };
+            }
 
             return response;
         } catch (error) {

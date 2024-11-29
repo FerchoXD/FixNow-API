@@ -6,6 +6,7 @@ export class RabbitMQHistoryUseCase {
     async execute(uuid:string):Promise<any> {
         console.log('RabbitMQHistoryUseCase:', uuid);
         const response = await this.repository.rabbitHistory(uuid);
+        console.log('Respuesta de RabbitMQHistoryUseCase:', response);
         return response;
     }
 }

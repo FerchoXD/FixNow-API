@@ -6,11 +6,12 @@ import {
 const router = Router();
 
 router.post('/create/service', (req: Request, res: Response) => {
+    console.log("ruta",req.body);
     createServiceHistoryController.run(res, req);
 });
 
 router.post('/get/history', (req: Request, res: Response) => {
-    console.log(req.body);
+    console.log("ruta",req.body);
     createSupplierHistoryController.run(req, res);
 });
 

@@ -19,7 +19,7 @@ export class HistoryMySqlRepository implements HistoryInterface {
             if (!history || history.length === 0) {
                 return {
                     status: 404,
-                    message: 'No se encontraron citas con el UUID proporcionado.'
+                    message: 'No se encontraron citas.'
                 };
             }
     

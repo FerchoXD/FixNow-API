@@ -74,8 +74,10 @@ export class UserMySqlRepository implements UserInterface {
                         );
                     }),
                 },
-                order: [['relevance', 'DESC']], // Ordenar por relevancia descendente
+                order: [['relevance', 'DESC']],
             });
+
+            console.log('Proveedores encontrados:', suppliers);
 
             return suppliers;
         } catch (error) {
@@ -186,6 +188,10 @@ export class UserMySqlRepository implements UserInterface {
             
             const user = await UserModel.findOne({ where: { uuid: uuid } });
 
+            const images = await UserImageModel.findAll({ where: { userUuid: uuid } });
+
+            const calendar = await UserCalendarModel.findAll({ where: { userUuid: uuid } });
+
             if (!user) {
                 return {
                     status: 404,
@@ -217,7 +223,9 @@ export class UserMySqlRepository implements UserInterface {
 
             return {
                 status: 200,
-                data: user
+                data: user,
+                images: images,
+                calendar: calendar
             };
         } catch (error) {
             console.error('Error al obtener el perfil del cliente:', error);
