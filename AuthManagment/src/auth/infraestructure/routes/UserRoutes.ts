@@ -32,7 +32,7 @@ router.post('/login', (req: Request, res: Response) => {
     loginUserController.run(req, res);
 });
 
-router.get('/auth/google', (req: Request, res: Response) => {
+router.get('/google', (req: Request, res: Response) => {
     console.log("ruta auth/google", req.query.token);
     googleAuthController.run(req, res);
 });
@@ -46,16 +46,16 @@ router.post('/logout', (req: Request, res: Response) => {
     logoutUserController.run(req, res);
 });
 
+router.put('/profile/suplier', (req: Request, res: Response) => {
+    saveProfileDataController.saveProfileData(req, res);
+});
+
 // Rutas privadas
 router.use(authMiddleware);
 
 router.get('/get/data', (req: Request, res: Response) => {
     console.log('Ruta get data, req.body:', req.body);
     getDataUserController.run(req, res);
-});
-
-router.put('/profile/suplier', (req: Request, res: Response) => {
-    saveProfileDataController.saveProfileData(req, res);
 });
 
 router.get('/get/services/:uuid', (req: Request, res: Response) => {
