@@ -21,7 +21,7 @@ init();
   app.use(express.json());
 app.use(passport.initialize());
   app.use(passport.session());
-  app.use('/api/v1', userRouter);
+  app.use('/', userRouter);
   
   const port = process.env.PORT || 3001;
   

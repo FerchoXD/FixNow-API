@@ -28,11 +28,11 @@ router.put('/:token/activate', (req: Request, res: Response) => {
     activateUserController.run(req, res);
 });
 
-router.post('/auth/login', (req: Request, res: Response) => {
+router.post('/login', (req: Request, res: Response) => {
     loginUserController.run(req, res);
 });
 
-router.get('/auth/google', (req: Request, res: Response) => {
+router.get('/google', (req: Request, res: Response) => {
     console.log("ruta auth/google", req.query.token);
     googleAuthController.run(req, res);
 });
@@ -42,7 +42,7 @@ router.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/login' 
 }));
 
-router.post('/auth/logout', (req: Request, res: Response) => {
+router.post('/logout', (req: Request, res: Response) => {
     logoutUserController.run(req, res);
 });
 
