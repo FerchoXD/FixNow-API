@@ -1,6 +1,5 @@
 import { UserInterface } from "../../domain/repositories/UserInterface";
 import { ImageStorageService } from "../../infraestructure/Services/StorageImages/ImageStorageService";
-import { UserImageModel } from "../../infraestructure/models/MySQL/UserImage";
 
 export class SaveProfileDataUseCase {
     constructor(
@@ -12,7 +11,7 @@ export class SaveProfileDataUseCase {
 
         console.log('images', images);
 
-        const response = await this.repository.profileData(uuid, profileData,images, calendar);
+        //const response = await this.repository.profileData(uuid, profileData,images, calendar);
 
 
         if (images) {
@@ -22,6 +21,6 @@ export class SaveProfileDataUseCase {
             await this.repository.updateUserImages(uuid, uploadedImages);
         }
 
-        return response;
+        return "todo chido";
     }
 }

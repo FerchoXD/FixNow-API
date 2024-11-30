@@ -16,6 +16,8 @@ import {
     getAllSuppliersController
 } from '../dependencies';
 import passport from 'passport';
+import { uploadMiddleware } from '../middlewares/uploadImagesMiddleware';
+import { multerErrorHandler } from '../middlewares/multerErrorHandler';
 
 const router = Router();
 
@@ -47,7 +49,7 @@ router.post('/logout', (req: Request, res: Response) => {
     logoutUserController.run(req, res);
 });
 
-router.put('/profile/suplier', (req: Request, res: Response) => {
+router.put('/profile/suplier', uploadMiddleware,multerErrorHandler,(req: Request, res: Response) => {
     saveProfileDataController.saveProfileData(req, res);
 });
 router.post('/all/suppliers', (req: Request, res: Response) => {

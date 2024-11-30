@@ -30,7 +30,7 @@ export class UserMySqlRepository implements UserInterface {
                         {
                             model: UserCalendarModel,
                             as: 'calendar',
-                            attributes: ['uuid','day', 'start', 'end', 'active'], // Solo incluimos los campos 'day', 'start' y 'end'
+                            attributes: ['uuid','userUuid','day', 'start', 'end', 'active','createdAt','updatedAt'], // Solo incluimos los campos 'day', 'start' y 'end'
                         },
                     ],
                 });
@@ -53,7 +53,7 @@ export class UserMySqlRepository implements UserInterface {
                         {
                             model: UserCalendarModel,
                             as: 'calendar',
-                            attributes: ['day', 'start', 'end', 'active'], // Solo incluimos los campos 'day', 'start' y 'end'
+                            attributes: ['uuid','userUuid','day', 'start', 'end', 'active','createdAt','updatedAt'], // Solo incluimos los campos 'day', 'start' y 'end'
                         },
                     ],
                 });

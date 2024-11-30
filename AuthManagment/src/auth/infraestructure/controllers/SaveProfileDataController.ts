@@ -14,32 +14,20 @@ export class SaveProfileDataController {
 
     async saveProfileData(req: Request, res: Response): Promise<void> {
         try {
-            const { uuid, profileData, calendar } = req.body;
-
-            // Validar la imagen cargada por Multer
-            if (!req.file) {
-                res.status(400).json({ error: 'No se proporcionó ninguna imagen.' });
-                return;
-            }
-
-            const uploadedImage = req.file;
-
-            // Actualizar calendario (si aplica)
-            const calendarToUpdate: string[] = Array.isArray(calendar) ? calendar : [];
-
-            // Ejecutar el caso de uso
-            const user = await this.saveProfileDataUseCase.run(uuid, profileData, uploadedImage, calendarToUpdate);
-
-            if(user === "todo chido"){
-                res.status(200).json({ message: 'Perfil actualizado exitosamente.' });
-            }
             
-        } catch (error) {
-            console.error('Error al guardar los datos del perfil:', error);
-            if (error instanceof Error) {
-                res.status(500).json({ error: error.message }); // Manejo de errores
+            const { uuid, profileData, calendar } = req.body;
+            
+            const result = await this.saveProfileDataUseCase.run(uuid, profileData, req.file, calendar);
+
+            res.status(200).json({ message: 'Datos guardados correctamente.', data: result });
+        } catch (err: any) {
+            // Manejar errores específicos
+            if (err.message === 'Formato de archivo no permitido. Solo JPG, JPEG y PNG son aceptados.') {
+                res.status(400).json({ error: err.message });
+            } else if (err.code === 'LIMIT_FILE_SIZE') {
+                res.status(400).json({ error: 'El archivo es demasiado grande. El tamaño máximo permitido es de 5MB.' });
             } else {
-                res.status(500).json({ error: 'Error desconocido' });
+                res.status(500).json({ error: 'Ocurrió un error al procesar el archivo.' });
             }
         }
     }
