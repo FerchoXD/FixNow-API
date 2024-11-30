@@ -27,6 +27,11 @@ export class UserMySqlRepository implements UserInterface {
                             as: 'images',
                             attributes: ['images'], // Solo incluimos el campo 'images'
                         },
+                        {
+                            model: UserCalendarModel,
+                            as: 'calendar',
+                            attributes: ['day', 'start', 'end'], // Solo incluimos los campos 'day', 'start' y 'end'
+                        },
                     ],
                 });
                 return suppliers;
@@ -43,6 +48,11 @@ export class UserMySqlRepository implements UserInterface {
                             model: UserImageModel,
                             as: 'images',
                             attributes: ['images'], // Solo incluimos el campo 'images'
+                        },
+                        {
+                            model: UserCalendarModel,
+                            as: 'calendar',
+                            attributes: ['day', 'start', 'end'], // Solo incluimos los campos 'day', 'start' y 'end'
                         },
                     ],
                 });
