@@ -65,15 +65,15 @@ export class UserMySqlRepository implements UserInterface {
     }
     
 
-    async rabbitRaiting(userUuid: any, polaridad :any): Promise<any> {
+    async rabbitRaiting(userUuid: any, polaridad: any): Promise<any> {
         console.log('Datos recibidos de pagos:', userUuid);
-        console.log('Datos recibidos de pagos:', polaridad );
-        
+        console.log('Datos recibidos de pagos:', polaridad);
+
         await UserModel.update({ relevance: polaridad }, { where: { uuid: userUuid } });
 
-        const userdata = await UserModel.findOne({ 
+        const userdata = await UserModel.findOne({
             where: { uuid: userUuid },
-            attributes:['fullname']
+            attributes: ['fullname']
         });
         console.log('Datos recibidos de pagos:', userdata?.dataValues.fullname);
 
@@ -88,10 +88,10 @@ export class UserMySqlRepository implements UserInterface {
     async rabbitPayment(data: any): Promise<any> {
 
         console.log('Datos recibidos de pagos:', data);
-        
-        const payment = await UserModel.findOne({ 
-            where: { uuid: data, role: 'SUPPLIER'},
-            attributes: ['uuid', 'firstname','lastname', 'email', 'phone', 'role', ]
+
+        const payment = await UserModel.findOne({
+            where: { uuid: data, role: 'SUPPLIER' },
+            attributes: ['uuid', 'firstname', 'lastname', 'email', 'phone', 'role',]
         });
 
         if (payment?.verifiedAt === null) {
@@ -142,27 +142,27 @@ export class UserMySqlRepository implements UserInterface {
 
     async rabbitHistory(uuid: string): Promise<any> {
         console.log('UUID:', uuid);
-    
+
         // Buscar historial del usuario en la base de datos
         const history = await UserModel.findOne({ where: { uuid } });
-    
+
         // Si no se encuentra el historial, lanzar un error
         if (!history) {
             throw new CustomError('Historial de provedor no encontrado.', 404);  // 404 Not Found
         }
-    
+
         // Si la cuenta no está activada, lanzar un error
         if (!history.verifiedAt) {
             throw new CustomError('La cuenta no está activada.', 400);  // 400 Bad Request
         }
-    
-        console.log('Historial:', typeof(history.fullname));
+
+        console.log('Historial:', typeof (history.fullname));
         console.log('Historial:', history.fullname);
 
         return history.fullname;
     }
-    
-    
+
+
     async authenticateWithGoogle(googleId: string, fullname: string, email: string, profileUrl: string,): Promise<User> {
         console.log('Google ID desde repo:', googleId);
         console.log('Nombre desde repo:', fullname);
@@ -199,39 +199,39 @@ export class UserMySqlRepository implements UserInterface {
             return user;
         }).then(user => user.toJSON());
     }
-    
+
     async findByGoogleId(googleId: string): Promise<User | null> {
         const user = await UserModel.findOne({ where: { googleId } });
         return user ? user.toJSON() : null;
-      }
-    
-      async createUser(user: User): Promise<User> {
+    }
+
+    async createUser(user: User): Promise<User> {
         const createdUser = await UserModel.create(
         );
         return createdUser.toJSON();
-      }
+    }
 
     getFilters(data: any): Promise<User | any> {
         const filters: any = {
             role: 'supplier',
         };
-    
+
         if (data.relevance) {
             filters.relevance = data.relevance;
         }
-        
+
         if (data.service) {
             filters.selectedservices = data.service;
         }
-    
+
         if (data.quotation) {
             filters.quotation = data.quotation;
         }
-    
+
         if (data.hourlyrate) {
             filters.hourlyrate = data.hourlyrate;
         }
-    
+
         return UserModel.findAll({
             where: filters,
         });
@@ -239,7 +239,7 @@ export class UserMySqlRepository implements UserInterface {
 
     async findProfileById(uuid: string): Promise<User | any> {
         try {
-            
+
             const user = await UserModel.findOne({ where: { uuid: uuid } });
 
             const images = await UserImageModel.findAll({ where: { userUuid: uuid } });
@@ -252,34 +252,13 @@ export class UserMySqlRepository implements UserInterface {
                     message: 'Usuario no encontrado.'
                 };
             }
-
-            // const data = {
-            //     uuid: user.uuid,
-            //     contact: {
-            //         firstname: user.firstname,
-            //         lastname: user.lastname,
-            //         phone: user.phone,
-            //         role: user.role
-            //     },
-            //     credential: {
-            //         email: user.email
-            //     },
-            //     ...(user.role === 'SUPPLIER' && {
-            //         userProfile: {
-            //             address: user.address,
-            //             workexperience: user.workexperience,
-            //             standardprice: user.standardprice,
-            //             hourlyrate: user.hourlyrate,
-            //             selectedservices: user.selectedservices
-            //         }
-            //     })
-            // };
-
             return {
                 status: 200,
-                data: user,
-                images: images,
-                calendar: calendar
+                data: {
+                    ...user.toJSON(),
+                    images: images,
+                    calendar: calendar
+                }
             };
         } catch (error) {
             console.error('Error al obtener el perfil del cliente:', error);
@@ -292,7 +271,7 @@ export class UserMySqlRepository implements UserInterface {
 
     async getServices(uuid: string): Promise<any> {
         try {
-            if(!uuid || uuid === "undefined"){
+            if (!uuid || uuid === "undefined") {
                 return {
                     status: 400,
                     message: 'UUID no encontrado.'
@@ -326,7 +305,7 @@ export class UserMySqlRepository implements UserInterface {
             };
         }
     }
-    
+
     async profileData(uuid: string, profileData: any, imageUrls: string[], calendar: any[]): Promise<any> {
         try {
             // Buscar el usuario
@@ -334,20 +313,20 @@ export class UserMySqlRepository implements UserInterface {
             if (!user) {
                 throw new Error('Usuario no encontrado.');
             }
-    
+
             // Actualizar datos del perfil en el usuario
             await this.updateUserProfile(user, profileData);
-    
+
             // Actualizar el calendario si se pasa un nuevo calendario
             if (calendar && calendar.length > 0) {
                 await this.updateUserCalendar(uuid, calendar);
             }
-    
+
             // Si hay nuevas URLs de imágenes, actualizar las imágenes en UserImageModel
             if (imageUrls && imageUrls.length > 0) {
                 await this.updateUserImages(uuid, imageUrls);
             }
-    
+
             // Recuperar los datos actualizados del usuario
             const updatedUser = await UserModel.findOne({
                 where: { uuid },
@@ -356,11 +335,11 @@ export class UserMySqlRepository implements UserInterface {
                     { model: UserCalendarModel, as: 'calendar', required: false } // Incluye calendario del usuario
                 ]
             });
-    
+
             if (!updatedUser) {
                 throw new Error('No se pudo recuperar el usuario actualizado.');
             }
-    
+
             // Devolver los datos actualizados (usuario, calendario, imágenes)
             return {
                 data: updatedUser,
@@ -370,30 +349,30 @@ export class UserMySqlRepository implements UserInterface {
             throw error;
         }
     }
-    
+
 
     async updateUserCalendar(uuid: string, calendar: any[]): Promise<void> {
         try {
             // Eliminar el calendario existente para este usuario
-            await UserCalendarModel.destroy({ where: { userUuid : uuid } });
-    
+            await UserCalendarModel.destroy({ where: { userUuid: uuid } });
+
             const calendarEntries = calendar.map((day) => ({
                 uuid: uuidv4(),
-                userUuid:uuid,
-                day: day.day, 
-                active: day.activo, 
-                start: day.inicio, 
-                end: day.fin, 
+                userUuid: uuid,
+                day: day.day,
+                active: day.activo,
+                start: day.inicio,
+                end: day.fin,
             }));
-    
+
             await UserCalendarModel.bulkCreate(calendarEntries);
         } catch (error) {
             console.error('Error actualizando el calendario del usuario:', error);
             throw new Error('No se pudo actualizar el calendario del usuario.');
         }
     }
-    
-    
+
+
     private async updateUserProfile(user: any, profileData: any): Promise<void> {
         try {
             await user.update(profileData);
@@ -402,12 +381,12 @@ export class UserMySqlRepository implements UserInterface {
             throw new Error('No se pudo actualizar el perfil del usuario.');
         }
     }
-    
+
     async updateUserImages(uuid: string, imageUrls: string[]): Promise<void> {
         try {
             // Eliminar imágenes antiguas
             await UserImageModel.destroy({ where: { userUuid: uuid } });
-    
+
             // Guardar las nuevas imágenes
             for (const url of imageUrls) {
                 await UserImageModel.create({
@@ -420,7 +399,7 @@ export class UserMySqlRepository implements UserInterface {
             throw new Error('No se pudo actualizar las imágenes del usuario.');
         }
     }
-    
+
 
     async save(user: User): Promise<any> {
         try {
@@ -465,17 +444,17 @@ export class UserMySqlRepository implements UserInterface {
             });
 
             console.log('Usuario:', user);
-    
+
             if (!user) {
                 return {
                     status: 404,
                     message: 'Usuario no encontrado o ya activado.'
                 };
             }
-    
+
             user.verifiedAt = new Date();
             await user.save();
-    
+
             return {
                 status: 200,
                 response: user
@@ -492,21 +471,21 @@ export class UserMySqlRepository implements UserInterface {
     async login(email: string, password: string): Promise<any> {
         try {
             const user = await UserModel.findOne({ where: { email: email } });
-    
+
             if (!user) {
                 return {
                     status: 404,
                     message: 'Usuario no encontrado.'
                 };
             }
-    
+
             if (!user.verifiedAt) {
                 return {
                     status: 403,
                     message: 'La cuenta no está activada.'
                 };
             }
-    
+
             const passwordIsValid = bcrypt.compareSync(password, user.password);
             if (!passwordIsValid) {
                 return {
@@ -514,7 +493,7 @@ export class UserMySqlRepository implements UserInterface {
                     message: 'Contraseña incorrecta.'
                 };
             }
-    
+
             const token = JWTService.generateToken(user.uuid, user.email);
             user.token = token;
             await user.save();
@@ -524,7 +503,7 @@ export class UserMySqlRepository implements UserInterface {
                 token: token,
                 uuid: user.uuid
             };
-    
+
         } catch (error) {
             console.error('Error al iniciar sesión:', error);
             return {
@@ -535,16 +514,16 @@ export class UserMySqlRepository implements UserInterface {
     }
 
     async logout(email: string): Promise<any | void> {
-        try{
+        try {
             const user = await UserModel.findOne({ where: { email: email } });
-    
+
             if (!user) {
                 return {
                     status: 404,
                     message: 'Usuario no encontrado.'
                 };
             }
-    
+
             if (!user.verifiedAt) {
                 return {
                     status: 403,
@@ -553,12 +532,12 @@ export class UserMySqlRepository implements UserInterface {
             }
 
             if (!user.token) {
-                return { 
+                return {
                     status: 403,
-                    message: 'No has iniciado sesión.' 
+                    message: 'No has iniciado sesión.'
                 };
             }
-    
+
             user.token = null;
             await user.save();
 
@@ -566,7 +545,7 @@ export class UserMySqlRepository implements UserInterface {
                 status: 200,
                 message: 'Cierre de sesión exitoso.',
             };
-        }catch(error){
+        } catch (error) {
             console.error('Error al cerrar sesión:', error);
             return {
                 status: 500,

@@ -3,6 +3,8 @@ import { CreateTransactionUseCase } from "../application/usecases/CreateTransact
 import { CreateTransactionController } from "./controllers/CreateTransactionController";
 import { GetTransactionController } from "./controllers/GetTransactionController";
 import { TransactionMongoRepository } from "./repositories/TransactionMongoRepository";
+import { GetTotalTransactionsByUserIdController } from "./controllers/GetTotalTransactionsByUserIdController";
+import { GetTotalTransactionsByUserId } from "../application/usecases/GetTotalTransactionsByUserId";
 
 const mongoRepostory = new TransactionMongoRepository();
 
@@ -12,7 +14,11 @@ const createTransactionController = new CreateTransactionController(createTransa
 const getTransactionUseCase = new GetTransactionUseCase(mongoRepostory);
 const getTransactionController = new GetTransactionController(getTransactionUseCase);
 
+const getTotalTransactionsUseCase = new GetTotalTransactionsByUserId(mongoRepostory);
+const getTotalTransactionByUserIdController = new GetTotalTransactionsByUserIdController(getTotalTransactionsUseCase);
+
 export {
     createTransactionController,
-    getTransactionController
+    getTransactionController,
+    getTotalTransactionByUserIdController,
 }
