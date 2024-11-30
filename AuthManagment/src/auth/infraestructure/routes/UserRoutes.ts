@@ -12,7 +12,8 @@ import {
     getFiltersController,
     googleAuthController,
     searchSuppliersController,
-    getDataUserController
+    getDataUserController,
+    getAllSuppliersController
 } from '../dependencies';
 import passport from 'passport';
 
@@ -49,9 +50,13 @@ router.post('/logout', (req: Request, res: Response) => {
 router.put('/profile/suplier', (req: Request, res: Response) => {
     saveProfileDataController.saveProfileData(req, res);
 });
+router.post('/all/suppliers', (req: Request, res: Response) => {
+    getAllSuppliersController.run(req, res);
+});
 
-// Rutas privadas
+
 router.use(authMiddleware);
+
 
 router.get('/get/data', (req: Request, res: Response) => {
     console.log('Ruta get data, req.body:', req.body);

@@ -11,6 +11,59 @@ import { Op, Sequelize } from 'sequelize';
 import passport from 'passport';
 
 export class UserMySqlRepository implements UserInterface {
+    async getAllSuppliers(validField: string): Promise<User[] | { status: number; message: string }> {
+        console.log('ValidField:', validField);
+    
+        try {
+            if (validField === "All") {
+                const suppliers = await UserModel.findAll({
+                    where: {
+                        role: 'SUPPLIER',
+                        verifiedAt: { [Op.not]: null },
+                    },
+                    include: [
+                        {
+                            model: UserImageModel,
+                            as: 'images',
+                            attributes: ['images'], // Solo incluimos el campo 'images'
+                        },
+                    ],
+                });
+                return suppliers;
+            } else {
+                // Si no, filtra por categoría seleccionada en selectedservices
+                const suppliers = await UserModel.findAll({
+                    where: {
+                        role: 'SUPPLIER',
+                        verifiedAt: { [Op.not]: null },
+                        [Op.and]: Sequelize.literal(`JSON_CONTAINS(selectedservices, '"${validField}"')`),
+                    },
+                    include: [
+                        {
+                            model: UserImageModel,
+                            as: 'images',
+                            attributes: ['images'], // Solo incluimos el campo 'images'
+                        },
+                    ],
+                });
+    
+                // Si no hay proveedores, devolver 404
+                if (!suppliers || suppliers.length === 0) {
+                    return {
+                        status: 404,
+                        message: 'No se encontraron proveedores para la categoría seleccionada.',
+                    };
+                }
+    
+                // Respuesta exitosa
+                return suppliers;
+            }
+        } catch (error) {
+            console.error("Error en getAllSuppliers:", error);
+            throw new Error('Error interno del servidor.'); // Se lanza el error para manejarlo a nivel del controlador
+        }
+    }
+    
 
     async rabbitRaiting(userUuid: any, polaridad :any): Promise<any> {
         console.log('Datos recibidos de pagos:', userUuid);
@@ -61,6 +114,7 @@ export class UserMySqlRepository implements UserInterface {
         };
 
     }
+    
 
     async findRelevantSuppliers(keyPhrases: string[]): Promise<UserModel[]> {
         try {
