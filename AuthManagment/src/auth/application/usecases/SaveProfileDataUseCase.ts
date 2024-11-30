@@ -8,12 +8,16 @@ export class SaveProfileDataUseCase {
         private readonly imageStorageService: ImageStorageService
     ) {}
 
-    async run(uuid: string, profileData: any, images: string[], calendar: any[]): Promise<any> {
+    async run(uuid: string, profileData: any, images: any, calendar: any[]): Promise<any> {
+
+        console.log('images', images);
 
         const response = await this.repository.profileData(uuid, profileData,images, calendar);
 
 
-        if (images && images.length > 0) {
+        if (images) {
+
+            return "todo chido";
             const uploadedImages = await this.imageStorageService.uploadImages(uuid, images);
             await this.repository.updateUserImages(uuid, uploadedImages);
         }

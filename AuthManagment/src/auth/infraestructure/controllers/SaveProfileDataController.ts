@@ -28,9 +28,12 @@ export class SaveProfileDataController {
             const calendarToUpdate: string[] = Array.isArray(calendar) ? calendar : [];
 
             // Ejecutar el caso de uso
-            //const user = await this.saveProfileDataUseCase.run(uuid, profileData, uploadedImage, calendarToUpdate);
+            const user = await this.saveProfileDataUseCase.run(uuid, profileData, uploadedImage, calendarToUpdate);
 
-            //res.status(200).json(user); // Retornamos el usuario actualizado
+            if(user === "todo chido"){
+                res.status(200).json({ message: 'Perfil actualizado exitosamente.' });
+            }
+            
         } catch (error) {
             console.error('Error al guardar los datos del perfil:', error);
             if (error instanceof Error) {
