@@ -30,10 +30,11 @@ export class UserMySqlRepository implements UserInterface {
                         {
                             model: UserCalendarModel,
                             as: 'calendar',
-                            attributes: ['day', 'start', 'end'], // Solo incluimos los campos 'day', 'start' y 'end'
+                            attributes: ['day', 'start', 'end', 'active'], // Solo incluimos los campos 'day', 'start' y 'end'
                         },
                     ],
                 });
+                console.log('Proveedores encontrados:', suppliers);
                 return suppliers;
             } else {
                 // Si no, filtra por categoría seleccionada en selectedservices
@@ -52,7 +53,7 @@ export class UserMySqlRepository implements UserInterface {
                         {
                             model: UserCalendarModel,
                             as: 'calendar',
-                            attributes: ['day', 'start', 'end'], // Solo incluimos los campos 'day', 'start' y 'end'
+                            attributes: ['day', 'start', 'end', 'active'], // Solo incluimos los campos 'day', 'start' y 'end'
                         },
                     ],
                 });
