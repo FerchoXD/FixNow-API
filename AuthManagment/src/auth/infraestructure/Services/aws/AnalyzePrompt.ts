@@ -56,11 +56,11 @@ export class AnalyzePrompt {
                 'pared agrietada', 'color de pared', 'remodelación de pintura', 'pintura de exteriores', 
                 'pintura de interiores', 'mantenimiento de pintura', 'esmalte', 'manchas en paredes', 'pintura deteriorada'
             ],
-            'Limpieza general': [
-                'limpieza', 'limpiar', 'mugre', 'polvo', 'ordenar', 'barrer', 'fregar', 'trapeador', 
-                'aspiradora', 'quitar manchas', 'desinfección', 'limpieza profunda', 'cocina limpia', 
-                'baño limpio', 'vidrios', 'limpieza de oficinas', 'limpieza de casas', 'limpiar alfombras', 
-                'organización', 'servicio de limpieza', 'suciedad', 'grasa'
+            'Limpieza': [
+                'limpieza', 'limpiar', 'mugre', 'polvo', 'ordenar', 'barrer', 'fregar', 'trapeador',
+                'aspiradora', 'quitar manchas', 'desinfección', 'limpieza profunda', 'cocina limpia',
+                'baño limpio', 'vidrios', 'limpieza de oficinas', 'limpieza de casas', 'limpiar alfombras',
+                'organización', 'servicio de limpieza', 'suciedad', 'grasa', 'limpieza de ventanas', 'limpieza de pisos',
             ],
             'Jardinería': [
                 'jardinería', 'jardinero', 'césped', 'poda', 'plantas', 'mantenimiento de jardines', 
@@ -74,32 +74,31 @@ export class AnalyzePrompt {
                 'obra negra', 'plafones', 'acabados', 'columnas', 'cimientos', 'reparación de muros', 
                 'piso', 'azulejos', 'remodelación de casas', 'pared dañada'
             ],
-            'Fontanería': [
-                'fontanería', 'fontanero', 'agua', 'tuberías', 'llave de agua', 'grifo', 'fugas de agua', 
-                'desagüe', 'cisterna', 'válvula', 'instalación de agua', 'drenaje obstruido', 
-                'inodoro', 'fregadero', 'baño tapado', 'reparación de tuberías', 'mantenimiento de agua', 
-                'cambio de tuberías', 'tubería rota'
-            ],
             'Cerrajería': [
                 'cerrajería', 'cerrajero', 'cerradura', 'llaves', 'puerta cerrada', 'apertura de puertas', 
                 'llave rota', 'candado', 'cerradura electrónica', 'cambio de cerraduras', 
                 'seguridad de puertas', 'reparación de cerraduras', 'puerta dañada', 'forzar cerradura', 
                 'reemplazo de llaves', 'llave atascada', 'cerradura de seguridad'
             ],
-            'Reparación de electrodomésticos': [
+            'Electrodomésticos': [
                 'electrodomésticos', 'reparación', 'microondas', 'lavadora', 'secadora', 'refrigerador', 
                 'televisión', 'horno', 'lavavajillas', 'cafetera', 'licuadora', 'aire acondicionado', 
                 'cocina eléctrica', 'fallas eléctricas', 'reparar aparato', 'calentador de agua', 
                 'equipos de cocina', 'reparación de línea blanca', 'mantenimiento de electrodomésticos'
             ],
-            'Mantenimiento de aires acondicionados': [
+            'Climatización': [
                 'aire acondicionado', 'mantenimiento', 'clima', 'refrigeración', 'reparar', 
                 'fugas de gas', 'filtros de aire', 'compresor', 'termostato', 'instalación de aire', 
                 'reparación de clima', 'servicio de aire acondicionado', 'enfriamiento', 'ventilador', 
-                'limpieza de filtros', 'temperatura'
+                'limpieza de filtros', 'temperatura', 'aire acondicionado central', 'aire acondicionado portátil'
             ],
-            'Reparación de techo y filtraciones': [
-                'techo', 'filtraciones', 'gotera', 'tejas', 'impermeabilización', 'reparación de techos', 
+            'Impermeabilización': [
+                'techo', 'filtraciones', 'gotera', 'tejas', 'impermeabilización', 'reparación de techos', 'impermeabilizante',
+                'impermeabilizar', 'techo mojado', 'techo con goteras', 'techo con filtraciones', 'techo con humedad',
+                'techo sin impermeabilizar', 'techo sin mantenimiento', 'techo con goteras', 'techo con humedad',
+                'techo con filtraciones', 'techo con goteras', 'techo con humedad', 'techo sin impermeabilizar',
+                'techo sin mantenimiento', 'techo con goteras', 'techo con humedad', 'techo con filtraciones',
+                'techo con goteras', 'techo con humedad', 'techo sin impermeabilizar', 'techo sin mantenimiento',
                 'techo roto', 'mantenimiento de techos', 'agua filtrada', 'grietas en techo', 
                 'techo agrietado', 'sellado', 'revestimiento', 'techumbre', 'reparar techo'
             ],
