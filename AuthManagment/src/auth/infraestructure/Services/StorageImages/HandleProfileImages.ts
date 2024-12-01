@@ -1,6 +1,6 @@
 import { ImageStorageService } from './ImageStorageService';
 import { UserImageModel } from '../../models/MySQL/UserImage'; 
-
+/*
 export class HandleProfileImages {
     private imageStorageService: ImageStorageService;
 
@@ -23,3 +23,4 @@ export class HandleProfileImages {
         return imageUrls; // Devuelve las URLs para usarlas si es necesario
     }
 }
+    */
