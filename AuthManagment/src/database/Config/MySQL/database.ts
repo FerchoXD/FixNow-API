@@ -19,6 +19,12 @@ const sequelize = new Sequelize(
     port: parseInt(process.env.DB_PORT as string),
     dialectOptions,
     logging: console.log,
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 60000, 
+      idle: 10000    
+  }
   }
 );
 
