@@ -8,6 +8,12 @@ const sequelize = new Sequelize(
     dialect: 'mysql',
     port: 3306,
     logging: console.log,
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 60000, 
+      idle: 10000    
+  }
   }
 );
 export default sequelize;
