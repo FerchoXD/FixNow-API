@@ -318,93 +318,184 @@ export class UserMySqlRepository implements UserInterface {
     }
 
     async profileData(uuid: string, profileData: any, imageUrls: string[], calendar: any[]): Promise<any> {
+
+        console.log('UUID:', uuid);
+        console.log('Datos de perfil:', profileData);
+        console.log('URLs de imágenes:', imageUrls);
+        console.log('Calendario:', calendar);
+
+        const isProfileDataEmpty = !profileData || Object.keys(profileData).length === 0;
+        const areImageUrlsEmpty = !imageUrls || imageUrls.length === 0;
+        const isCalendarEmpty = !calendar || calendar.length === 0;
+
+        if (isProfileDataEmpty && areImageUrlsEmpty && isCalendarEmpty) {
+            return "No hay datos para actualizar";
+        }
+
         try {
             // Buscar el usuario
             const user = await UserModel.findOne({ where: { uuid } });
             if (!user) {
-                throw new Error('Usuario no encontrado.');
+                throw new Error('Usuario no encontrado.',);
             }
 
-            // Actualizar datos del perfil en el usuario
-            await this.updateUserProfile(user, profileData);
+            console.log('Usuario encontrado', profileData);
+            let data = null;
+            if (profileData && Object.keys(profileData).length > 0) {
+                data = await this.updateUserProfile(user, profileData);
+            }
 
-            // Actualizar el calendario si se pasa un nuevo calendario
+            let calendarUpdate = null;
+
             if (calendar && calendar.length > 0) {
-                await this.updateUserCalendar(uuid, calendar);
+                calendarUpdate = await this.updateUserCalendar(uuid, calendar);
             }
-
-            // Si hay nuevas URLs de imágenes, actualizar las imágenes en UserImageModel
+            
+            let imagesUpdate = null;
             if (imageUrls && imageUrls.length > 0) {
-                await this.updateUserImages(uuid, imageUrls);
+                imagesUpdate = await this.updateUserImages(uuid, imageUrls);
             }
-
-            // Recuperar los datos actualizados del usuario
-            const updatedUser = await UserModel.findOne({
-                where: { uuid },
-                include: [
-                    { model: UserImageModel, as: 'images', required: false }, // Incluye imágenes del usuario
-                    { model: UserCalendarModel, as: 'calendar', required: false } // Incluye calendario del usuario
-                ]
-            });
-
-            if (!updatedUser) {
-                throw new Error('No se pudo recuperar el usuario actualizado.');
-            }
-
-            // Devolver los datos actualizados (usuario, calendario, imágenes)
+            
             return {
-                data: updatedUser,
+                status: 200,
+                data: 
+                data, 
+                calendarUpdate,
+                imagesUpdate 
             };
         } catch (error) {
-            console.error('Error actualizando el perfil:', error);
+            console.error('Error:', error);
             throw error;
         }
     }
 
-
-    async updateUserCalendar(uuid: string, calendar: any[]): Promise<void> {
+    async updateUserCalendar(uuid: string, calendar: any): Promise<any> {
         try {
-            // Eliminar el calendario existente para este usuario
-            await UserCalendarModel.destroy({ where: { userUuid: uuid } });
+            if (typeof calendar === 'string') {
+                try {
+                    calendar = JSON.parse(calendar);
+                } catch (error: any) {
+                    console.error('Error al parsear el calendario como JSON:', error.message);
+                    throw new Error('El formato del calendario no es válido.');
+                }
+            }
+    
+            if (!Array.isArray(calendar) || calendar.length === 0) {
+                console.error('El parámetro calendar no es un arreglo válido o está vacío:', calendar);
+                throw new Error('El calendario proporcionado no es válido o está vacío.');
+            }
+    
+            const hasAtLeastOneActiveDay = calendar.some((day: any) => day.activo === true);
+            if (!hasAtLeastOneActiveDay) {
+                console.error('El calendario debe tener al menos un día laboral.');
+                throw new Error('El calendario debe tener al menos un día laboral.');
+            }
+    
+            const updatedEntries = [];
+    
+            for (const day of calendar) {
+                const startValue = day.activo ? day.inicio : null;
+                const endValue = day.activo ? day.fin : null;
+    
+                if (typeof day.day !== 'string') {
+                    console.error('El valor de "day" debe ser una cadena:', day);
+                    throw new Error('Formato de entrada inválido: el día debe ser una cadena.');
+                }
+    
+                const existingEntry = await UserCalendarModel.findOne({
+                    where: { userUuid: uuid, day: day.day },
+                });
+    
+                if (existingEntry) {
+                    const updatedEntry = await existingEntry.update({
+                        active: day.activo,
+                        start: startValue,
+                        end: endValue,
+                    });
+                    updatedEntries.push(updatedEntry);
+                } else {
+                    const newEntry = await UserCalendarModel.create({
+                        uuid: uuidv4(),
+                        userUuid: uuid,
+                        day: day.day,
+                        active: day.activo,
+                        start: startValue,
+                        end: endValue,
+                    });
+                    updatedEntries.push(newEntry);
+                }
+            }
+    
+            return updatedEntries;
+        } catch (error: any) {
+            console.error('Error actualizando el calendario del usuario:', error.message);
 
-            const calendarEntries = calendar.map((day) => ({
-                uuid: uuidv4(),
-                userUuid: uuid,
-                day: day.day,
-                active: day.activo,
-                start: day.inicio,
-                end: day.fin,
-            }));
+            if (error.message === 'El calendario debe tener al menos un día laboral.') {
+                throw new Error('El calendario debe tener al menos un día laboral.');
+            }
 
-            await UserCalendarModel.bulkCreate(calendarEntries);
-        } catch (error) {
-            console.error('Error actualizando el calendario del usuario:', error);
+            if (error.message === 'El calendario proporcionado no es válido o está vacío.') {
+                throw new Error('El calendario proporcionado no es válido o está vacío.');
+            }
+
             throw new Error('No se pudo actualizar el calendario del usuario.');
         }
     }
-
-
-    private async updateUserProfile(user: any, profileData: any): Promise<void> {
+    
+    private async updateUserProfile(user: any, profileData: any): Promise<any> {
         try {
-            await user.update(profileData);
+            if (typeof profileData === 'string') {
+                try {
+                    profileData = JSON.parse(profileData);
+                } catch (error) {
+                    console.error('Error al parsear profileData:', error);
+                    throw new Error('El formato de profileData no es válido.');
+                }
+            }
+            
+            if (!profileData || typeof profileData !== 'object') {
+                console.error('profileData no es un objeto válido:', profileData);
+                throw new Error('profileData no contiene datos válidos.');
+            }
+            
+            const dataToUpdate: Record<string, any> = {};
+            if (profileData.address !== undefined) dataToUpdate.address = profileData.address;
+            if (profileData.workexperience !== undefined) dataToUpdate.workexperience = profileData.workexperience;
+            if (profileData.standardprice !== undefined) dataToUpdate.standardprice = profileData.standardprice;
+            if (profileData.hourlyrate !== undefined) dataToUpdate.hourlyrate = profileData.hourlyrate;
+            if (profileData.selectedservices !== undefined) dataToUpdate.selectedservices = profileData.selectedservices;
+            
+            if (Object.keys(dataToUpdate).length === 0) {
+                console.log('No hay datos para actualizar.');
+                return;
+            }
+    
+            console.log('Datos a actualizar:', dataToUpdate);
+            
+            return await user.update(dataToUpdate);
         } catch (error) {
             console.error('Error actualizando los datos del usuario:', error);
             throw new Error('No se pudo actualizar el perfil del usuario.');
         }
     }
+    
+    
 
-    async updateUserImages(uuid: string, imageUrls: string[]): Promise<void> {
+    async updateUserImages(uuid: string, imageUrls: string[]): Promise<any> {
         try {
-            // Eliminar imágenes antiguas
+            
             await UserImageModel.destroy({ where: { userUuid: uuid } });
-
-            // Guardar las nuevas imágenes
+            
             for (const url of imageUrls) {
                 await UserImageModel.create({
                     userUuid: uuid,
-                    images: url, // Guardar cada URL en una fila separada
+                    images: url,
                 });
             }
+            
+            const images = await UserImageModel.findAll({ where: { userUuid: uuid } });
+            console.log('Imágenes actualizadas correctamente.');
+            return images;
         } catch (error) {
             console.error('Error actualizando las imágenes del usuario:', error);
             throw new Error('No se pudo actualizar las imágenes del usuario.');

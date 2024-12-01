@@ -14,19 +14,19 @@ export class ImageStorageService {
         });
     }
 
-    async uploadImages(uuid: string, images: string[]): Promise<string[]> {
+    async uploadImages(uuid: string, files: Express.Multer.File[]): Promise<string[]> {
         const urls: string[] = [];
-        for (const [index, base64Image] of images.entries()) {
-            const buffer = Buffer.from(base64Image, 'base64');
-            const fileName = `supplier-profile/${uuid}/image-${index + 1}.jpg`;
+
+        for (const [index, file] of files.entries()) {
+            const fileName = `supplier-profile/${uuid}/image-${index + 1}-${Date.now()}.jpg`;
 
             try {
                 const command = new PutObjectCommand({
                     Bucket: this.bucketName,
                     Key: fileName,
-                    Body: buffer,
-                    ContentType: 'image/jpeg',
-                    ACL: 'public-read', // Permitir acceso público si es necesario
+                    Body: file.buffer,
+                    ContentType: file.mimetype,
+                    ACL: 'public-read',
                 });
 
                 await this.s3Client.send(command);
@@ -38,6 +38,7 @@ export class ImageStorageService {
                 throw error;
             }
         }
+
         return urls;
     }
 }
