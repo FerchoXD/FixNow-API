@@ -340,28 +340,38 @@ export class UserMySqlRepository implements UserInterface {
             }
 
             console.log('Usuario encontrado', profileData);
-            let data = null;
             if (profileData && Object.keys(profileData).length > 0) {
-                data = await this.updateUserProfile(user, profileData);
+                await this.updateUserProfile(user, profileData);
             }
-
-            let calendarUpdate = null;
 
             if (calendar && calendar.length > 0) {
-                calendarUpdate = await this.updateUserCalendar(uuid, calendar);
+                await this.updateUserCalendar(uuid, calendar);
             }
             
-            let imagesUpdate = null;
             if (imageUrls && imageUrls.length > 0) {
-                imagesUpdate = await this.updateUserImages(uuid, imageUrls);
+                await this.updateUserImages(uuid, imageUrls);
             }
             
+            const data = await UserModel.findOne({ 
+                where: { uuid },
+                include: [
+                    {
+                        model: UserImageModel,
+                        as: 'images',
+                        attributes: ['images'], 
+                    },
+                    {
+                        model: UserCalendarModel,
+                        as: 'calendar',
+                        attributes: ['uuid','userUuid','day', 'start', 'end', 'active','createdAt','updatedAt'],
+                    },
+                ],
+            });
+
+
             return {
                 status: 200,
-                data: 
-                data, 
-                calendarUpdate,
-                imagesUpdate 
+                data: data
             };
         } catch (error) {
             console.error('Error:', error);
