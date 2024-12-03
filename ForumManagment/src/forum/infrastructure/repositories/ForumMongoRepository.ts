@@ -4,6 +4,15 @@ import { PostModel } from "../models/Mongo/PostSchema";
 import { v4 as uuidv4 } from 'uuid';
 
 export class ForumMongoRepository implements ForumInterface {
+    async getAllPost(): Promise<any> {
+        const AllPost = await PostModel.find().exec();
+        return AllPost;
+    }
+
+    async getAllPostById(userUuid: string): Promise<any> {
+        const AllPostByUuid = await PostModel.find({uuid: userUuid}).exec();
+        return AllPostByUuid;
+    }
 
     async findPostByTitleUsernameAndContent(searchTerm: string): Promise<any> {
         if (!searchTerm) {

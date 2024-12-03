@@ -4,4 +4,6 @@ export interface ForumInterface {
     createComment(username:string,postUuid:string ,content:string, time:Date): Promise<any>;
     findComments(postUuid:string): Promise<any>;
     findPostByTitleUsernameAndContent(searchTerm:string): Promise<any>;
+    getAllPost(): Promise<any>;
+    getAllPostById(userUuid:string): Promise<any>;
 }

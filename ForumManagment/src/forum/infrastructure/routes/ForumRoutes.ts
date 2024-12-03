@@ -3,7 +3,9 @@ import {
     createPostController,
     createCommentController,
     findCommentsController,
-    findPostByTitleController
+    findPostByTitleController,
+    getAllPostController,
+    geAllPostByIdController
 } from '../dependencies';
 const router = Router();
 
@@ -17,6 +19,18 @@ router.post('/create/comment', (req: Request, res: Response) => {
 
 router.post('/find/comments', (req: Request, res: Response) => {
     findCommentsController.run(req, res);
+});
+
+//? all
+router.get('/get/posts', (req: Request, res: Response) => {
+    console.log('query', req.query);
+    getAllPostController.run(req, res);
+});
+
+//? id
+router.get('/get/posts/:id', (req: Request, res: Response) => {
+    console.log('params', req.params);
+    geAllPostByIdController.run(req, res);
 });
 
 router.get('/find/post', (req: Request, res: Response) => {
