@@ -11,6 +11,12 @@ import { Op, Sequelize } from 'sequelize';
 import passport from 'passport';
 
 export class UserMySqlRepository implements UserInterface {
+    rabbitHistorySupplier(uuid: string): Promise<any> {
+        return this.rabbitHistory(uuid);
+    }
+    rabbitHistoryCustomer(uuid: string): Promise<any> {
+        return this.rabbitHistory(uuid);
+    }
     async getAllSuppliers(validField: string): Promise<User[] | { status: number; message: string }> {
         console.log('ValidField:', validField);
     
@@ -151,7 +157,7 @@ export class UserMySqlRepository implements UserInterface {
         }
     }
 
-    async rabbitHistory(uuid: string): Promise<any> {
+    private async rabbitHistory(uuid: string): Promise<any> {
         console.log('UUID:', uuid);
 
         // Buscar historial del usuario en la base de datos

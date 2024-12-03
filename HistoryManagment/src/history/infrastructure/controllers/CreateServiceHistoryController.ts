@@ -7,7 +7,7 @@ export class CreateServiceHistoryController {
     async run(res: Response, req: Request): Promise<any> {
         console.log(req.body);
         console.log('Controlador userUuid:', req.body.userUuid);
-        const {userUuid,title, description, agreedPrice, agreedDate } = req.body;
+        const {customerUuid,supplierUuid,title, description, agreedPrice, agreedDate } = req.body;
         if (!title || !description || !agreedPrice || !agreedDate) {
             return res.status(400).send({
                 message: 'Faltan campos obligatorios.',
@@ -15,7 +15,7 @@ export class CreateServiceHistoryController {
         }
 
         try {
-            const result = await this.useCase.execute(userUuid,title, description, agreedPrice, agreedDate);
+            const result = await this.useCase.execute(customerUuid,supplierUuid,title, description, agreedPrice, agreedDate);
             console.log(result);
     
             if (!result || (Array.isArray(result) && result.length === 0)) {

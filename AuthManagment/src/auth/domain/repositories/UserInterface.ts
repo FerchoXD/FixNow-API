@@ -13,7 +13,8 @@ export interface UserInterface {
     authenticateWithGoogle(googleId: string, name: string, email: string, profileUrl: string): Promise<User>;
     findByGoogleId(googleId: string): Promise<User | null>;
     createUser(user: User): Promise<User>;
-    rabbitHistory(uuid: string): Promise<any>;
+    rabbitHistorySupplier(uuid: string): Promise<any>;
+    rabbitHistoryCustomer(uuid: string): Promise<any>;
     findRelevantSuppliers(keyPhrases:string[]): Promise<User[]>;
     //getData(): Promise<User>;
     rabbitPayment(data: any): Promise<void>;

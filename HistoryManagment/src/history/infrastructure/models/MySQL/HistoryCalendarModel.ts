@@ -9,6 +9,8 @@ export enum CalendarStatus {
 
 export class HistoryCalendarModel extends Model {
     public uuid!: string;
+    public customerUuid!: string;
+    public supplierUuid!: string;
     public title!: string;
     public description!: string;
     public agreedPrice!: number;
@@ -22,7 +24,11 @@ HistoryCalendarModel.init({
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
     },
-    userUuid: {
+    customerUuid: {
+        type: new DataTypes.UUID(),
+        allowNull: false,
+    },
+    supplierUuid: {
         type: new DataTypes.UUID(),
         allowNull: false,
     },

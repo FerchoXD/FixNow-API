@@ -24,8 +24,10 @@ import { GetFiltersController } from "./controllers/GetFiltersController";
 import { GoogleAuthController } from "./controllers/GoogleAuthController";
 import { GoogleAuthUseCase } from "../application/usecases/GoogleAuthUseCase";
 import { GoogleAuthService } from "./Services/GoogleAuth/GoogleAuthService";
-import { ConsumerHistory } from "./Services/rabbitmq/consumer/HistoryConsumer";
-import { RabbitMQHistoryUseCase } from "../application/usecases/RabbitmqHistoryUseCase";
+import { ConsumerHistorySupplier } from "./Services/rabbitmq/consumer/HistoryConsumerSupplier";
+import { ConsumerHistoryCustomer} from "./Services/rabbitmq/consumer/HistoryConsumerCustomer";
+import { RabbitMQHistorySupplierUseCase } from "../application/usecases/RabbitmqHistorySupplierUseCase";
+import { RabbitMQHistoryCustomerUseCase } from "../application/usecases/RabbitmqHistoryCustomerUseCase";
 import { SearchSuppliersController } from "./controllers/SearchSuppliersController";
 import { SearchSuppliersUseCase } from "../application/usecases/SearchSuppliersUseCase";
 import { AnalyzePrompt } from './Services/aws/AnalyzePrompt';
@@ -41,7 +43,8 @@ import { GetAllSuppliersUseCase } from "../application/usecases/GetAllSuppliersU
 const mysqlRepository = new UserMySqlRepository();
 const googleAuthService = new GoogleAuthService( new GoogleAuthUseCase(mysqlRepository) );
 const databaseConfig = new MySQLConfig();
-const consumerHistory = new ConsumerHistory();
+const consumerHistorys = new ConsumerHistorySupplier();
+const consumerHistoryc = new ConsumerHistoryCustomer();
 const consumerPayment = new ConsumerPayment();
 const consumerRaiting = new ConsumerRaiting();
 const analyzePrompt = new AnalyzePrompt();
@@ -50,8 +53,12 @@ const analyzePrompt = new AnalyzePrompt();
 export async function init() {
   try {
     // Inicializar RabbitMQ Consumer
-    await consumerHistory.setup();
-    await consumerHistory.consume(async (data: any) => {
+    await consumerHistorys.setup();
+    await consumerHistorys.consume(async (data: any) => {
+      console.log('Datos recibidos de historial:', data);
+    });
+    await consumerHistoryc.setup();
+    await consumerHistoryc.consume(async (data: any) => {
       console.log('Datos recibidos de historial:', data);
     });
     await consumerPayment.setup();
@@ -84,7 +91,8 @@ const getServicesUseCase = new GetServicesUseCase(mysqlRepository);
 const searchSupplierUseCase = new SearchSupplierUseCase();
 const getProfileUseCase = new GetProfileUseCase(mysqlRepository);
 const getFiltersUseCase = new GetFiltersUseCase(mysqlRepository);
-const rabbitmqHistoryUsecase = new RabbitMQHistoryUseCase(mysqlRepository);
+const rabbitMQHistorySupplierUseCase = new RabbitMQHistorySupplierUseCase(mysqlRepository);
+const rabbitMQHistoryCustomerUseCase = new RabbitMQHistoryCustomerUseCase(mysqlRepository);
 const rabbitmqPaymentUsecase = new RabbitmqPaymentUseCase(mysqlRepository);
 const rabbitmqRaitingUsecase = new RabbitmqRaitingUseCase(mysqlRepository);
 const searchSuppliersUseCase = new SearchSuppliersUseCase(mysqlRepository, analyzePrompt);
@@ -122,7 +130,8 @@ export {
   getProfileController,
   getFiltersController,
   googleAuthController,
-  rabbitmqHistoryUsecase,
+  rabbitMQHistorySupplierUseCase,
+  rabbitMQHistoryCustomerUseCase,
   rabbitmqPaymentUsecase,
   rabbitmqRaitingUsecase,
   searchSuppliersController,

@@ -5,16 +5,16 @@ export class CreateSupplierHistoryController {
   constructor(private createSupplierHistoryUseCase: CreateSupplierHistoryUseCase) {}
 
   async run(req: Request, res: Response) {
-    const { userUuid } = req.body;
+    const { supplierUuid } = req.body;
 
-    console.log('Controlador userUuid:', userUuid);
+    console.log('Controlador userUuid:', supplierUuid);
 
-    if (!userUuid) {
+    if (!supplierUuid) {
       return res.status(400).json({ error: 'UUID es requerido' });
   }
 
     try {
-      const response = await this.createSupplierHistoryUseCase.execute(userUuid);
+      const response = await this.createSupplierHistoryUseCase.execute(supplierUuid);
 
       console.log('Respuesta del caso de uso:', response.status);
 

@@ -1,7 +1,6 @@
-import { on } from 'events';
 import RabbitMQConnection from '../rabbitConexion';
 
-export class ProducerHistory {
+export class ProducerHistoryCustomer {
     private channel: any;
     private correlationId: string;
 
@@ -28,7 +27,7 @@ export class ProducerHistory {
     async send(userUuid: string): Promise<any> {
         try {
 
-            console.log('useruyudi', userUuid);
+            console.log('customer id', userUuid);
             console.log('useruyudi', typeof userUuid);
 
             // Generar la cola temporal para recibir la respuesta
@@ -47,7 +46,7 @@ export class ProducerHistory {
     
                 // Enviar el mensaje a la cola principal
                 this.channel.sendToQueue(
-                    process.env.RABBITMQ_QUEUE || 'history-supplier-queue',
+                    process.env.RABBITMQ_QUEUE || 'history-customer-queue',
                     Buffer.from(message), // Asegúrate de que el mensaje sea un JSON string válido
                     {
                         replyTo: replyQueue.queue,

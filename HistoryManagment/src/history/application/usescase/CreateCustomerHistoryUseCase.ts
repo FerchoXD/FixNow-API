@@ -1,22 +1,20 @@
 import { response } from "express";
 import { HistoryInterface } from "../../domain/repositories/HistoryInterface";
-import { ProducerHistoryCustomer } from "../../infrastructure/services/rabbitmq/producer/RabbitHistoryCustomerProducer";
+import { ProducerHistorySupplier } from "../../infrastructure/services/rabbitmq/producer/RabbitHistorySupplierProducer";
 
-export class CreateSupplierHistoryUseCase {
+export class CreateCustomerHistoryUseCase {
     constructor(private repository: HistoryInterface) {}
 
-    async execute(supplierUuid: string): Promise<any> {
-        const producer = new ProducerHistoryCustomer();
+    async execute(customerUuid: string): Promise<any> {
+        const producer = new ProducerHistorySupplier();
 
         try {
             await producer.setup();
 
-            // Envía datos al proveedor RabbitMQ
-            const responseuuid = await producer.send(supplierUuid);
+            const responseuuid = await producer.send(customerUuid);
             console.log(responseuuid);
-            console.log('Respuesta del proveedor:', responseuuid.statusCode, responseuuid.message);
-            console.log('UUID:', responseuuid.fullname);
-            console.log('UUID:', supplierUuid);
+
+            
             if (responseuuid.statusCode === 404) {
                 return {
                     status: 404,
@@ -25,7 +23,7 @@ export class CreateSupplierHistoryUseCase {
             }
 
             // Consultar historial desde el repositorio
-            const response: any = await this.repository.historySupplier(responseuuid.fullname, supplierUuid);
+            const response: any = await this.repository.historyCustomer(responseuuid.fullname, customerUuid);
             console.log('Historial creado y mensaje enviado.', response);
 
             if (response.status === 404) {

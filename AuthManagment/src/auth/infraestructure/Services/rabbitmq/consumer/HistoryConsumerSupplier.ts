@@ -1,8 +1,8 @@
 import RabbitMQConnection from '../rabbitConexion';
-import { rabbitmqHistoryUsecase } from '../../../dependencies';
+import { rabbitMQHistorySupplierUseCase } from '../../../dependencies';
 import CustomError  from '../../../../application/errors/CustomError';
 
-export class ConsumerHistory {
+export class ConsumerHistorySupplier {
     private channel: any;
     private queue: string;
 
@@ -63,7 +63,7 @@ export class ConsumerHistory {
                         console.log('Mensaje recibido como objeto:', message);
             
                         // Obtener fullname
-                        const fullname = await rabbitmqHistoryUsecase.execute(message.userUuid);
+                        const fullname = await rabbitMQHistorySupplierUseCase.execute(message.userUuid);
                         console.log('Obteniendo fullname:', fullname);
             
                         // Asignar el fullname al mensaje

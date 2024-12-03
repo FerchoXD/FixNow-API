@@ -4,13 +4,53 @@ import { HistoryInterface } from "../../domain/repositories/HistoryInterface";
 import HistoryCalendarModel from "../models/MySQL/HistoryCalendarModel";
 
 export class HistoryMySqlRepository implements HistoryInterface {
+    async historyCustomer(fullname: string, customerUuid: string): Promise<any> {
+        try{
+            const history = await HistoryCalendarModel.findAll({
+                where: { supplierUuid: customerUuid },
+                attributes: ['uuid','title', 'description', 'status', 'createdAt']
+            });
 
-    async historySupplier(fullname: string, userUuid: string): Promise<any> {
+            console.log('Historial de citas:', history);
+    
+            // Validar si no se encontraron registros
+            if (!history || history.length === 0) {
+                return {
+                    status: 404,
+                    message: 'No se encontraron citas.'
+                };
+            }
+    
+            // Transformar resultados en un formato limpio
+            const historyData = history.map(record => record.toJSON());
+    
+            // Retornar el historial procesado
+            return {
+                status: 200,
+                message: 'Historial de citas encontrado.',
+                data: {
+                    fullname: fullname,
+                    history: historyData
+                }
+            };
+        } catch (error) {
+            console.error('Error en historySupplier:', (error as Error).message);
+    
+            // Manejar error interno
+            return {
+                status: 500,
+                message: 'Error interno del servidor.',
+                error: (error as Error).message
+            };
+        }
+    }
+
+    async historySupplier(fullname: string, supplierUuid: string): Promise<any> {
         try {
             // Buscar historial en la base de datos
             const history = await HistoryCalendarModel.findAll({
-                where: { userUuid: userUuid },
-                attributes: ['uuid', 'userUuid', 'title', 'description', 'status', 'createdAt']
+                where: { supplierUuid: supplierUuid },
+                attributes: ['uuid','title', 'description', 'status', 'createdAt']
             });
     
             console.log('Historial de citas:', history);
@@ -48,12 +88,13 @@ export class HistoryMySqlRepository implements HistoryInterface {
     }
     
 
-    async create(userUuid:string,title: string, description: string, agreedPrice: number, agreedDate: Date): Promise<any> {
+    async create(customerUuid:string,supplierUuid:string,title: string, description: string, agreedPrice: number, agreedDate: Date): Promise<any> {
         try {
 
             const existingHistory = await HistoryCalendarModel.findOne({
                 where: {
-                    userUuid: userUuid,
+                    customerUuid: customerUuid,
+                    supplierUuid: supplierUuid,
                     title: title,
                     description: description,
                     agreedPrice: agreedPrice,
@@ -69,7 +110,8 @@ export class HistoryMySqlRepository implements HistoryInterface {
             }
     
             const historyCreated = await HistoryCalendarModel.create({
-                userUuid: userUuid,
+                customerUuid: customerUuid,
+                supplierUuid: supplierUuid,
                 title: title,
                 description: description,
                 agreedPrice: agreedPrice,
