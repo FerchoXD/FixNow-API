@@ -4,7 +4,7 @@ import { RabbitPaymentProducer } from "../../infrastructure/services/rabbitmq/pr
 
 export class CreateSuscriptionUseCase{
     constructor(private repository: PaymentInterface) {}
-    async run(userUuid: string): Promise<any> {
+    async execute(userUuid: string): Promise<any> {
 
         const producer = new RabbitPaymentProducer();
         const paymentData = new ServiceMercadoPago();
