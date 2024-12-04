@@ -15,7 +15,8 @@ export class RegisterUserUseCase {
         phone: string,
         email: string,
         password: string,
-        role: 'CUSTOMER' | 'SUPPLIER'
+        role: 'CUSTOMER' | 'SUPPLIER',
+        tokenfcm: string
     ): Promise<User | any> {
         try {
             let contact = new Contact(firstname, lastname,fullname, email, phone, role);
@@ -24,7 +25,7 @@ export class RegisterUserUseCase {
 
             let status = new Status(new Date());
             let userProfile = new UserProfile();
-            let user = new User(contact, credential, status, userProfile, '', contact.fullname);
+            let user = new User(contact, credential, status, userProfile, '',tokenfcm, contact.fullname);
             
             const response = await this.repository.save(user);
             return response;

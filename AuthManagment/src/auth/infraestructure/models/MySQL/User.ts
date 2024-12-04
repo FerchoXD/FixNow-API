@@ -10,6 +10,7 @@ import UserCalendarModel from './UserCalendar';
 export class UserModel extends Model {
     public uuid!: string;  // Agregado
     public googleId!: string;  // Agregado
+    public tokenfcm!: string;  // Agregado
     public contact!: Contact;  // Agregado
     public credential!: Credential;  // Agregado
     public status!: Status;  // Agregado
