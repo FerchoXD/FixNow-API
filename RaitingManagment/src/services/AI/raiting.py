@@ -46,18 +46,17 @@ def enviar_mensaje(mensaje_usuario):
         categoria = respuesta_json.get("categoria", "irrelevante")
         polaridad = respuesta_json.get("polaridad", None)
 
-        # Manejo de las diferentes categorías
         if categoria == "grosero":
             print("Eliminar comentario: Contiene lenguaje inapropiado.")
-            print("Esto es la polaridad: -1")
-            return -1
+            print("Esto es la polaridad: -1", polaridad)
+            return polaridad
         elif categoria == "relevante":
             print(f"Comentario relevante. Polaridad: {polaridad}")
             return polaridad
         else:  # irrelevante
             print("El comentario no es relevante para el proveedor actual.")
             print("Esto es la polaridad: 0")
-            return 0
+            return polaridad
     except json.JSONDecodeError as e:
         print("Error al decodificar la respuesta de la API:", e)
         print("Esto es la polaridad: None")

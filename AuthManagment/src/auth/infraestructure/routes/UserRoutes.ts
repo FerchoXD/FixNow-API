@@ -65,7 +65,6 @@ router.post('/tokenfcm', (req: Request, res: Response) => {
 
 router.use(authMiddleware);
 
-
 router.get('/get/data', (req: Request, res: Response) => {
     console.log('Ruta get data, req.body:', req.body);
     getDataUserController.run(req, res);

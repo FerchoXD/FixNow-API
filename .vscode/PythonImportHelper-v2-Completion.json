@@ -139,6 +139,14 @@
         "documentation": {}
     },
     {
+        "label": "obtener_comentarios_por_id",
+        "importPath": "src.controllers.raiting_controller",
+        "description": "src.controllers.raiting_controller",
+        "isExtraImport": true,
+        "detail": "src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
@@ -209,7 +217,16 @@
         "kind": 2,
         "importPath": "RaitingManagment.src.controllers.raiting_controller",
         "description": "RaitingManagment.src.controllers.raiting_controller",
-        "peekOfCode": "def calcular_rating(user_uuid, polaridad_actual=None):\n    try:\n        # Obtener todos los comentarios activos, relevantes y con categoría 'relevante' para el usuario\n        comentarios = Comment.objects(\n            userUuid=user_uuid,\n            status=\"active\",\n            isRelevant=True,\n            category=\"relevante\"\n        )\n        # Verificar si hay comentarios válidos",
+        "peekOfCode": "def calcular_rating(user_uuid, polaridad_actual=None):\n    try:\n        # Obtener todos los comentarios activos, relevantes y con categoría 'relevante' para el usuari\n        comentarios = Comment.objects(\n            userUuid=user_uuid,\n            status=\"active\",\n            isRelevant=True,\n            category=\"relevante\"\n        )\n        # Verificar si hay comentarios válidos",
+        "detail": "RaitingManagment.src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "manejar_polaridad_comentario",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.controllers.raiting_controller",
+        "description": "RaitingManagment.src.controllers.raiting_controller",
+        "peekOfCode": "def manejar_polaridad_comentario(polaridad, userUuid, contenido, fullname):\n    try:\n        if polaridad == -1:\n            # Eliminar comentarios groseros\n            comentario_grosero = Comment(\n                userUuid=userUuid,\n                fullname=fullname,\n                content=contenido,\n                polarity=polaridad,\n                status='deleted',",
         "detail": "RaitingManagment.src.controllers.raiting_controller",
         "documentation": {}
     },
@@ -228,6 +245,15 @@
         "importPath": "RaitingManagment.src.controllers.raiting_controller",
         "description": "RaitingManagment.src.controllers.raiting_controller",
         "peekOfCode": "def create_comment():\n    try:\n        # Obtener datos del cuerpo de la solicitud\n        data = request.get_json()\n        if not data or 'userUuid' not in data or not data['userUuid']:\n            return jsonify({\"error\": \"El identificador del usuario es requerido\"}), 400\n        # Validar que el contenido exista\n        if not data or 'content' not in data or not data['content']:\n            return jsonify({\"error\": \"El contenido del comentario es requerido\"}), 400\n        print(\"Esto es data:\", json.dumps(data['content'], indent=4))",
+        "detail": "RaitingManagment.src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "obtener_comentarios_por_id",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.controllers.raiting_controller",
+        "description": "RaitingManagment.src.controllers.raiting_controller",
+        "peekOfCode": "def obtener_comentarios_por_id(userUuid):\n    try:\n        if not userUuid:\n            return jsonify({\"error\": \"El identificador del usuario es requerido\"}), 400\n        # Obtener comentarios que no sean ofensivos (categoría distinta de 'grosero')\n        comentarios = Comment.objects(\n            userUuid=userUuid,\n            category__ne=\"grosero\"  # Filtrar comentarios cuya categoría no sea \"grosero\"\n        ).order_by(\"-created_at\")  # Ordenar por fecha de creación, del más reciente al más antiguo\n        # Verificar si hay comentarios disponibles",
         "detail": "RaitingManagment.src.controllers.raiting_controller",
         "documentation": {}
     },
@@ -263,7 +289,16 @@
         "kind": 2,
         "importPath": "RaitingManagment.src.routes.raiting_routes",
         "description": "RaitingManagment.src.routes.raiting_routes",
-        "peekOfCode": "def create_comment_route():\n    return create_comment()",
+        "peekOfCode": "def create_comment_route():\n    return create_comment()\n@raiting_bp.route('/comments/<userUuid>', methods=['GET'])\ndef get_comments(userUuid):\n    return obtener_comentarios_por_id(userUuid)",
+        "detail": "RaitingManagment.src.routes.raiting_routes",
+        "documentation": {}
+    },
+    {
+        "label": "get_comments",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.routes.raiting_routes",
+        "description": "RaitingManagment.src.routes.raiting_routes",
+        "peekOfCode": "def get_comments(userUuid):\n    return obtener_comentarios_por_id(userUuid)",
         "detail": "RaitingManagment.src.routes.raiting_routes",
         "documentation": {}
     },
@@ -272,7 +307,7 @@
         "kind": 5,
         "importPath": "RaitingManagment.src.routes.raiting_routes",
         "description": "RaitingManagment.src.routes.raiting_routes",
-        "peekOfCode": "raiting_bp = Blueprint('raiting', __name__)\n# Ruta POST para crear un comentario\n@raiting_bp.route('/create/commet', methods=['POST'])\ndef create_comment_route():\n    return create_comment()",
+        "peekOfCode": "raiting_bp = Blueprint('raiting', __name__)\n# Ruta POST para crear un comentario\n@raiting_bp.route('/create/commet', methods=['POST'])\ndef create_comment_route():\n    return create_comment()\n@raiting_bp.route('/comments/<userUuid>', methods=['GET'])\ndef get_comments(userUuid):\n    return obtener_comentarios_por_id(userUuid)",
         "detail": "RaitingManagment.src.routes.raiting_routes",
         "documentation": {}
     },
