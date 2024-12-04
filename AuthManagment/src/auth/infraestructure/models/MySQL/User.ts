@@ -43,6 +43,10 @@ UserModel.init({
         type: DataTypes.STRING,
         allowNull: true,
     },
+    tokenfcm : {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     firstname: { 
         type: DataTypes.STRING,
         allowNull: false,

@@ -13,7 +13,8 @@ import {
     googleAuthController,
     searchSuppliersController,
     getDataUserController,
-    getAllSuppliersController
+    getAllSuppliersController,
+    tokenfcmController
 } from '../dependencies';
 import passport from 'passport';
 import { uploadMiddleware } from '../middlewares/uploadImagesMiddleware';
@@ -54,6 +55,11 @@ router.put('/profile/suplier', uploadMiddleware, multerErrorHandler,(req: Reques
 });
 router.post('/all/suppliers', (req: Request, res: Response) => {
     getAllSuppliersController.run(req, res);
+});
+
+router.post('/tokenfcm', (req: Request, res: Response) => {
+    console.log('Ruta tokenfcm, req.body:', req.body);
+    tokenfcmController.run(req, res);
 });
 
 

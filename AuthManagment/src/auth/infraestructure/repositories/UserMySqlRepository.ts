@@ -11,6 +11,35 @@ import { Op, Sequelize } from 'sequelize';
 import passport from 'passport';
 
 export class UserMySqlRepository implements UserInterface {
+    async saveTokenFcm(userUuid: string, token: string): Promise<any> {
+        console.log('Datos recibidos en saveTokenFcm:', { userUuid, token });
+    
+        // Verifica si el usuario existe
+        const userExists = await UserModel.findOne({ where: { uuid: userUuid } });
+        
+        console.log('Usuario encontrado:', userExists);
+
+        if (!userExists) {
+            throw new Error('Usuario no encontrado.');
+        }
+    
+        // Intenta actualizar el token
+        const [updatedRows] = await UserModel.update(
+            { tokenfcm: token },
+            { where: { uuid: userUuid } }
+        );
+    
+        if (updatedRows === 0) {
+            throw new Error('El token no pudo ser actualizado.');
+        }
+    
+        return {
+            status: 201,
+            message: 'Token guardado correctamente.'
+        };
+    }
+    
+    
     rabbitHistorySupplier(uuid: string): Promise<any> {
         return this.rabbitHistory(uuid);
     }

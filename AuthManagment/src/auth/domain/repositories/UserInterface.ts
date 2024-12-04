@@ -20,4 +20,5 @@ export interface UserInterface {
     rabbitPayment(data: any): Promise<void>;
     rabbitRaiting(data: any, polarity:any): Promise<void>;
     getAllSuppliers(validField:String): Promise<User[] | { status: number; message: string}>;
+    saveTokenFcm(userUuid: string, token: string): Promise<any>;
 }

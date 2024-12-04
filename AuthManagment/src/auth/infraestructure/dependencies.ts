@@ -39,6 +39,8 @@ import { ConsumerRaiting } from "./Services/rabbitmq/consumer/RaitingConsumer";
 import { RabbitmqRaitingUseCase } from "../application/usecases/RabbitmqRaitingUseCase";
 import { GetAllSuppliersController } from "./controllers/GetAllSuppliersController";
 import { GetAllSuppliersUseCase } from "../application/usecases/GetAllSuppliersUseCase";
+import { TokenFcmUseCase } from "../application/usecases/TokenFcmUseCase";
+import { TokenFcmController } from "./controllers/GetTokenFcmController";
 
 const mysqlRepository = new UserMySqlRepository();
 const googleAuthService = new GoogleAuthService( new GoogleAuthUseCase(mysqlRepository) );
@@ -98,6 +100,7 @@ const rabbitmqRaitingUsecase = new RabbitmqRaitingUseCase(mysqlRepository);
 const searchSuppliersUseCase = new SearchSuppliersUseCase(mysqlRepository, analyzePrompt);
 const getDataUserUseCase = new GetDataUserUseCase(mysqlRepository);
 const getAllSuppliersUseCase = new GetAllSuppliersUseCase(mysqlRepository);
+const tokenfcmUseCase = new TokenFcmUseCase(mysqlRepository);
 
 const registerUserController = new RegisterUserController(registerUserUseCase, new EmailService());
 const activateUserController = new ActivateUserController(activateUserUseCase);
@@ -112,6 +115,7 @@ const googleAuthController = new GoogleAuthController(googleAuthService);
 const searchSuppliersController = new SearchSuppliersController(searchSuppliersUseCase);
 const getDataUserController = new GetDataUserController(getDataUserUseCase);
 const getAllSuppliersController = new GetAllSuppliersController(getAllSuppliersUseCase);
+const tokenfcmController = new TokenFcmController(tokenfcmUseCase);
 
 const dbConfig = getDatabaseConfig(mysqlRepository);
 dbConfig.initialize().then(() => {
@@ -136,5 +140,6 @@ export {
   rabbitmqRaitingUsecase,
   searchSuppliersController,
   getDataUserController,
-  getAllSuppliersController
+  getAllSuppliersController,
+  tokenfcmController
   };
