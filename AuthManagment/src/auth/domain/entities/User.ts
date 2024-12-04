@@ -8,6 +8,7 @@ export class User {
     public uuid: string;
     public googleId: string;
     public fullname: string; 
+    public tokenfcm: string;
     public contact: Contact;
     public credential: Credential;
     public status: Status;
@@ -19,11 +20,13 @@ export class User {
         status: Status, 
         userProfile: UserProfile, 
         googleId: string,
+        tokenfcm: string,
         fullname: string ) {
 
         this.uuid = uuidv4();
         this.googleId = googleId;
         this.fullname = fullname;
+        this.tokenfcm = tokenfcm;
         this.contact = contact;
         this.credential = credential;
         this.status = status;
