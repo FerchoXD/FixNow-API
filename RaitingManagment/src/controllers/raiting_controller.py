@@ -159,7 +159,6 @@ def create_comment():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 def obtener_comentarios_por_id(userUuid):
     try:
         if not userUuid:
