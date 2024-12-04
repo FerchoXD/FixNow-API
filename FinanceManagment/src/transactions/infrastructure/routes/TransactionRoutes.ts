@@ -1,6 +1,7 @@
 import express from 'express';
 import { Request, Response } from 'express';
-import { createTransactionController, getTransactionController, getTotalTransactionByUserIdController } from '../dependencies';
+import { createTransactionController, getTransactionController, getTotalTransactionByUserIdController, getAllTotalTransactionsByUser } from '../dependencies';
+import { GetAllTotalTransactionsByUser } from '../../application/usecases/GetAllTotalTransactionsByUser';
 
 export const transactionRoutes = express.Router();
 
@@ -15,3 +16,9 @@ transactionRoutes.get('/transactions/:id', (req: Request, res: Response) => {
 transactionRoutes.post('/transactions/user', (req: Request, res: Response) => {
     getTotalTransactionByUserIdController.handle(req, res);
 })
+
+transactionRoutes.get('/transactions/user/:id', (req: Request, res: Response) => {
+    getAllTotalTransactionsByUser.handle(req, res);
+})
+
+transactionRoutes.get

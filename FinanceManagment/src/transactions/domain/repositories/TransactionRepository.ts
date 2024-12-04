@@ -8,4 +8,6 @@ export interface TransactionRepository {
     findTotalTransaction(userId: string, year: number, month: number): Promise<TotalTransaction | null>
     createTotalTransaction(totalTransaction: TotalTransaction): Promise<TotalTransaction | null>
     updateTotalTransaction(totalTransaction: TotalTransaction): Promise<TotalTransaction>
+    getAllTotalTransactionsByUser(id: string): Promise<TotalTransaction[]>;
+
 }

@@ -618,7 +618,6 @@ export class UserMySqlRepository implements UserInterface {
     async login(email: string, password: string): Promise<any> {
         try {
             const user = await UserModel.findOne({ where: { email: email } });
-
             if (!user) {
                 return {
                     status: 404,

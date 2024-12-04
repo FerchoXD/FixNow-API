@@ -59,4 +59,18 @@ export class TransactionMongoRepository implements TransactionRepository {
         );
     }
 
+    async getAllTotalTransactionsByUser(id: string): Promise<TotalTransaction[]> {
+        const totalTransactionDocs = await TotalTransactionModel.find({ userId: id }).lean();
+
+        return totalTransactionDocs.map(doc => new TotalTransaction(
+            doc.userId,
+            doc.year,
+            doc.month,
+            doc.totalIncome,
+            doc.totalExpenses,
+            doc.balance,
+        ));
+    }
+
+
 }
