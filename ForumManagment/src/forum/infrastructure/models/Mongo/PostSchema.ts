@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export interface IPost extends Document {
   uuid: string;
+  userUuid: string;
   username: string;
   title: string;
   content: string;
@@ -18,6 +19,10 @@ const postSchema = new Schema<IPost>(
       default: uuidv4,
       required: true,
       unique: true,
+    },
+    userUuid: {
+      type: String,
+      required: true,
     },
     username: {
       type: String,

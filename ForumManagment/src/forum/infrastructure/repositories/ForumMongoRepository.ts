@@ -118,10 +118,11 @@ export class ForumMongoRepository implements ForumInterface {
         }
     }
 
-    async createPost(username: string, title: string, content: string, time: Date): Promise<any> {
+    async createPost(userUuid:string,username: string, title: string, content: string, time: Date): Promise<any> {
         try {
             const newPost = new PostModel({
                 uuid: uuidv4(), 
+                userUuid,
                 username,
                 title,
                 content,

@@ -5,12 +5,16 @@ export class CreatePostController {
     constructor(readonly useCase: CreatePostUseCase) { }
 
     async run(req: Request, res: Response): Promise<any> {
-        const { username, title, content, time } = req.body;
+        const { userUuid,username, title, content, time } = req.body;
 
         console.log('CreatePostController');
 
         // Validaciones
         const errors: string[] = [];
+
+        if (!userUuid || typeof userUuid !== 'string') {
+            errors.push('El campo "userUuid" es requerido y debe ser una cadena.');
+        }
 
         // Validar que los campos requeridos estén presentes
         if (!username || typeof username !== 'string') {
@@ -43,7 +47,7 @@ export class CreatePostController {
 
         try {
             // Ejecutar el caso de uso
-            const result = await this.useCase.execute(username, title, content, new Date(time));
+            const result = await this.useCase.execute(userUuid,username, title, content, new Date(time));
             console.log(result);
 
             // Responder con el resultado
