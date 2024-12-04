@@ -554,6 +554,7 @@ export class UserMySqlRepository implements UserInterface {
                 id: user.uuid,
                 firstname: user.contact.firstname,
                 lastname: user.contact.lastname,
+                tokenfcm: user.tokenfcm,
                 fullname: user.contact.firstname + ' ' + user.contact.lastname,
                 phone: user.contact.phone,
                 email: user.credential.email,
