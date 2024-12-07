@@ -2,7 +2,8 @@ import { Router, Request, Response } from 'express';
 import { 
     createServiceHistoryController,
     createSupplierHistoryController,
-    createCustomerHistoryController
+    createCustomerHistoryController,
+    changeStatusController
 } from '../dependencies';
 const router = Router();
 
@@ -22,6 +23,11 @@ router.post('/get/history/supplier', (req: Request, res: Response) => {
 router.post('/get/history/customer', (req: Request, res: Response) => {
     console.log("ruta",req.body);
     createCustomerHistoryController.run(req, res);
+});
+
+//
+router.post('/status', (req: Request, res: Response) => {
+    changeStatusController.run(req, res);
 });
 
 export default router;

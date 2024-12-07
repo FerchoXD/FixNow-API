@@ -4,6 +4,28 @@ import { HistoryInterface } from "../../domain/repositories/HistoryInterface";
 import HistoryCalendarModel from "../models/MySQL/HistoryCalendarModel";
 
 export class HistoryMySqlRepository implements HistoryInterface {
+    async changeStatus(serviceUuid: string, status: string): Promise<any> {
+        console.log('Cambiando estado de la cita:', serviceUuid, status);
+        
+        const response = await HistoryCalendarModel.update({ status: status }, {
+            where: { uuid: serviceUuid }
+        });
+        console.log('Cita actualizada:', response);
+
+        if (!response) {
+            return {
+                status: 404,
+                message: 'No se encontró la cita.'
+            };
+        }
+        
+        const data={
+            status: 200,
+            message: 'Estado actualizado correctamente.'
+        };
+
+        return data;
+    }
     async historyCustomer(fullname: string, customerUuid: string): Promise<any> {
         try{
             const history = await HistoryCalendarModel.findAll({

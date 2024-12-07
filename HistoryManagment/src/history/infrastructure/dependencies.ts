@@ -8,6 +8,8 @@ import { CreateSupplierHistoryUseCase } from "../application/usescase/CreateSupp
 import { CreateSupplierHistoryController } from "./controllers/CreateSupplierHistoryController";
 import { CreateCustomerHistoryUseCase } from "../application/usescase/CreateCustomerHistoryUseCase";
 import { CreateCustomerHistoryController } from "./controllers/CreateCustomerHistoryController";
+import { ChangeStatusUseCase } from "../application/usescase/ChangeStatusUseCase";
+import { ChangeStatusController } from "./controllers/ChangeStatusController";
 
 const mysqlRepository = new HistoryMySqlRepository();
 const databaseConfig = new MySQLConfig();
@@ -29,6 +31,9 @@ const createSupplierHistoryController = new CreateSupplierHistoryController(crea
 const createCustomerHistoryUseCase = new CreateCustomerHistoryUseCase(mysqlRepository)
 const createCustomerHistoryController = new CreateCustomerHistoryController(createCustomerHistoryUseCase);
 
+const changeStatusUseCase = new ChangeStatusUseCase(mysqlRepository);
+const changeStatusController = new ChangeStatusController(changeStatusUseCase);
+
 const dbConfig = getDatabaseConfig(mysqlRepository);
 
 // Asegúrate de que HistoryCalendarModel esté inicializado
@@ -39,5 +44,6 @@ dbConfig.initialize().then(() => {
 export { 
   createServiceHistoryController,
   createSupplierHistoryController,
-  createCustomerHistoryController
+  createCustomerHistoryController,
+  changeStatusController
   };

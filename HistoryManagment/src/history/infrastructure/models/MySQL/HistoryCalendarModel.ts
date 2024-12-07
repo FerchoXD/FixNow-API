@@ -4,6 +4,7 @@ import sequelize from '../../../../database/config/MySQL/database';
 export enum CalendarStatus {
     PENDING = 'PENDING',
     CONFIRMED = 'CONFIRMED',
+    DONE = 'DONE',
     CANCELLED = 'CANCELLED',
 }
 
@@ -49,7 +50,7 @@ HistoryCalendarModel.init({
         allowNull: false,
     },
     status: {
-        type: new DataTypes.ENUM(CalendarStatus.PENDING, CalendarStatus.CONFIRMED, CalendarStatus.CANCELLED),
+        type: new DataTypes.ENUM(CalendarStatus.PENDING, CalendarStatus.CONFIRMED,CalendarStatus.DONE, CalendarStatus.CANCELLED),
         allowNull: false,
         defaultValue: CalendarStatus.PENDING,
     },
