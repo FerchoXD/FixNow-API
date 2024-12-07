@@ -89,26 +89,9 @@ export class HistoryMySqlRepository implements HistoryInterface {
     
 
     async create(customerUuid:string,supplierUuid:string,title: string, description: string, agreedPrice: number, agreedDate: Date): Promise<any> {
+        console.log('Creando cita:');
         try {
-
-            const existingHistory = await HistoryCalendarModel.findOne({
-                where: {
-                    customerUuid: customerUuid,
-                    supplierUuid: supplierUuid,
-                    title: title,
-                    description: description,
-                    agreedPrice: agreedPrice,
-                    agreedDate: agreedDate
-                }
-            });
-    
-            if (existingHistory) {
-                return {
-                    status: 400,
-                    message: 'Ya ha sido creada una cita con esos mismos datos.',
-                };
-            }
-    
+            // Crear una nueva cita en la base de datos
             const historyCreated = await HistoryCalendarModel.create({
                 customerUuid: customerUuid,
                 supplierUuid: supplierUuid,
@@ -117,7 +100,8 @@ export class HistoryMySqlRepository implements HistoryInterface {
                 agreedPrice: agreedPrice,
                 agreedDate: agreedDate,
             });
-    
+            
+            console.log('Cita creada:');
             return {
                 message: 'Cita creada con éxito.',
                 data: historyCreated

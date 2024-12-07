@@ -41,6 +41,8 @@ import { GetAllSuppliersController } from "./controllers/GetAllSuppliersControll
 import { GetAllSuppliersUseCase } from "../application/usecases/GetAllSuppliersUseCase";
 import { TokenFcmUseCase } from "../application/usecases/TokenFcmUseCase";
 import { TokenFcmController } from "./controllers/GetTokenFcmController";
+import { ConsumerTokenfcm } from "./Services/rabbitmq/consumer/HistoryNotifications";
+import { RabbitmqTokenfcmUsecase } from "../application/usecases/rabbitMQHistoryTokenfcmUseCase";
 
 const mysqlRepository = new UserMySqlRepository();
 const googleAuthService = new GoogleAuthService( new GoogleAuthUseCase(mysqlRepository) );
@@ -49,6 +51,7 @@ const consumerHistorys = new ConsumerHistorySupplier();
 const consumerHistoryc = new ConsumerHistoryCustomer();
 const consumerPayment = new ConsumerPayment();
 const consumerRaiting = new ConsumerRaiting();
+const consumerTokenfcm = new ConsumerTokenfcm();
 const analyzePrompt = new AnalyzePrompt();
 
 
@@ -70,6 +73,10 @@ export async function init() {
     await consumerRaiting.setup();
     await consumerRaiting.consume(async (data: any) => {
       console.log('Datos recibidos de pagos:', data);
+    });
+    await consumerTokenfcm.setup();
+    await consumerTokenfcm.consume(async (data: any) => {
+      console.log('Datos recibidos de historial:', data);
     });
     console.log('RabbitMQ Consumer está listo');
   } catch (error) {
@@ -97,6 +104,7 @@ const rabbitMQHistorySupplierUseCase = new RabbitMQHistorySupplierUseCase(mysqlR
 const rabbitMQHistoryCustomerUseCase = new RabbitMQHistoryCustomerUseCase(mysqlRepository);
 const rabbitmqPaymentUsecase = new RabbitmqPaymentUseCase(mysqlRepository);
 const rabbitmqRaitingUsecase = new RabbitmqRaitingUseCase(mysqlRepository);
+const rabbitmqTokenfcmUsecase = new RabbitmqTokenfcmUsecase(mysqlRepository);
 const searchSuppliersUseCase = new SearchSuppliersUseCase(mysqlRepository, analyzePrompt);
 const getDataUserUseCase = new GetDataUserUseCase(mysqlRepository);
 const getAllSuppliersUseCase = new GetAllSuppliersUseCase(mysqlRepository);
@@ -141,5 +149,6 @@ export {
   searchSuppliersController,
   getDataUserController,
   getAllSuppliersController,
-  tokenfcmController
+  tokenfcmController,
+  rabbitmqTokenfcmUsecase
   };

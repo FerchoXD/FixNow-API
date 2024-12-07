@@ -11,6 +11,22 @@ import { Op, Sequelize } from 'sequelize';
 import passport from 'passport';
 
 export class UserMySqlRepository implements UserInterface {
+    async findTokenfcmForHistory(userUuid: string): Promise<any> {
+        
+        const getToken = await UserModel.findOne({ 
+            where: { uuid: userUuid },
+            attributes: ['tokenfcm']
+        });
+        console.log('Token:', getToken?.tokenfcm);
+        if (getToken === null) {
+            return {
+                status: 404,
+                message: 'Token no encontrado.'
+            };
+        }
+
+        return getToken.tokenfcm;
+    }
     async saveTokenFcm(userUuid: string, token: string): Promise<any> {
         console.log('Datos recibidos en saveTokenFcm:', { userUuid, token });
     

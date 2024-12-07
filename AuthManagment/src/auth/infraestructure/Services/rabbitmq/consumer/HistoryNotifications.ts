@@ -1,20 +1,20 @@
 import RabbitMQConnection from '../rabbitConexion';
-import { rabbitMQHistorySupplierUseCase } from '../../../dependencies';
 import CustomError  from '../../../../application/errors/CustomError';
+import {rabbitmqTokenfcmUsecase} from '../../../dependencies';
 
-export class ConsumerHistorySupplier {
+export class ConsumerTokenfcm {
     private channel: any;
     private queue: string;
 
     constructor() {
-        this.queue = process.env.RABBITMQ_QUEUE || 'history-supplier-queue';
+        this.queue = process.env.RABBITMQ_QUEUE || 'history-notification-queue';
     }
 
     async setup(): Promise<void> {
         try {
             const connection = RabbitMQConnection.getInstance();
             this.channel = await connection.connect();
-            this.channel.prefetch(1); // Procesa un mensaje a la vez por consumidor
+            this.channel.prefetch(1);
 
             // Asegurarse de que la cola exista
             await this.channel.assertQueue(this.queue, { durable: true });
@@ -32,17 +32,18 @@ export class ConsumerHistorySupplier {
         if (!this.channel) {
             throw new Error('RabbitMQ no está configurado. Llama a `setup()` primero.');
         }
-    
+
         try {
             console.log(`Esperando mensajes en la cola: ${this.queue}`);
-    
+
+            // Consumir mensajes de la cola
             this.channel.consume(this.queue, async (msg: any) => {
                 console.log('Mensaje recibido:', msg.content.toString());
                 if (msg !== null) {
                     try {
                         const rawMessage = msg.content.toString();
                         console.log('Contenido bruto del mensaje recibido:', rawMessage);
-    
+            
                         let message;
                         try {
                             message = JSON.parse(rawMessage);
@@ -51,28 +52,28 @@ export class ConsumerHistorySupplier {
                             this.channel.nack(msg, false, false);
                             return;
                         }
-    
+            
                         // Validar que el mensaje sea un objeto antes de continuar
-                        if (typeof message !== 'object' || message === null || !message.userUuid) {
-                            console.error('El mensaje recibido no es válido o falta userUuid:', message);
+                        if (typeof message !== 'object' || message === null) {
+                            console.error('El mensaje recibido no es un objeto válido:', message);
                             this.channel.nack(msg, false, false);
                             return;
                         }
-    
-                        console.log('Mensaje recibido como objeto válido:', message);
-    
+            
+                        console.log('Mensaje recibido como objeto:', message);
+            
                         // Obtener fullname
-                        const fullname = await rabbitMQHistorySupplierUseCase.execute(message.userUuid);
-                        console.log('Obteniendo fullname:', fullname);
-    
+                        const tokenfcm = await rabbitmqTokenfcmUsecase.execute(message.userUuid);
+                        console.log('Obteniendo token despues de usecase:', tokenfcm);
+            
                         // Asignar el fullname al mensaje
-                        message.fullname = fullname;
-    
+                        message.tokenfcm = tokenfcm;
+            
                         console.log('Mensaje actualizado:', message);
-    
+            
                         // Procesar el mensaje
                         onMessage(message);
-    
+            
                         // Enviar el mensaje de vuelta a la cola temporal si se requiere
                         const replyQueue = msg.properties.replyTo;
                         if (replyQueue) {
@@ -80,24 +81,42 @@ export class ConsumerHistorySupplier {
                                 correlationId: msg.properties.correlationId,
                             });
                         }
-    
+            
                         // Confirmar que el mensaje fue procesado correctamente
                         this.channel.ack(msg);
                     } catch (error) {
-                        console.error('Error inesperado procesando el mensaje:', error);
-    
-                        const errorMessage = {
-                            statusCode: 500,
-                            message: 'Error interno del servidor.',
-                        };
-    
-                        this.channel.sendToQueue(
-                            msg.properties.replyTo,
-                            Buffer.from(JSON.stringify(errorMessage)),
-                            { correlationId: msg.properties.correlationId },
-                        );
-    
-                        this.channel.nack(msg, false, false);
+                        if (error instanceof CustomError) {
+                            // Manejar errores personalizados de manera estructurada
+                            console.error('Error procesando historial:', error.message);
+                            
+                            // Responder al cliente con el código de estado y el mensaje de error
+                            const errorMessage = {
+                                statusCode: error.statusCode,
+                                message: error.message
+                            };
+
+                            console.log('Enviando mensaje de error:', errorMessage);
+                
+                            // Aquí puedes enviar este error de vuelta al cliente
+                            this.channel.sendToQueue(msg.properties.replyTo, Buffer.from(JSON.stringify(errorMessage)), {
+                                correlationId: msg.properties.correlationId,
+                            });
+
+                            this.channel.nack(msg, false, false); // Rechazar el mensaje
+
+                        } else {
+                            // Manejar errores no previstos
+                            console.error('Error inesperado:', error);
+                            const errorMessage = {
+                                statusCode: 500,
+                                message: 'Error interno del servidor.'
+                            };
+                            
+                            // Responder con un error genérico de servidor
+                            this.channel.sendToQueue(msg.properties.replyTo, Buffer.from(JSON.stringify(errorMessage)), {
+                                correlationId: msg.properties.correlationId,
+                            });
+                        }
                     }
                 }
             });
@@ -106,7 +125,6 @@ export class ConsumerHistorySupplier {
             throw new Error('No se pudo consumir mensajes de RabbitMQ.');
         }
     }
-    
 
     async close(): Promise<void> {
         try {
