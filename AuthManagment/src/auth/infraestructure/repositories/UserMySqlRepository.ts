@@ -129,7 +129,11 @@ export class UserMySqlRepository implements UserInterface {
 
     async rabbitRaiting(userUuid: any, polaridad: any): Promise<any> {
         console.log('Datos recibidos de pagos:', userUuid);
-        console.log('Datos recibidos de pagos:', polaridad);
+        console.log('xd:', polaridad);
+
+        if (polaridad === -1) {
+            polaridad = 0;
+        }
 
         await UserModel.update({ relevance: polaridad }, { where: { uuid: userUuid } });
 

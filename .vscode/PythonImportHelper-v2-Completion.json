@@ -16,7 +16,31 @@
         "documentation": {}
     },
     {
+        "label": "abort",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "Blueprint",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
         "importPath": "flask",
         "description": "flask",
         "isExtraImport": true,
@@ -217,7 +241,7 @@
         "kind": 2,
         "importPath": "RaitingManagment.src.controllers.raiting_controller",
         "description": "RaitingManagment.src.controllers.raiting_controller",
-        "peekOfCode": "def calcular_rating(user_uuid, polaridad_actual=None):\n    try:\n        # Obtener todos los comentarios activos, relevantes y con categoría 'relevante' para el usuari\n        comentarios = Comment.objects(\n            userUuid=user_uuid,\n            status=\"active\",\n            isRelevant=True,\n            category=\"relevante\"\n        )\n        # Verificar si hay comentarios válidos",
+        "peekOfCode": "def calcular_rating(user_uuid, polaridad_actual=None):\n    try:\n        # Obtener todos los comentarios activos, relevantes y con categoría 'relevante' para el usuario\n        comentarios = Comment.objects(\n            userUuid=user_uuid,\n            status=\"active\",\n            isRelevant=True,\n            category=\"relevante\"\n        )\n        # Calcular la suma de polaridades existentes",
         "detail": "RaitingManagment.src.controllers.raiting_controller",
         "documentation": {}
     },
@@ -289,7 +313,7 @@
         "kind": 2,
         "importPath": "RaitingManagment.src.routes.raiting_routes",
         "description": "RaitingManagment.src.routes.raiting_routes",
-        "peekOfCode": "def create_comment_route():\n    return create_comment()\n@raiting_bp.route('/comments/<userUuid>', methods=['GET'])\ndef get_comments(userUuid):\n    return obtener_comentarios_por_id(userUuid)",
+        "peekOfCode": "def create_comment_route():\n    return create_comment()\n# Ruta POST para obtener comentarios por userUuid\n@raiting_bp.route('/comments', methods=['POST'])\ndef get_comments():\n    data = request.get_json()\n    userUuid = data.get('userUuid')\n    return obtener_comentarios_por_id(userUuid)",
         "detail": "RaitingManagment.src.routes.raiting_routes",
         "documentation": {}
     },
@@ -298,7 +322,7 @@
         "kind": 2,
         "importPath": "RaitingManagment.src.routes.raiting_routes",
         "description": "RaitingManagment.src.routes.raiting_routes",
-        "peekOfCode": "def get_comments(userUuid):\n    return obtener_comentarios_por_id(userUuid)",
+        "peekOfCode": "def get_comments():\n    data = request.get_json()\n    userUuid = data.get('userUuid')\n    return obtener_comentarios_por_id(userUuid)",
         "detail": "RaitingManagment.src.routes.raiting_routes",
         "documentation": {}
     },
@@ -307,7 +331,7 @@
         "kind": 5,
         "importPath": "RaitingManagment.src.routes.raiting_routes",
         "description": "RaitingManagment.src.routes.raiting_routes",
-        "peekOfCode": "raiting_bp = Blueprint('raiting', __name__)\n# Ruta POST para crear un comentario\n@raiting_bp.route('/create/commet', methods=['POST'])\ndef create_comment_route():\n    return create_comment()\n@raiting_bp.route('/comments/<userUuid>', methods=['GET'])\ndef get_comments(userUuid):\n    return obtener_comentarios_por_id(userUuid)",
+        "peekOfCode": "raiting_bp = Blueprint('raiting', __name__)\n# Ruta POST para crear un comentario\n@raiting_bp.route('/create/comment', methods=['POST'])\ndef create_comment_route():\n    return create_comment()\n# Ruta POST para obtener comentarios por userUuid\n@raiting_bp.route('/comments', methods=['POST'])\ndef get_comments():\n    data = request.get_json()\n    userUuid = data.get('userUuid')",
         "detail": "RaitingManagment.src.routes.raiting_routes",
         "documentation": {}
     },
@@ -334,7 +358,7 @@
         "kind": 2,
         "importPath": "RaitingManagment.src.services.AI.raiting",
         "description": "RaitingManagment.src.services.AI.raiting",
-        "peekOfCode": "def preparar_texto(texto):\n    mensaje_usuario = (\n        f\"{texto} Evalúa este mensaje y clasifícalo en una de las siguientes categorías: \"\n        \"'relevante' (si está relacionado con el servicio del proveedor actual), \"\n        \"'irrelevante' (si no está relacionado con el servicio del proveedor y debe tener una polaridad de 0), \"\n        f\"o 'grosero' (si contiene lenguaje inapropiado como {PALABRAS_PROHIBIDAS} y debe tener una polaridad de -1). \"\n        \"Si el mensaje es relevante, proporciona también la polaridad del sentimiento en una escala del 1 al 5 (1=Muy negativo, 5=Muy positivo). \"\n        \"Ejemplos de texto irrelevante: '¿Cómo estás hoy?', 'Me gusta el clima'. \"\n        \"Responde únicamente en un JSON con las claves 'categoria' y 'polaridad'. \"\n        \"No des explicaciones ni detalles adicionales.\"",
+        "peekOfCode": "def preparar_texto(texto):\n    mensaje_usuario = (\n        f\"{texto} Evalúa este mensaje y clasifícalo en una de las siguientes categorías: \"\n        \"'relevante' (si está relacionado con el servicio del proveedor actual), \"\n        \"'irrelevante' (si no está relacionado con el servicio del proveedor y debe tener una polaridad de 0), \"\n        f\"o 'grosero' (si contiene lenguaje inapropiado como {PALABRAS_PROHIBIDAS} y debe tener una polaridad de -1). \"\n        \"Si el mensaje es relevante, proporciona también la polaridad del sentimiento en una escala del 1 al 5 (1=Muy negativo, 5=Muy positivo). \"\n        f\"Ejemplos de texto irrelevante: {PALABRAS_IRRELEVANTES} \"\n        \"Responde únicamente en un JSON con las claves 'categoria' y 'polaridad'. \"\n        \"No des explicaciones ni detalles adicionales.\"",
         "detail": "RaitingManagment.src.services.AI.raiting",
         "documentation": {}
     },
@@ -370,7 +394,16 @@
         "kind": 5,
         "importPath": "RaitingManagment.src.services.AI.raiting",
         "description": "RaitingManagment.src.services.AI.raiting",
-        "peekOfCode": "PALABRAS_PROHIBIDAS = \"\"\"\nestúpido,imbécil,idiota,mierda,chingadera,chingar,maldito,basura,perro,puto,\nperra,puta,cabrón,tarado,patético, chinga tu madre,chinga tu puta madre,\nasqueroso,grosero,inepto,mediocre,ridículo,despreciable,malparido,ojete,pendejo,\ntonto,cretino,sarnoso,inútil,corrupto,sucio,traidor,huevón,cobarde,infeliz,zángano,\nidiot,dumb,stupid,trash,bastard,scumbag,jerk,loser,moron,idiotic,fool,useless,\nworthless,ignorant,dirty,corrupt,incompetent,lame,stupid-ass,motherf***er,asshole,\ndickhead,f***er,b***h,a**hole,crap,crappy,trashbag,bullshit,damn,hell,numbskull,\ndork,prick,weirdo,jackass,scumbag,P3nd3j0,Kk,Pu+0,M!erda,B@$t@rd0,C@bR0n,M0th3rf***3r,\nF00l,Idi0+,@$$,Sh!t,Bu!!sh!t,Cr@ppy,1d10t,F**k,T@r@d0,B@st@rdo,H3ll,A$$h0l3,P3rr@,",
+        "peekOfCode": "PALABRAS_PROHIBIDAS = \"\"\"\nestúpido,imbécil,idiota,mierda,chingadera,chingar,maldito,basura,perro,puto,\nperra,puta,cabrón,tarado,patético,chinga tu madre,chinga tu puta madre,\nasqueroso,grosero,inepto,mediocre,ridículo,despreciable,malparido,ojete,pendejo,\ntonto,cretino,sarnoso,traidor,huevón,maldito\n\"\"\".strip()\nPALABRAS_IRRELEVANTES = \"\"\"\n¿Cómo estás hoy?, Me gusta el clima, \nAyer comí pizza., Mi color favorito es el azul.,\nHoy es martes., Me encanta la música clásica., ¿Tienes mascotas?, ",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "PALABRAS_IRRELEVANTES",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "PALABRAS_IRRELEVANTES = \"\"\"\n¿Cómo estás hoy?, Me gusta el clima, \nAyer comí pizza., Mi color favorito es el azul.,\nHoy es martes., Me encanta la música clásica., ¿Tienes mascotas?, \nEl cielo está despejado., Me gusta leer, Ayer llovió mucho., \nMe gustan las flores., ¿Te gusta viajar?, Hoy es un buen día., \nMe gustan los colores vivos., ¿Te gusta bailar?, El mar está en calma., \nMe encanta la pizza., Me gusta la moda., Ayer nevó.\n\"\"\".strip()\ndef preparar_texto(texto):",
         "detail": "RaitingManagment.src.services.AI.raiting",
         "documentation": {}
     },

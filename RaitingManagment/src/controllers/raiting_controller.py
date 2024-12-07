@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, abort
 from src.models.comments import Comment
 from src.services.AI.raiting import enviar_mensaje
 from src.services.rabbitmq.Raiting_producer import Producer
@@ -6,17 +6,13 @@ import json
 
 def calcular_rating(user_uuid, polaridad_actual=None):
     try:
-        # Obtener todos los comentarios activos, relevantes y con categoría 'relevante' para el usuari
+        # Obtener todos los comentarios activos, relevantes y con categoría 'relevante' para el usuario
         comentarios = Comment.objects(
             userUuid=user_uuid,
             status="active",
             isRelevant=True,
             category="relevante"
         )
-
-        # Verificar si hay comentarios válidos
-        if not comentarios and polaridad_actual is None:
-            return {"rating": 0, "total_comentarios": 0, "mensaje": "No hay comentarios válidos para calcular el rating."}
 
         # Calcular la suma de polaridades existentes
         suma_polaridad = sum(comentario.polarity for comentario in comentarios)
@@ -28,11 +24,29 @@ def calcular_rating(user_uuid, polaridad_actual=None):
         # Calcular el total de comentarios válidos
         total_comentarios = len(comentarios) + (1 if polaridad_actual is not None else 0)
 
-        rating = round(suma_polaridad / total_comentarios, 2)
+        # Verificar si hay comentarios válidos
+        if total_comentarios == 0:
+            return 0
+
+        # Calcular el rating promedio
+        rating_promedio = suma_polaridad / total_comentarios
+
+        # Determinar el máximo de estrellas según el número de comentarios
+        if 0 <= total_comentarios <= 5:
+            max_estrellas = 2
+        elif 6 <= total_comentarios <= 10:
+            max_estrellas = 3
+        elif 11 <= total_comentarios <= 20:
+            max_estrellas = 4
+        else:  # 21 comentarios o más
+            max_estrellas = 5
+
+        # Ajustar el rating dentro del rango permitido y prevenir valores negativos
+        rating = max(0, min(rating_promedio, max_estrellas))
 
         return rating
-    except Exception as e:
-        return {"error": str(e), "mensaje": "Error al calcular el rating."}
+    except Exception:
+        return 0
 
 
 def manejar_polaridad_comentario(polaridad, userUuid, contenido, fullname):
@@ -159,6 +173,8 @@ def create_comment():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+from flask import jsonify
+
 def obtener_comentarios_por_id(userUuid):
     try:
         if not userUuid:
@@ -172,7 +188,7 @@ def obtener_comentarios_por_id(userUuid):
 
         # Verificar si hay comentarios disponibles
         if not comentarios:
-            return jsonify({"message": "No se encontraron comentarios para este usuario."}), 200
+            return jsonify({"message": "No se encontraron comentarios para este usuario."}), 404
 
         # Filtrar solo los campos relevantes
         comentarios_filtrados = [
@@ -189,4 +205,3 @@ def obtener_comentarios_por_id(userUuid):
         return jsonify({"comentarios": comentarios_filtrados}), 200
     except Exception as e:
         return jsonify({"error": str(e), "mensaje": "Error al obtener los comentarios."}), 500
-
