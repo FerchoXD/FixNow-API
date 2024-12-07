@@ -26,7 +26,7 @@ export class ProducerSendNotification {
 
     
 
-    async send(tokenfcm: string, title:string, body:string): Promise<any> {
+    async send(tokenfcm: string, title:string, body:string,type:string, serviceId:string): Promise<any> {
         try {
             console.log('Enviando mensaje al productor...', tokenfcm, title, body);
             const replyQueue = await this.channel.assertQueue('', { exclusive: true });
@@ -40,7 +40,7 @@ export class ProducerSendNotification {
                     }
                 }, { noAck: false });
 
-                const message = JSON.stringify({ tokenfcm, title, body });
+                const message = JSON.stringify({ tokenfcm, title, body,type, serviceId});
     
                 this.channel.sendToQueue(
                     process.env.RABBITMQ_QUEUE || 'history-tokenfcm-queue',

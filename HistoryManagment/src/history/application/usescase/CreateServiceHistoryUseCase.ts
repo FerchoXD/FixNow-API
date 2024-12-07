@@ -34,9 +34,9 @@ export class CreateServiceHistoryUseCase {
             const producer = new ProducerSendNotification();
             await producer.setup();
             console.log("se inicio la conexion con el servidor de rabbitmq para notificaciones");
-
+            const type = "service";
             //enviamos la notificacion al supplier
-            const responseNoti = await producer.send(responseuuid.tokenfcm, 'Nueva cita', 'Tienes una nueva cita pendiente de confirmar'); 
+            const responseNoti = await producer.send(responseuuid.tokenfcm,response.data.dataValues.title, response.data.dataValues.description,type, response.data.dataValues.uuid ); 
             console.log('respuesta de producer que va a notificaciones', responseNoti);
 
 

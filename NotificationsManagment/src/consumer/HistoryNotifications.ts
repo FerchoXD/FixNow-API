@@ -63,7 +63,9 @@ export class RabbitConsumerNotification {
                             const response = await this.rabbitConsumerNotificationUseCase.execute(
                                 message.tokenfcm,
                                 message.title,
-                                message.body
+                                message.body,
+                                message.type,
+                                message.serviceId
                             );
                         
                             if (!response) {
