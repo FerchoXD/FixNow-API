@@ -32,7 +32,7 @@ export class RecomendationChatUseCase {
                 return { simpleResponse };
             }
 
-            throw new Error("No se pudo obtener la recomendación");
+            return response;
         } catch (error) {
             console.error('Error en RecomendationChatUseCase:', error);
             throw new Error('Error interno al procesar la solicitud.');
