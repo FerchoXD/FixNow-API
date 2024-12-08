@@ -4,12 +4,11 @@ import { v4 as uuidv4 } from "uuid";
 export interface IChatBot extends Document {
   uuid: string;
   userUuid: string;
-  username: string;
-  title: string;
-  content: string;
-  time: Date;
-  createdAt?: Date; 
-  updatedAt?: Date;
+  content?: string;
+  suppliers?: any;
+  complexity?: string;
+  simpleResponse?: string;
+  complexityResponse?: string;
 }
 
 const chatBotSchema = new Schema<IChatBot>(
@@ -24,21 +23,25 @@ const chatBotSchema = new Schema<IChatBot>(
       type: String,
       required: true,
     },
-    username: {
-      type: String,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
     content: {
       type: String,
       required: true,
     },
-    time: {
-      type: Date,
-      default: Date.now,
+    suppliers: {
+      type: Array,
+      required: false,
+    },
+    complexity: {
+      type: String,
+      required: false,
+    },
+    simpleResponse: {
+      type: String,
+      required: false,
+    },
+    complexityResponse: {
+      type: String,
+      required: false,
     },
   },
   {

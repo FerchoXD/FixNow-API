@@ -23,6 +23,8 @@ export class RecomendationChatUseCase {
                 console.log('Respuesta compleja:', complexResponse);
                 console.log("content", content);
                 const suppliers = await producer.send(content); 
+                
+                const save = await this.repository.getRecomendation(userUuid, content, complexity, complexResponse, simpleResponse,suppliers);
                 return { complexResponse, suppliers };
             }
 
@@ -30,8 +32,7 @@ export class RecomendationChatUseCase {
                 return { simpleResponse };
             }
 
-            const save = await this.repository.getRecomendation(userUuid, content, complexity, complexResponse, simpleResponse);
-            return save;
+            throw new Error("No se pudo obtener la recomendación");
         } catch (error) {
             console.error('Error en RecomendationChatUseCase:', error);
             throw new Error('Error interno al procesar la solicitud.');
