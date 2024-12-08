@@ -6,9 +6,10 @@ export interface IChatBot extends Document {
   userUuid: string;
   content?: string;
   suppliers?: any;
-  complexity?: string;
-  simpleResponse?: string;
-  complexityResponse?: string;
+  response?: any;
+  complexity?: any;
+  simpleResponse?: any;
+  complexityResponse?: any;
 }
 
 const chatBotSchema = new Schema<IChatBot>(
@@ -26,6 +27,10 @@ const chatBotSchema = new Schema<IChatBot>(
     content: {
       type: String,
       required: true,
+    },
+    response: {
+      type: String,
+      required: false,
     },
     suppliers: {
       type: Array,

@@ -24,14 +24,17 @@ export class RecomendationChatUseCase {
                 console.log("content", content);
                 const suppliers = await producer.send(content); 
                 
-                const save = await this.repository.getRecomendation(userUuid, content, complexity, complexResponse, simpleResponse,suppliers);
+                await this.repository.getRecomendation(userUuid, content, complexity, complexResponse, null,suppliers,null);
                 return { complexResponse, suppliers };
             }
 
             if (complexity === 'simple'){
+                await this.repository.getRecomendation(userUuid, content, complexity, null, simpleResponse,null,null);
                 return { simpleResponse };
             }
-
+            console.log('response',response);
+            const fer = await this.repository.getRecomendation(userUuid, content, null, null, null,null,response);
+            console.log('respuesta de la base de datos', fer);
             return response;
         } catch (error) {
             console.error('Error en RecomendationChatUseCase:', error);
