@@ -43,7 +43,7 @@ export class AnalyzePrompt {
                 'electricidad', 'electricista', 'eléctrico', 'luz', 'corriente eléctrica', 'voltaje', 
                 'interruptor', 'cortocircuito', 'fusible', 'cableado', 'panel eléctrico', 
                 'enchufe', 'toma corriente', 'instalación eléctrica', 'apagón', 'reparar luz', 'transformador', 
-                'mantenimiento eléctrico', 'cable roto', 'circuito', 'alumbrado'
+                'mantenimiento eléctrico', 'cable roto', 'circuito', 'alumbrado', 'instalación de luces', 'instalacion electrica'
             ],
             'Carpintería': [
                 'carpintería', 'carpintero', 'madera', 'muebles', 'puerta de madera', 'armario', 

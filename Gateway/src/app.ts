@@ -31,7 +31,7 @@ const createProxy = (target: string) =>
             proxyReqOpts.headers['changeOrigin'] = 'true';
             return proxyReqOpts;
         },
-    });
+});
 
 app.use('/api/v1/auth', createProxy(SERVICES.AUTH));
 app.use('/api/v1/history', createProxy(SERVICES.HISTORY));

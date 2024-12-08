@@ -62,6 +62,11 @@ router.post('/tokenfcm', (req: Request, res: Response) => {
     tokenfcmController.run(req, res);
 });
 
+router.post('/suppliers', (req: Request, res: Response) => {
+    console.log('Ruta suppliers, req.body:', req.body);
+    searchSuppliersController.run(req, res);
+});
+
 
 router.use(authMiddleware);
 
@@ -86,9 +91,5 @@ router.post('/filters', (req: Request, res: Response) => {
     getFiltersController.run(req, res);
 });
 
-router.post('/suppliers', (req: Request, res: Response) => {
-    console.log('Ruta suppliers, req.body:', req.body);
-    searchSuppliersController.run(req, res);
-});
 
 export default router;

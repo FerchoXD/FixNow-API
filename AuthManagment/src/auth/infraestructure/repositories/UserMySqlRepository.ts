@@ -194,11 +194,12 @@ export class UserMySqlRepository implements UserInterface {
                         );
                     }),
                 },
+                attributes: ['uuid', 'fullname', 'selectedservices', 'relevance'], // Mover fuera de where
                 order: [['relevance', 'DESC']],
             });
-
+    
             console.log('Proveedores encontrados:', suppliers);
-
+    
             return suppliers;
         } catch (error) {
             console.error('Error buscando proveedores relevantes:', error);
