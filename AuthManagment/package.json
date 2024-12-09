@@ -37,6 +37,7 @@
     "@aws-sdk/s3-request-presigner": "^3.699.0",
     "@google-cloud/bigquery": "^7.9.1",
     "@google-cloud/storage": "^7.14.0",
+    "@google/generative-ai": "^0.21.0",
     "aws-sdk": "^2.1692.0",
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",

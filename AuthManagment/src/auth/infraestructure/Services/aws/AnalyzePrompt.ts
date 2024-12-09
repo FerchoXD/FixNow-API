@@ -1,7 +1,9 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ComprehendClient, DetectKeyPhrasesCommand } from '@aws-sdk/client-comprehend';
 
 export class AnalyzePrompt {
     private client: ComprehendClient;
+    private genAI: GoogleGenerativeAI;
 
     constructor() {
         this.client = new ComprehendClient({
@@ -11,6 +13,7 @@ export class AnalyzePrompt {
                 secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
             },
         });
+        this.genAI = new GoogleGenerativeAI(process.env.API_KEY as string);
     }
 
     async execute(prompt: string): Promise<string[]> {
@@ -31,7 +34,38 @@ export class AnalyzePrompt {
         }
     }
 
-    
+    async detectProfessionsUsingAI(prompt: string): Promise<string[]> {
+        try {
+            const model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const aiPrompt = `
+Dado el siguiente texto, identifica las profesiones o servicios relevantes. Solo incluye profesiones relacionadas con:
+
+- Plomería
+- Electricidad
+- Carpintería
+- Pintura
+- Limpieza
+- Jardinería
+- Albañilería
+- Cerrajería
+- Electrodomésticos
+- Climatización
+- Impermeabilización
+
+Texto: "${prompt}"
+
+Lista de servicios detectados (separados por comas):`;
+            const result = await model.generateContent(aiPrompt);
+            const response = result.response?.text()?.split(",").map((item) => item.trim().toLowerCase()) || [];
+
+            console.log("Profesiones detectadas con IA:", response);
+            return response;
+        } catch (error) {
+            console.error("Error en detectProfessionsUsingAI:", error);
+            return [];
+        }
+    }
+
     detectProfessions(prompt: string): string[] {
         const professionMapping = {
             'Plomería': [
@@ -116,10 +150,11 @@ export class AnalyzePrompt {
         try {
             const comprehendKeyPhrases = await this.execute(prompt);
             const regexProfessions = this.detectProfessions(prompt);
+            const aiProfessions = await this.detectProfessionsUsingAI(prompt);
 
-            const combinedKeyPhrases = Array.from(new Set([...comprehendKeyPhrases, ...regexProfessions]));
+            const combinedKeyPhrases = Array.from(new Set([...comprehendKeyPhrases, ...regexProfessions, ...aiProfessions]));
 
-            console.log('Palabras clave combinadas (Comprehend + Regex):', combinedKeyPhrases);
+            console.log('Palabras clave combinadas (Comprehend + Regex + IA):', combinedKeyPhrases);
             return combinedKeyPhrases;
         } catch (error) {
             console.error('Error en enhancedAnalyzePrompt:', error);
@@ -127,4 +162,3 @@ export class AnalyzePrompt {
         }
     }
 }
-

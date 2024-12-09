@@ -186,26 +186,34 @@ export class UserMySqlRepository implements UserInterface {
         try {
             const suppliers = await UserModel.findAll({
                 where: {
-                    role: 'SUPPLIER', // Filtrar solo usuarios con rol SUPPLIER
-                    [Op.or]: keyPhrases.map((phrase) => {
-                        return Sequelize.where(
-                            Sequelize.fn('JSON_CONTAINS', Sequelize.col('selectedservices'), JSON.stringify(phrase)),
+                    role: 'SUPPLIER',
+                    [Op.and]: [
+                        Sequelize.where(
+                            Sequelize.fn('JSON_CONTAINS', Sequelize.col('selectedservices'), JSON.stringify('Carpintería')),
                             true
-                        );
-                    }),
+                        ),
+                        {
+                            [Op.or]: keyPhrases.map((phrase) =>
+                                Sequelize.where(
+                                    Sequelize.fn('JSON_CONTAINS', Sequelize.col('selectedservices'), JSON.stringify(phrase)),
+                                    true
+                                )
+                            ),
+                        },
+                    ],
                 },
-                attributes: ['uuid', 'fullname', 'selectedservices', 'relevance'], // Mover fuera de where
+                attributes: ['uuid', 'fullname', 'selectedservices', 'relevance'],
                 order: [['relevance', 'DESC']],
             });
     
             console.log('Proveedores encontrados:', suppliers);
-    
             return suppliers;
         } catch (error) {
             console.error('Error buscando proveedores relevantes:', error);
             throw new Error('No se pudo buscar proveedores relevantes.');
         }
     }
+    
 
     private async rabbitHistory(uuid: string): Promise<any> {
         console.log('UUID:', uuid);

@@ -35,3 +35,5 @@ export class RabbitmqGetSuppliersUsecase {
         return suppliers.sort((a, b) => b.relevance - a.relevance);
     }
 }
+
+
