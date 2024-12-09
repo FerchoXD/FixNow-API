@@ -146,19 +146,43 @@ Lista de servicios detectados (separados por comas):`;
         return detectedProfessions;
     }
 
+    private validateExactKeywords(keyPhrases: string[]): string[] {
+        const validServices = [
+            "Plomería",
+            "Electricidad",
+            "Carpintería",
+            "Pintura",
+            "Limpieza",
+            "Jardinería",
+            "Albañilería",
+            "Cerrajería",
+            "Electrodomésticos",
+            "Climatización",
+            "Impermeabilización",
+        ];
+    
+        return keyPhrases.filter((phrase) => validServices.includes(phrase));
+    }
+
     async enhancedAnalyzePrompt(prompt: string): Promise<string[]> {
         try {
             const comprehendKeyPhrases = await this.execute(prompt);
             const regexProfessions = this.detectProfessions(prompt);
             const aiProfessions = await this.detectProfessionsUsingAI(prompt);
-
-            const combinedKeyPhrases = Array.from(new Set([...comprehendKeyPhrases, ...regexProfessions, ...aiProfessions]));
-
-            console.log('Palabras clave combinadas (Comprehend + Regex + IA):', combinedKeyPhrases);
-            return combinedKeyPhrases;
+    
+            const combinedKeyPhrases = Array.from(
+                new Set([...comprehendKeyPhrases, ...regexProfessions, ...aiProfessions])
+            );
+    
+            // Validar que las palabras clave sean exactas
+            const filteredKeyPhrases = this.validateExactKeywords(combinedKeyPhrases);
+    
+            console.log("Palabras clave validadas:", filteredKeyPhrases);
+            return filteredKeyPhrases;
         } catch (error) {
-            console.error('Error en enhancedAnalyzePrompt:', error);
-            throw new Error('No se pudo analizar el prompt con el enfoque híbrido.');
+            console.error("Error en enhancedAnalyzePrompt:", error);
+            throw new Error("No se pudo analizar el prompt con el enfoque híbrido.");
         }
     }
+    
 }

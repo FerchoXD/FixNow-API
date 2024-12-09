@@ -117,6 +117,7 @@ Eres un asistente experto en clasificar textos en una de las siguientes categor�
 
 async run(content: string): Promise<any> {
   const inputType = await this.classifyInput(content);
+  console.log("Tipo de entrada detectado:", inputType);
 
   switch (inputType) {
       case "greeting":
@@ -141,6 +142,7 @@ async run(content: string): Promise<any> {
 
       case "service":
           const analysis = await this.analyzePrompt(content);
+          console.log("Análisis de servicio hola:", analysis);
 
           if (analysis.service) {
               if (analysis.complexity === "simple") {
@@ -150,6 +152,8 @@ async run(content: string): Promise<any> {
               } else if (analysis.complexity === "complex") {
                   const complexResponse = `Entiendo que necesitas ayuda con ${analysis.service}. Tenemos técnicos especializados que pueden ayudarte. A continuación te muestro los técnicos disponibles.`;
                   this.addToContext(content, complexResponse);
+                  console.log("Servicio detectado:", analysis.service);
+                  console.log("Complejidad detectada:", analysis.complexity);
                   return { complexResponse, analysis };
               }
           }

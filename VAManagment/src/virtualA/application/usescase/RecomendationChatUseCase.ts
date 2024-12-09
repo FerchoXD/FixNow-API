@@ -23,7 +23,7 @@ export class RecomendationChatUseCase {
                 console.log('Respuesta compleja:', complexResponse);
                 console.log("content", content);
                 const suppliers = await producer.send(content); 
-                
+                console.log('suppliers', suppliers);
                 await this.repository.getRecomendation(userUuid, content, complexity, complexResponse, null,suppliers,null);
                 return { complexResponse, suppliers };
             }

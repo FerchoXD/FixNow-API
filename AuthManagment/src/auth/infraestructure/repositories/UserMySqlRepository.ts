@@ -186,31 +186,27 @@ export class UserMySqlRepository implements UserInterface {
         try {
             const suppliers = await UserModel.findAll({
                 where: {
-                    role: 'SUPPLIER',
-                    [Op.and]: [
+                    role: "SUPPLIER",
+                    [Op.or]: keyPhrases.map((phrase) =>
                         Sequelize.where(
-                            Sequelize.fn('JSON_CONTAINS', Sequelize.col('selectedservices'), JSON.stringify('Carpintería')),
-                            true
-                        ),
-                        {
-                            [Op.or]: keyPhrases.map((phrase) =>
-                                Sequelize.where(
-                                    Sequelize.fn('JSON_CONTAINS', Sequelize.col('selectedservices'), JSON.stringify(phrase)),
-                                    true
-                                )
+                            Sequelize.fn(
+                                "JSON_CONTAINS",
+                                Sequelize.col("selectedservices"),
+                                JSON.stringify(phrase)
                             ),
-                        },
-                    ],
+                            true
+                        )
+                    ),
                 },
-                attributes: ['uuid', 'fullname', 'selectedservices', 'relevance'],
-                order: [['relevance', 'DESC']],
+                attributes: ["uuid", "fullname", "selectedservices", "relevance"],
+                order: [["relevance", "DESC"]],
             });
     
-            console.log('Proveedores encontrados:', suppliers);
+            console.log("Proveedores encontrados:", suppliers);
             return suppliers;
         } catch (error) {
-            console.error('Error buscando proveedores relevantes:', error);
-            throw new Error('No se pudo buscar proveedores relevantes.');
+            console.error("Error buscando proveedores relevantes:", error);
+            throw new Error("No se pudo buscar proveedores relevantes.");
         }
     }
     
