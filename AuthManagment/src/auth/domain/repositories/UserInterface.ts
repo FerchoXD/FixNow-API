@@ -22,4 +22,5 @@ export interface UserInterface {
     getAllSuppliers(validField:String): Promise<User[] | { status: number; message: string}>;
     saveTokenFcm(userUuid: string, token: string): Promise<any>;
     findTokenfcmForHistory(userUuid: string): Promise<any>;
+    getCustomer(userUuid: string): Promise<any>;
 }

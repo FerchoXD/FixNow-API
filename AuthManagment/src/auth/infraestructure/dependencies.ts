@@ -45,6 +45,8 @@ import { ConsumerTokenfcm } from "./Services/rabbitmq/consumer/HistoryNotificati
 import { RabbitmqTokenfcmUsecase } from "../application/usecases/rabbitMQHistoryTokenfcmUseCase";
 import { ConsumerChatBotSupplier } from "./Services/rabbitmq/consumer/ChatBotConsumerSupplier";
 import { RabbitmqGetSuppliersUsecase } from "../application/usecases/RabbitmqGetSuppliersUsecase";
+import { GetDataCustomerController } from "./controllers/GetDataCustomerController";
+import { GetDataCustomerUseCase } from "../application/usecases/GetDataCustomerUseCase";
 
 const mysqlRepository = new UserMySqlRepository();
 const googleAuthService = new GoogleAuthService( new GoogleAuthUseCase(mysqlRepository) );
@@ -117,6 +119,7 @@ const searchSuppliersUseCase = new SearchSuppliersUseCase(mysqlRepository, analy
 const getDataUserUseCase = new GetDataUserUseCase(mysqlRepository);
 const getAllSuppliersUseCase = new GetAllSuppliersUseCase(mysqlRepository);
 const tokenfcmUseCase = new TokenFcmUseCase(mysqlRepository);
+const getDataCustomerUseCase = new GetDataCustomerUseCase(mysqlRepository);
 
 const registerUserController = new RegisterUserController(registerUserUseCase, new EmailService());
 const activateUserController = new ActivateUserController(activateUserUseCase);
@@ -132,6 +135,7 @@ const searchSuppliersController = new SearchSuppliersController(searchSuppliersU
 const getDataUserController = new GetDataUserController(getDataUserUseCase);
 const getAllSuppliersController = new GetAllSuppliersController(getAllSuppliersUseCase);
 const tokenfcmController = new TokenFcmController(tokenfcmUseCase);
+const getDataCustomerController = new GetDataCustomerController(getDataCustomerUseCase);
 
 const dbConfig = getDatabaseConfig(mysqlRepository);
 dbConfig.initialize().then(() => {
@@ -159,5 +163,6 @@ export {
   getAllSuppliersController,
   tokenfcmController,
   rabbitmqTokenfcmUsecase,
-  rabbitmqgetSuppliersUsecase
+  rabbitmqgetSuppliersUsecase,
+  getDataCustomerController
   };

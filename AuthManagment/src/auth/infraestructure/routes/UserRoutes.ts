@@ -14,7 +14,8 @@ import {
     searchSuppliersController,
     getDataUserController,
     getAllSuppliersController,
-    tokenfcmController
+    tokenfcmController,
+    getDataCustomerController
 } from '../dependencies';
 import passport from 'passport';
 import { uploadMiddleware } from '../middlewares/uploadImagesMiddleware';
@@ -26,6 +27,11 @@ const router = Router();
 router.post('/', (req: Request, res: Response) => {
     console.log(req.body);
     registerUserController.run(req, res);
+});
+
+router.get('/get/data/customer/:userUuid', (req: Request, res: Response) => {
+    console.log('Ruta get data customer, req.body:', req.params);
+    getDataCustomerController.run(req, res);
 });
 
 router.put('/:token/activate', (req: Request, res: Response) => {

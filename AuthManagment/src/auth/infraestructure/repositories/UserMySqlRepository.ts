@@ -7,10 +7,22 @@ import UserImageModel from '../models/MySQL/UserImage';
 import { v4 as uuidv4 } from 'uuid';
 import CustomError from "../../application/errors/CustomError";
 import UserCalendarModel from '../models/MySQL/UserCalendar';
-import { Op, Sequelize } from 'sequelize';
+import { Op, Sequelize, where } from 'sequelize';
 import passport from 'passport';
 
 export class UserMySqlRepository implements UserInterface {
+    async getCustomer(userUuid: string): Promise<any> {
+        const data = await UserModel.findOne({ where: { uuid: userUuid } });
+
+        if (!data) {
+            return {
+                status: 404,
+                message: 'Usuario no encontrado.'
+            };
+        }
+
+        return data;
+    }
     async findTokenfcmForHistory(userUuid: string): Promise<any> {
         
         const getToken = await UserModel.findOne({ 
