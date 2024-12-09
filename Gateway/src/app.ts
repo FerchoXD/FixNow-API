@@ -18,12 +18,12 @@ const SERVICES = {
     AUTH: process.env.AUTH_URL || 'http://127.0.0.1:3001',
     HISTORY: process.env.HISTORY_URL || 'http://127.0.0.1:3002',
     FORUM: process.env.FORUM_URL || 'http://127.0.0.1:3003',
-    NOTIFICATIONS: process.env.NOTIFICATIONS_URL || 'http://127.0.0.1:3004',
-    PAYMENT: process.env.PAYMENT_URL || 'http://127.0.0.1:3005',
+    PAYMENT: process.env.PAYMENT_URL || 'http://127.0.0.1:3004',
+    NOTIFICATIONS: process.env.NOTIFICATIONS_URL || 'http://127.0.0.1:3005',
     FINANCE: process.env.FINANCE_URL || 'http://127.0.0.1:3006',
     VIRTUALASSISTANT: process.env.VIRTUALASSISTANT_URL || 'http://127.0.0.1:3007',
-    //CHAT: process.env.CHAT_URL || 'http://127.0.0.1:4000',
     RAITING: process.env.RAITING_URL || 'http://127.0.0.1:5000',
+    CHAT: process.env.CHAT_URL || 'http://127.0.0.1:5001',
 };
 
 
