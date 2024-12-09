@@ -42,7 +42,7 @@ app.use('/api/v1/forum', createProxy(SERVICES.FORUM));
 app.use('/api/v1/notifications', createProxy(SERVICES.NOTIFICATIONS));
 app.use('/api/v1/finance', createProxy(SERVICES.FINANCE));
 app.use('/api/v1/virtualassistant', createProxy(SERVICES.VIRTUALASSISTANT));
-//app.use('/api/v1/chat', createProxy(SERVICES.CHAT));
+app.use('/api/v1/chat', createProxy(SERVICES.CHAT));
 app.use('/api/v1/payment', createProxy(SERVICES.PAYMENT));
 app.use('/api/v1/raiting', createProxy(SERVICES.RAITING));
 
