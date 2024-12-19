@@ -1,5 +1,11 @@
+
   import dotenv from 'dotenv';
   dotenv.config();
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+import express from 'express';
+import userRouter from "./infraestructure/routes/UserRoutes"
+
 
   import express from 'express';
   import {init} from './infraestructure/dependencies';

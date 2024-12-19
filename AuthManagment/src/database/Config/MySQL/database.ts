@@ -6,6 +6,7 @@ const dialectOptions = process.env.NODE_ENV === 'development'
         require: true,
         rejectUnauthorized: false,
       },
+
     }
   : undefined;
 

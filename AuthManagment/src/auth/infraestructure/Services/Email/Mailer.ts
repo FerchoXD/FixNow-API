@@ -12,3 +12,4 @@ export const transporter = nodemailer.createTransport({
         rejectUnauthorized: process.env.NODE_ENV !== 'development',
     }*/
 });
+
