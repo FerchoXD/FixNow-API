@@ -1,0 +1,62 @@
+version: '3.8'
+services:
+  gateway:
+    build:
+      context: ./Gateway
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+
+    environment:
+      - AUTH_URL=http://auth:3001
+      - HISTORY_URL=http://history:3002
+      - FORUM_URL=http://forum:3003
+      - PAYMENT_URL=http://payment:3004
+      - RAITING_URL=http://raiting:5000
+
+    depends_on:
+      - auth
+      - history
+      - forum
+    networks:
+      - red_fixnow
+
+  auth:
+    build:
+      context: ./AuthManagment
+      dockerfile: Dockerfile
+    networks:
+      - red_fixnow
+
+  history:
+    build:
+      context: ./HistoryManagment
+      dockerfile: Dockerfile
+    networks:
+      - red_fixnow
+
+  forum:
+    build:
+      context: ./ForumManagment
+      dockerfile: Dockerfile
+    networks:
+      - red_fixnow
+
+  payment:
+    build:
+      context: ./PaymentsManagment
+      dockerfile: Dockerfile
+    networks:
+      - red_fixnow
+
+  raiting:
+    build:
+      context: ./RaitingManagment
+      dockerfile: Dockerfile
+    networks:
+      - red_fixnow
+
+
+networks:
+  red_fixnow:
+    driver: bridge

@@ -11,19 +11,21 @@ export class RegisterUserUseCase {
     async run(
         firstname: string,
         lastname: string,
+        fullname: string,
         phone: string,
         email: string,
         password: string,
-        role: 'suplier' | 'client'
+        role: 'CUSTOMER' | 'SUPPLIER',
+        tokenfcm: string
     ): Promise<User | any> {
         try {
-            let contact = new Contact(firstname, lastname, email, phone, role);
+            let contact = new Contact(firstname, lastname,fullname, email, phone, role);
             let credential = new Credential(email, password);
             await credential.setHashPassword();
 
             let status = new Status(new Date());
             let userProfile = new UserProfile();
-            let user = new User(contact, credential, status, userProfile);
+            let user = new User(contact, credential, status, userProfile, '',tokenfcm, contact.fullname);
             
             const response = await this.repository.save(user);
             return response;

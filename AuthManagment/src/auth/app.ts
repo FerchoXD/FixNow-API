@@ -1,14 +1,36 @@
+
+  import dotenv from 'dotenv';
+  dotenv.config();
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 import express from 'express';
 import userRouter from "./infraestructure/routes/UserRoutes"
 
-const app = express();
-const port = 3000;
 
-app.use(express.json());
+  import express from 'express';
+  import {init} from './infraestructure/dependencies';
+  import passport from 'passport';
+  import session from 'express-session';
+  import userRouter from './infraestructure/routes/UserRoutes';
 
-app.use('/api/v1/users', userRouter);
+  if (process.env.NODE_ENV === 'development') {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  }
 
-app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
-});
+init();
+  const app = express();
+  app.use(session({
+    secret: process.env.GOOGLE_SECRET_SESSION as string,
+    resave: false,
+    saveUninitialized: false,
+  }));
+  app.use(express.json());
+app.use(passport.initialize());
+  app.use(passport.session());
+  app.use('/', userRouter);
+  
+  const port = process.env.PORT || 3001;
+  
+  app.listen(port, () => {
+    console.log(`---Servidor corriendo en el puerto ${port}---`);
+  });

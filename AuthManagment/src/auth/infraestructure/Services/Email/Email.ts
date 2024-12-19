@@ -7,11 +7,13 @@ import { transporter } from "./Mailer";
 export class EmailService implements EmailPort {
     async run(user: any): Promise<void> {
         const opcionesCorreo = {
-            from: 'email', // Debe ser el mismo email usado en la autenticación del transporter
+
+            from: process.env.EMAIL_FROM, // Debe ser el mismo email usado en la autenticación del transporter
+
             to: user.email,
             subject: 'Activacion de Cuenta', // Asunto del correo
-            text: user.activationToken, // Cuerpo del correo en texto plano
-            html: `<h1>Tu token de activación es: ${user.activationToken}.</h1>`, 
+            text: user.activationToken,
+            html: `<h1>Tu token de activación es: ${user.activationToken}.</h1>`,
         };
         try {
             // Enviar el correo

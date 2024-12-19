@@ -12,6 +12,7 @@ export class RegisterUserController {
 
     async run(req:Request, res:Response){
 
+        console.log(req.body.firstname);
 
         if(!req.body.firstname || !req.body.lastname || !req.body.phone || !req.body.email || !req.body.password || !req.body.role){
             return res.status(400).json({
@@ -48,7 +49,7 @@ export class RegisterUserController {
             });
         }
 
-        const user = await this.registerUserUseCase.run(req.body.firstname, req.body.lastname, req.body.phone, req.body.email, req.body.password, req.body.role);
+        const user = await this.registerUserUseCase.run(req.body.firstname, req.body.lastname,"", req.body.phone, req.body.email, req.body.password, req.body.role, req.body.tokenfcm);
         if(user.error === true){
             return res.status(500).json(user)
         }

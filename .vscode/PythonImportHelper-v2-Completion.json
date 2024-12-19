@@ -1,0 +1,696 @@
+[
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "abort",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Blueprint",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "SocketIO",
+        "importPath": "flask_socketio",
+        "description": "flask_socketio",
+        "isExtraImport": true,
+        "detail": "flask_socketio",
+        "documentation": {}
+    },
+    {
+        "label": "emit",
+        "importPath": "flask_socketio",
+        "description": "flask_socketio",
+        "isExtraImport": true,
+        "detail": "flask_socketio",
+        "documentation": {}
+    },
+    {
+        "label": "join_room",
+        "importPath": "flask_socketio",
+        "description": "flask_socketio",
+        "isExtraImport": true,
+        "detail": "flask_socketio",
+        "documentation": {}
+    },
+    {
+        "label": "leave_room",
+        "importPath": "flask_socketio",
+        "description": "flask_socketio",
+        "isExtraImport": true,
+        "detail": "flask_socketio",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "UTC",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "MongoClient",
+        "importPath": "pymongo",
+        "description": "pymongo",
+        "isExtraImport": true,
+        "detail": "pymongo",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "Comment",
+        "importPath": "src.models.comments",
+        "description": "src.models.comments",
+        "isExtraImport": true,
+        "detail": "src.models.comments",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "importPath": "src.models.comments",
+        "description": "src.models.comments",
+        "isExtraImport": true,
+        "detail": "src.models.comments",
+        "documentation": {}
+    },
+    {
+        "label": "enviar_mensaje",
+        "importPath": "src.services.AI.raiting",
+        "description": "src.services.AI.raiting",
+        "isExtraImport": true,
+        "detail": "src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "Producer",
+        "importPath": "src.services.rabbitmq.Raiting_producer",
+        "description": "src.services.rabbitmq.Raiting_producer",
+        "isExtraImport": true,
+        "detail": "src.services.rabbitmq.Raiting_producer",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "MongoEngine",
+        "importPath": "flask_mongoengine",
+        "description": "flask_mongoengine",
+        "isExtraImport": true,
+        "detail": "flask_mongoengine",
+        "documentation": {}
+    },
+    {
+        "label": "MongoEngine",
+        "importPath": "flask_mongoengine",
+        "description": "flask_mongoengine",
+        "isExtraImport": true,
+        "detail": "flask_mongoengine",
+        "documentation": {}
+    },
+    {
+        "label": "create_comment",
+        "importPath": "src.controllers.raiting_controller",
+        "description": "src.controllers.raiting_controller",
+        "isExtraImport": true,
+        "detail": "src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "obtener_comentarios_por_id",
+        "importPath": "src.controllers.raiting_controller",
+        "description": "src.controllers.raiting_controller",
+        "isExtraImport": true,
+        "detail": "src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "service_account",
+        "importPath": "google.oauth2",
+        "description": "google.oauth2",
+        "isExtraImport": true,
+        "detail": "google.oauth2",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "google.auth.transport.requests",
+        "description": "google.auth.transport.requests",
+        "isExtraImport": true,
+        "detail": "google.auth.transport.requests",
+        "documentation": {}
+    },
+    {
+        "label": "pika",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pika",
+        "description": "pika",
+        "detail": "pika",
+        "documentation": {}
+    },
+    {
+        "label": "RabbitMQConnection",
+        "importPath": "src.services.rabbitmq.rabbit_connection",
+        "description": "src.services.rabbitmq.rabbit_connection",
+        "isExtraImport": true,
+        "detail": "src.services.rabbitmq.rabbit_connection",
+        "documentation": {}
+    },
+    {
+        "label": "raiting_bp",
+        "importPath": "src.routes.raiting_routes",
+        "description": "src.routes.raiting_routes",
+        "isExtraImport": true,
+        "detail": "src.routes.raiting_routes",
+        "documentation": {}
+    },
+    {
+        "label": "Config",
+        "importPath": "src.database.configdb",
+        "description": "src.database.configdb",
+        "isExtraImport": true,
+        "detail": "src.database.configdb",
+        "documentation": {}
+    },
+    {
+        "label": "controllers",
+        "importPath": "app",
+        "description": "app",
+        "isExtraImport": true,
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "def index():\n    return \"Chat Application\"\n@app.route('/messages', methods=['GET'])\ndef get_messages():\n    user_uuid = request.args.get('user_uuid')\n    supplier_uuid = request.args.get('supplier_uuid')\n    if not user_uuid or not supplier_uuid:\n        return jsonify({'error': 'Se requieren los parámetros user_uuid y supplier_uuid'}), 400\n    room = f\"{min(user_uuid, supplier_uuid)}_{max(user_uuid, supplier_uuid)}\"\n    messages = list(messages_collection.find({'room': room}, {'_id': 0}))",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "get_messages",
+        "kind": 2,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "def get_messages():\n    user_uuid = request.args.get('user_uuid')\n    supplier_uuid = request.args.get('supplier_uuid')\n    if not user_uuid or not supplier_uuid:\n        return jsonify({'error': 'Se requieren los parámetros user_uuid y supplier_uuid'}), 400\n    room = f\"{min(user_uuid, supplier_uuid)}_{max(user_uuid, supplier_uuid)}\"\n    messages = list(messages_collection.find({'room': room}, {'_id': 0}))\n    return jsonify(messages), 200\n@socketio.on('connect')\ndef handle_connect():",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "handle_connect",
+        "kind": 2,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "def handle_connect():\n    print('Usuario conectado')\n@socketio.on('disconnect')\ndef handle_disconnect():\n    print('Usuario desconectado')\n@socketio.on('join')\ndef handle_join(data):\n    user_uuid = data.get('user_uuid')\n    supplier_uuid = data.get('supplier_uuid')\n    if user_uuid and supplier_uuid:",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "handle_disconnect",
+        "kind": 2,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "def handle_disconnect():\n    print('Usuario desconectado')\n@socketio.on('join')\ndef handle_join(data):\n    user_uuid = data.get('user_uuid')\n    supplier_uuid = data.get('supplier_uuid')\n    if user_uuid and supplier_uuid:\n        room = f\"{min(user_uuid, supplier_uuid)}_{max(user_uuid, supplier_uuid)}\"\n        join_room(room)\n        emit('message', {'info': f\"Usuario {user_uuid} se ha unido a la sala {room}\"}, room=room)",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "handle_join",
+        "kind": 2,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "def handle_join(data):\n    user_uuid = data.get('user_uuid')\n    supplier_uuid = data.get('supplier_uuid')\n    if user_uuid and supplier_uuid:\n        room = f\"{min(user_uuid, supplier_uuid)}_{max(user_uuid, supplier_uuid)}\"\n        join_room(room)\n        emit('message', {'info': f\"Usuario {user_uuid} se ha unido a la sala {room}\"}, room=room)\n    else:\n        emit('error', {'error': 'Datos incompletos: se requieren \"user_uuid\" y \"supplier_uuid\".'})\n@socketio.on('leave')",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "handle_leave",
+        "kind": 2,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "def handle_leave(data):\n    user_uuid = data.get('user_uuid')\n    supplier_uuid = data.get('supplier_uuid')\n    if user_uuid and supplier_uuid:\n        room = f\"{min(user_uuid, supplier_uuid)}_{max(user_uuid, supplier_uuid)}\"\n        leave_room(room)\n        emit('message', {'info': f\"Usuario {user_uuid} ha dejado la sala {room}\"}, room=room)\n    else:\n        emit('error', {'error': 'Datos incompletos: se requieren \"user_uuid\" y \"supplier_uuid\".'})\n@socketio.on('send_message')",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "handle_send_message",
+        "kind": 2,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "def handle_send_message(data):\n    user_uuid = data.get('user_uuid')\n    supplier_uuid = data.get('supplier_uuid')\n    sender_uuid = data.get('sender_uuid')\n    message = data.get('message')\n    if user_uuid and supplier_uuid and message:\n        room = f\"{min(user_uuid, supplier_uuid)}_{max(user_uuid, supplier_uuid)}\"\n        message_data = {\n            'room': room,\n            'sender_uuid': sender_uuid,",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "app = Flask(__name__)\napp.config['SECRET_KEY'] = 'secret!'\nsocketio = SocketIO(app)\n# Leer variables del entorno\nMONGO_USER = os.getenv('MONGO_USER')\nMONGO_PASSWORD = os.getenv('MONGO_PASSWORD')\nMONGO_CLUSTER = os.getenv('MONGO_CLUSTER')\nMONGO_DATABASE = os.getenv('MONGO_DATABASE')\n# Configurar la conexión a MongoDB\nMONGO_URI = f\"mongodb+srv://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_CLUSTER}.faonfdg.mongodb.net/{MONGO_DATABASE}?retryWrites=true&w=majority&appName={MONGO_CLUSTER}\"",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['SECRET_KEY']",
+        "kind": 5,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "app.config['SECRET_KEY'] = 'secret!'\nsocketio = SocketIO(app)\n# Leer variables del entorno\nMONGO_USER = os.getenv('MONGO_USER')\nMONGO_PASSWORD = os.getenv('MONGO_PASSWORD')\nMONGO_CLUSTER = os.getenv('MONGO_CLUSTER')\nMONGO_DATABASE = os.getenv('MONGO_DATABASE')\n# Configurar la conexión a MongoDB\nMONGO_URI = f\"mongodb+srv://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_CLUSTER}.faonfdg.mongodb.net/{MONGO_DATABASE}?retryWrites=true&w=majority&appName={MONGO_CLUSTER}\"\nclient = MongoClient(MONGO_URI)",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "socketio",
+        "kind": 5,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "socketio = SocketIO(app)\n# Leer variables del entorno\nMONGO_USER = os.getenv('MONGO_USER')\nMONGO_PASSWORD = os.getenv('MONGO_PASSWORD')\nMONGO_CLUSTER = os.getenv('MONGO_CLUSTER')\nMONGO_DATABASE = os.getenv('MONGO_DATABASE')\n# Configurar la conexión a MongoDB\nMONGO_URI = f\"mongodb+srv://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_CLUSTER}.faonfdg.mongodb.net/{MONGO_DATABASE}?retryWrites=true&w=majority&appName={MONGO_CLUSTER}\"\nclient = MongoClient(MONGO_URI)\ndb = client[MONGO_DATABASE]",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "MONGO_USER",
+        "kind": 5,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "MONGO_USER = os.getenv('MONGO_USER')\nMONGO_PASSWORD = os.getenv('MONGO_PASSWORD')\nMONGO_CLUSTER = os.getenv('MONGO_CLUSTER')\nMONGO_DATABASE = os.getenv('MONGO_DATABASE')\n# Configurar la conexión a MongoDB\nMONGO_URI = f\"mongodb+srv://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_CLUSTER}.faonfdg.mongodb.net/{MONGO_DATABASE}?retryWrites=true&w=majority&appName={MONGO_CLUSTER}\"\nclient = MongoClient(MONGO_URI)\ndb = client[MONGO_DATABASE]\nmessages_collection = db['messages']\n@app.route('/')",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "MONGO_PASSWORD",
+        "kind": 5,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "MONGO_PASSWORD = os.getenv('MONGO_PASSWORD')\nMONGO_CLUSTER = os.getenv('MONGO_CLUSTER')\nMONGO_DATABASE = os.getenv('MONGO_DATABASE')\n# Configurar la conexión a MongoDB\nMONGO_URI = f\"mongodb+srv://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_CLUSTER}.faonfdg.mongodb.net/{MONGO_DATABASE}?retryWrites=true&w=majority&appName={MONGO_CLUSTER}\"\nclient = MongoClient(MONGO_URI)\ndb = client[MONGO_DATABASE]\nmessages_collection = db['messages']\n@app.route('/')\ndef index():",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "MONGO_CLUSTER",
+        "kind": 5,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "MONGO_CLUSTER = os.getenv('MONGO_CLUSTER')\nMONGO_DATABASE = os.getenv('MONGO_DATABASE')\n# Configurar la conexión a MongoDB\nMONGO_URI = f\"mongodb+srv://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_CLUSTER}.faonfdg.mongodb.net/{MONGO_DATABASE}?retryWrites=true&w=majority&appName={MONGO_CLUSTER}\"\nclient = MongoClient(MONGO_URI)\ndb = client[MONGO_DATABASE]\nmessages_collection = db['messages']\n@app.route('/')\ndef index():\n    return \"Chat Application\"",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "MONGO_DATABASE",
+        "kind": 5,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "MONGO_DATABASE = os.getenv('MONGO_DATABASE')\n# Configurar la conexión a MongoDB\nMONGO_URI = f\"mongodb+srv://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_CLUSTER}.faonfdg.mongodb.net/{MONGO_DATABASE}?retryWrites=true&w=majority&appName={MONGO_CLUSTER}\"\nclient = MongoClient(MONGO_URI)\ndb = client[MONGO_DATABASE]\nmessages_collection = db['messages']\n@app.route('/')\ndef index():\n    return \"Chat Application\"\n@app.route('/messages', methods=['GET'])",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "MONGO_URI",
+        "kind": 5,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "MONGO_URI = f\"mongodb+srv://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_CLUSTER}.faonfdg.mongodb.net/{MONGO_DATABASE}?retryWrites=true&w=majority&appName={MONGO_CLUSTER}\"\nclient = MongoClient(MONGO_URI)\ndb = client[MONGO_DATABASE]\nmessages_collection = db['messages']\n@app.route('/')\ndef index():\n    return \"Chat Application\"\n@app.route('/messages', methods=['GET'])\ndef get_messages():\n    user_uuid = request.args.get('user_uuid')",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "client = MongoClient(MONGO_URI)\ndb = client[MONGO_DATABASE]\nmessages_collection = db['messages']\n@app.route('/')\ndef index():\n    return \"Chat Application\"\n@app.route('/messages', methods=['GET'])\ndef get_messages():\n    user_uuid = request.args.get('user_uuid')\n    supplier_uuid = request.args.get('supplier_uuid')",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "db = client[MONGO_DATABASE]\nmessages_collection = db['messages']\n@app.route('/')\ndef index():\n    return \"Chat Application\"\n@app.route('/messages', methods=['GET'])\ndef get_messages():\n    user_uuid = request.args.get('user_uuid')\n    supplier_uuid = request.args.get('supplier_uuid')\n    if not user_uuid or not supplier_uuid:",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "messages_collection",
+        "kind": 5,
+        "importPath": "ChatManagment.app",
+        "description": "ChatManagment.app",
+        "peekOfCode": "messages_collection = db['messages']\n@app.route('/')\ndef index():\n    return \"Chat Application\"\n@app.route('/messages', methods=['GET'])\ndef get_messages():\n    user_uuid = request.args.get('user_uuid')\n    supplier_uuid = request.args.get('supplier_uuid')\n    if not user_uuid or not supplier_uuid:\n        return jsonify({'error': 'Se requieren los parámetros user_uuid y supplier_uuid'}), 400",
+        "detail": "ChatManagment.app",
+        "documentation": {}
+    },
+    {
+        "label": "calcular_rating",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.controllers.raiting_controller",
+        "description": "RaitingManagment.src.controllers.raiting_controller",
+        "peekOfCode": "def calcular_rating(user_uuid, polaridad_actual=None):\n    try:\n        # Obtener todos los comentarios activos, relevantes y con categoría 'relevante' para el usuario\n        comentarios = Comment.objects(\n            userUuid=user_uuid,\n            status=\"active\",\n            isRelevant=True,\n            category=\"relevante\"\n        )\n        # Calcular la suma de polaridades existentes",
+        "detail": "RaitingManagment.src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "manejar_polaridad_comentario",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.controllers.raiting_controller",
+        "description": "RaitingManagment.src.controllers.raiting_controller",
+        "peekOfCode": "def manejar_polaridad_comentario(polaridad, userUuid, contenido, fullname):\n    try:\n        if polaridad == -1:\n            # Eliminar comentarios groseros\n            comentario_grosero = Comment(\n                userUuid=userUuid,\n                fullname=fullname,\n                content=contenido,\n                polarity=polaridad,\n                status='deleted',",
+        "detail": "RaitingManagment.src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "crear_comentario",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.controllers.raiting_controller",
+        "description": "RaitingManagment.src.controllers.raiting_controller",
+        "peekOfCode": "def crear_comentario(polaridad, userUuid, contenido,fullname):\n    try:\n        if polaridad == 0:\n            status = 'active'\n            is_relevant = False\n            category = 'irrelevante'\n        elif polaridad == -1:\n            status = 'deleted'\n            is_relevant = False\n            category = 'grosero'",
+        "detail": "RaitingManagment.src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "create_comment",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.controllers.raiting_controller",
+        "description": "RaitingManagment.src.controllers.raiting_controller",
+        "peekOfCode": "def create_comment():\n    try:\n        # Obtener datos del cuerpo de la solicitud\n        data = request.get_json()\n        if not data or 'userUuid' not in data or not data['userUuid']:\n            return jsonify({\"error\": \"El identificador del usuario es requerido\"}), 400\n        # Validar que el contenido exista\n        if not data or 'content' not in data or not data['content']:\n            return jsonify({\"error\": \"El contenido del comentario es requerido\"}), 400\n        print(\"Esto es data:\", json.dumps(data['content'], indent=4))",
+        "detail": "RaitingManagment.src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "obtener_comentarios_por_id",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.controllers.raiting_controller",
+        "description": "RaitingManagment.src.controllers.raiting_controller",
+        "peekOfCode": "def obtener_comentarios_por_id(userUuid):\n    try:\n        if not userUuid:\n            return jsonify({\"error\": \"El identificador del usuario es requerido\"}), 400\n        # Obtener comentarios que no sean ofensivos (categoría distinta de 'grosero')\n        comentarios = Comment.objects(\n            userUuid=userUuid,\n            category__ne=\"grosero\"  # Filtrar comentarios cuya categoría no sea \"grosero\"\n        ).order_by(\"-created_at\")  # Ordenar por fecha de creación, del más reciente al más antiguo\n        # Verificar si hay comentarios disponibles",
+        "detail": "RaitingManagment.src.controllers.raiting_controller",
+        "documentation": {}
+    },
+    {
+        "label": "Config",
+        "kind": 6,
+        "importPath": "RaitingManagment.src.database.configdb",
+        "description": "RaitingManagment.src.database.configdb",
+        "peekOfCode": "class Config:\n    SECRET_KEY = os.environ.get('SECRET_KEY') or 'clave_secreta'\n    MONGODB_SETTINGS = {\n        'host': f\"mongodb+srv://{os.environ.get('MONGO_USER', 'user')}:{os.environ.get('MONGO_PASSWORD', 'password')}@{os.environ.get('MONGO_CLUSTER', 'cluster0.7zv8v')}.faonfdg.mongodb.net/{os.environ.get('MONGO_DATABASE', 'ratingdb')}?retryWrites=true&w=majority&appName={os.environ.get('MONGO_CLUSTER', 'cluster0.7zv8v')}\"\n    }",
+        "detail": "RaitingManagment.src.database.configdb",
+        "documentation": {}
+    },
+    {
+        "label": "Comment",
+        "kind": 6,
+        "importPath": "RaitingManagment.src.models.comments",
+        "description": "RaitingManagment.src.models.comments",
+        "peekOfCode": "class Comment(db.Document):\n    uuid = db.UUIDField(default=uuid_lib.uuid4, required=True, unique=True)\n    userUuid = db.StringField(required=True)\n    fullname = db.StringField()\n    content = db.StringField(required=True)\n    polarity = db.FloatField()\n    timestamp = db.DateTimeField(default=datetime.utcnow)  # Fecha y hora del comentario\n    status = db.StringField(default=\"active\", choices=[\"active\", \"deleted\"])  # Estado\n    isRelevant = db.BooleanField(default=True)  # Indica relevancia\n    category = db.StringField(choices=[\"relevante\", \"irrelevante\", \"grosero\"])",
+        "detail": "RaitingManagment.src.models.comments",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.models.comments",
+        "description": "RaitingManagment.src.models.comments",
+        "peekOfCode": "db = MongoEngine()\nclass Comment(db.Document):\n    uuid = db.UUIDField(default=uuid_lib.uuid4, required=True, unique=True)\n    userUuid = db.StringField(required=True)\n    fullname = db.StringField()\n    content = db.StringField(required=True)\n    polarity = db.FloatField()\n    timestamp = db.DateTimeField(default=datetime.utcnow)  # Fecha y hora del comentario\n    status = db.StringField(default=\"active\", choices=[\"active\", \"deleted\"])  # Estado\n    isRelevant = db.BooleanField(default=True)  # Indica relevancia",
+        "detail": "RaitingManagment.src.models.comments",
+        "documentation": {}
+    },
+    {
+        "label": "create_comment_route",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.routes.raiting_routes",
+        "description": "RaitingManagment.src.routes.raiting_routes",
+        "peekOfCode": "def create_comment_route():\n    return create_comment()\n# Ruta POST para obtener comentarios por userUuid\n@raiting_bp.route('/comments', methods=['POST'])\ndef get_comments():\n    data = request.get_json()\n    userUuid = data.get('userUuid')\n    return obtener_comentarios_por_id(userUuid)",
+        "detail": "RaitingManagment.src.routes.raiting_routes",
+        "documentation": {}
+    },
+    {
+        "label": "get_comments",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.routes.raiting_routes",
+        "description": "RaitingManagment.src.routes.raiting_routes",
+        "peekOfCode": "def get_comments():\n    data = request.get_json()\n    userUuid = data.get('userUuid')\n    return obtener_comentarios_por_id(userUuid)",
+        "detail": "RaitingManagment.src.routes.raiting_routes",
+        "documentation": {}
+    },
+    {
+        "label": "raiting_bp",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.routes.raiting_routes",
+        "description": "RaitingManagment.src.routes.raiting_routes",
+        "peekOfCode": "raiting_bp = Blueprint('raiting', __name__)\n# Ruta POST para crear un comentario\n@raiting_bp.route('/create/comment', methods=['POST'])\ndef create_comment_route():\n    return create_comment()\n# Ruta POST para obtener comentarios por userUuid\n@raiting_bp.route('/comments', methods=['POST'])\ndef get_comments():\n    data = request.get_json()\n    userUuid = data.get('userUuid')",
+        "detail": "RaitingManagment.src.routes.raiting_routes",
+        "documentation": {}
+    },
+    {
+        "label": "get_access_token",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "def get_access_token():\n    if not os.path.exists(CREDENTIALS_PATH):\n        raise FileNotFoundError(f\"El archivo de credenciales no fue encontrado en la ruta: {CREDENTIALS_PATH}\")\n    credentials = service_account.Credentials.from_service_account_file(\n        CREDENTIALS_PATH, scopes=SCOPES)\n    credentials.refresh(Request())\n    return credentials.token\ndef enviar_mensaje(mensaje_usuario):\n    texto = preparar_texto(mensaje_usuario)\n    token = get_access_token()",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "enviar_mensaje",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "def enviar_mensaje(mensaje_usuario):\n    texto = preparar_texto(mensaje_usuario)\n    token = get_access_token()\n    headers = {\n        'Authorization': f'Bearer {token}',\n        'Content-Type': 'application/json'\n    }\n    payload = {\n        \"contents\": [\n            {\"parts\": [{\"text\": texto}]}",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "preparar_texto",
+        "kind": 2,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "def preparar_texto(texto):\n    mensaje_usuario = (\n        f\"{texto} Evalúa este mensaje y clasifícalo en una de las siguientes categorías: \"\n        \"'relevante' (si está relacionado con el servicio del proveedor actual), \"\n        \"'irrelevante' (si no está relacionado con el servicio del proveedor y debe tener una polaridad de 0), \"\n        f\"o 'grosero' (si contiene lenguaje inapropiado como {PALABRAS_PROHIBIDAS} y debe tener una polaridad de -1). \"\n        \"Si el mensaje es relevante, proporciona también la polaridad del sentimiento en una escala del 1 al 5 (1=Muy negativo, 5=Muy positivo). \"\n        f\"Ejemplos de texto irrelevante: {PALABRAS_IRRELEVANTES} \"\n        \"Responde únicamente en un JSON con las claves 'categoria' y 'polaridad'. \"\n        \"No des explicaciones ni detalles adicionales.\"",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "CREDENTIALS_PATH",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "CREDENTIALS_PATH = \"./src/services/AI/mineria.json\"\nSCOPES = [\"https://www.googleapis.com/auth/generative-language\"]\nAPI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent'\ndef get_access_token():\n    if not os.path.exists(CREDENTIALS_PATH):\n        raise FileNotFoundError(f\"El archivo de credenciales no fue encontrado en la ruta: {CREDENTIALS_PATH}\")\n    credentials = service_account.Credentials.from_service_account_file(\n        CREDENTIALS_PATH, scopes=SCOPES)\n    credentials.refresh(Request())\n    return credentials.token",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "SCOPES",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "SCOPES = [\"https://www.googleapis.com/auth/generative-language\"]\nAPI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent'\ndef get_access_token():\n    if not os.path.exists(CREDENTIALS_PATH):\n        raise FileNotFoundError(f\"El archivo de credenciales no fue encontrado en la ruta: {CREDENTIALS_PATH}\")\n    credentials = service_account.Credentials.from_service_account_file(\n        CREDENTIALS_PATH, scopes=SCOPES)\n    credentials.refresh(Request())\n    return credentials.token\ndef enviar_mensaje(mensaje_usuario):",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "API_ENDPOINT",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent'\ndef get_access_token():\n    if not os.path.exists(CREDENTIALS_PATH):\n        raise FileNotFoundError(f\"El archivo de credenciales no fue encontrado en la ruta: {CREDENTIALS_PATH}\")\n    credentials = service_account.Credentials.from_service_account_file(\n        CREDENTIALS_PATH, scopes=SCOPES)\n    credentials.refresh(Request())\n    return credentials.token\ndef enviar_mensaje(mensaje_usuario):\n    texto = preparar_texto(mensaje_usuario)",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "PALABRAS_PROHIBIDAS",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "PALABRAS_PROHIBIDAS = \"\"\"\nestúpido,imbécil,idiota,mierda,chingadera,chingar,maldito,basura,perro,puto,\nperra,puta,cabrón,tarado,patético,chinga tu madre,chinga tu puta madre,\nasqueroso,grosero,inepto,mediocre,ridículo,despreciable,malparido,ojete,pendejo,\ntonto,cretino,sarnoso,traidor,huevón,maldito\n\"\"\".strip()\nPALABRAS_IRRELEVANTES = \"\"\"\n¿Cómo estás hoy?, Me gusta el clima, \nAyer comí pizza., Mi color favorito es el azul.,\nHoy es martes., Me encanta la música clásica., ¿Tienes mascotas?, ",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "PALABRAS_IRRELEVANTES",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.services.AI.raiting",
+        "description": "RaitingManagment.src.services.AI.raiting",
+        "peekOfCode": "PALABRAS_IRRELEVANTES = \"\"\"\n¿Cómo estás hoy?, Me gusta el clima, \nAyer comí pizza., Mi color favorito es el azul.,\nHoy es martes., Me encanta la música clásica., ¿Tienes mascotas?, \nEl cielo está despejado., Me gusta leer, Ayer llovió mucho., \nMe gustan las flores., ¿Te gusta viajar?, Hoy es un buen día., \nMe gustan los colores vivos., ¿Te gusta bailar?, El mar está en calma., \nMe encanta la pizza., Me gusta la moda., Ayer nevó.\n\"\"\".strip()\ndef preparar_texto(texto):",
+        "detail": "RaitingManagment.src.services.AI.raiting",
+        "documentation": {}
+    },
+    {
+        "label": "RabbitMQConnection",
+        "kind": 6,
+        "importPath": "RaitingManagment.src.services.rabbitmq.rabbit_connection",
+        "description": "RaitingManagment.src.services.rabbitmq.rabbit_connection",
+        "peekOfCode": "class RabbitMQConnection:\n    _instance = None  # Singleton instance\n    def __init__(self):\n        self.connection = None\n        self.channel = None\n        self.rabbitmq_url = os.getenv(\"RABBITMQ_URL\", \"amqp://localhost:5672\")\n        if not (self.rabbitmq_url.startswith(\"amqp://\") or self.rabbitmq_url.startswith(\"amqps://\")):\n            raise ValueError(f\"La URL de RabbitMQ debe comenzar con 'amqp://' o 'amqps://'. URL actual: {self.rabbitmq_url}\")\n    @classmethod\n    def get_instance(cls):",
+        "detail": "RaitingManagment.src.services.rabbitmq.rabbit_connection",
+        "documentation": {}
+    },
+    {
+        "label": "Producer",
+        "kind": 6,
+        "importPath": "RaitingManagment.src.services.rabbitmq.Raiting_producer",
+        "description": "RaitingManagment.src.services.rabbitmq.Raiting_producer",
+        "peekOfCode": "class Producer:\n    def __init__(self, queue_name):\n        self.queue_name = os.environ.get(\"RABBITMQ_QUEUE\", queue_name)\n        self.rabbit = RabbitMQConnection.get_instance()\n        self.correlation_id = None  # ID único para correlación de mensajes\n        self.response = None  # Almacena la respuesta del consumidor\n    def send_message_with_reply(self, user_uuid, polaridad):\n        \"\"\"Enviar un mensaje y esperar una respuesta en una cola temporal.\"\"\"\n        try:\n            channel = self.rabbit.connect()",
+        "detail": "RaitingManagment.src.services.rabbitmq.Raiting_producer",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.main",
+        "description": "RaitingManagment.src.main",
+        "peekOfCode": "db = MongoEngine()\napp = Flask(__name__)\napp.config.from_object(Config)\ndb.init_app(app)\napp.register_blueprint(raiting_bp)\nif __name__ == '__main__':\n    app.run(debug=True)\nfrom app import controllers",
+        "detail": "RaitingManagment.src.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "RaitingManagment.src.main",
+        "description": "RaitingManagment.src.main",
+        "peekOfCode": "app = Flask(__name__)\napp.config.from_object(Config)\ndb.init_app(app)\napp.register_blueprint(raiting_bp)\nif __name__ == '__main__':\n    app.run(debug=True)\nfrom app import controllers",
+        "detail": "RaitingManagment.src.main",
+        "documentation": {}
+    }
+]

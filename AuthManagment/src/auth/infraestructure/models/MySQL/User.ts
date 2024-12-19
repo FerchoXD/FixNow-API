@@ -1,16 +1,27 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../../../../database/Config/MySQL/database';
+import { Contact } from '../../../domain/entities/Contact';
+import { Credential } from '../../../domain/entities/Credential';
+import { Status } from '../../../domain/entities/Status';
+import { UserProfile } from '../../../domain/entities/UserProfile';
+import UserImageModel from './UserImage';
+import UserCalendarModel from './UserCalendar';
 
 export class UserModel extends Model {
-    public id!: string;
+    public uuid!: string;  // Agregado
+    public googleId!: string;  // Agregado
+    public tokenfcm!: string;  // Agregado
+    public contact!: Contact;  // Agregado
+    public credential!: Credential;  // Agregado
+    public status!: Status;  // Agregado
+    public userProfile!: UserProfile;  // Agregado
     public firstname!: string;
-    public lastName!: string;
+    public lastname!: string;
+    public fullname!: string;
     public phone!: string;
     public email!: string;
     public password!: string;
-    public role!: string;
-    public profileurl!: string;
-    public profilefilenames!: string;
+    public role!: "CUSTOMER" | "SUPPLIER";
     public address!: string;
     public workexperience!: string;
     public standardprice!: number;
@@ -19,19 +30,33 @@ export class UserModel extends Model {
     public token!: string | null;
     public activationToken!: string | null;
     public verifiedAt!: Date | null;
+    public quotation!: number;
+    public relevance!: number;
 }
 
 UserModel.init({
-    id: {
+    uuid: { 
         type: DataTypes.UUID,
         primaryKey: true,
-        defaultValue: DataTypes.UUIDV4, 
+        defaultValue: DataTypes.UUIDV4,
+    },
+    googleId: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    tokenfcm : {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     firstname: { 
         type: DataTypes.STRING,
         allowNull: false,
     },
     lastname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    fullname:{
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -50,18 +75,8 @@ UserModel.init({
         allowNull: false,
     },
     role: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('CUSTOMER', 'SUPPLIER'),
         allowNull: false,
-    },
-    profileurl: {
-        type: DataTypes.STRING,
-        allowNull: true, 
-        defaultValue: 'PENDING',
-    },
-    profilefilenames: {
-        type: DataTypes.STRING, 
-        allowNull: true,
-        defaultValue: 'PENDING',
     },
     address: {
         type: DataTypes.STRING,
@@ -88,6 +103,16 @@ UserModel.init({
         allowNull: true,
         defaultValue: [],
     },
+    quotation: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: 0,
+    },
+    relevance: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+        defaultValue: 0,
+    },
     token: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -106,5 +131,14 @@ UserModel.init({
     tableName: 'users',
     timestamps: true,
 });
+
+export const associateUserModelWithImages = () => {
+    UserModel.hasMany(UserImageModel, { foreignKey: 'userUuid', as: 'images' });
+};
+
+export const associateUserModelWithCalendars = () => {
+    UserModel.hasMany(UserCalendarModel, { foreignKey: 'userUuid', as: 'calendar' });
+};
+
 
 export default UserModel;
